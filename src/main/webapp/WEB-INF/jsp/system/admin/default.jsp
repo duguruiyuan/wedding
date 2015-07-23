@@ -59,7 +59,7 @@
 
 
 
-						<!-- 柱状图 -->
+						<%-- <!-- 柱状图 -->
 						<div class="center">
 							<div style="float:left;">
 								<table border="0" width="50%">
@@ -239,12 +239,13 @@
 									</tr>
 								</table>
 							</div>
+							
 							<div style="float:right;">
 								<table border="0" width="50%">
 									<tr>
 										<td><jsp:include
 												page="../../FusionChartsHTMLRenderer.jsp" flush="true">
-												<jsp:param name="chartSWF" value="static/FusionCharts/Line.swf" />
+											 <jsp:param name="chartSWF" value="static/FusionCharts/Line.swf" /> 
 												<jsp:param name="strURL" value="" />
 												<jsp:param name="strXML" value="<%=strXML%>" />
 												<jsp:param name="chartId" value="myNext" />
@@ -255,10 +256,10 @@
 									</tr>
 								</table>
 							</div>
-						</div>
+						</div> 
 
 
-
+--%>
 
 
 
