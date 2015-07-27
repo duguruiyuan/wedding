@@ -102,6 +102,10 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.fh.dao" />
+	</bean>
+
 	<!-- ================ Shiro start ================ -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="ShiroRealm" />
@@ -130,6 +134,7 @@
 				/login_login = anon
 				/app**/** = anon
 				/weixin/** = anon
+				/rest** = anon
 				/** = authc
 			</value>
 		</property>

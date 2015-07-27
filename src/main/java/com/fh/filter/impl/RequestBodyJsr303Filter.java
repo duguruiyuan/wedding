@@ -9,7 +9,7 @@ import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fh.constants.IYiMingConstants;
+import com.fh.constants.AppConstants;
 import com.fh.filter.AppFilter;
 import com.fh.filter.AppFilterChain;
 import com.fh.util.BusinessException;
@@ -35,7 +35,7 @@ public class RequestBodyJsr303Filter implements AppFilter {
 				message.append(constrainViolation.getPropertyPath().toString() + constrainViolation.getMessage() + "|");
 			}
 
-			String key = IYiMingConstants.CODE_115;
+			String key = AppConstants.CODE_115;
 			throw new BusinessException(key, message.toString());
 		}
 		appFilterChain.doFilter(requestBody, httpServletRequest);

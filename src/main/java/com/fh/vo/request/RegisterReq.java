@@ -12,21 +12,11 @@ public class RegisterReq extends RequestBody {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String mobile;
+	private String phone;
 	private String username;
 	private String password;
 	private String validateCode;
 	private String city;// 城市
-
-	@NotBlank
-	@Length(min = 11, max = 11)
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
 
 	@NotBlank
 	public String getUsername() {
@@ -64,6 +54,16 @@ public class RegisterReq extends RequestBody {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	@NotBlank
+	@Length(min = 11, max = 11)
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

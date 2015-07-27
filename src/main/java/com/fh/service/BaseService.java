@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fh.constants.IYiMingConstants;
+import com.fh.constants.AppConstants;
 import com.fh.filter.AppFilterChain;
 import com.fh.filter.IYiMingSession;
 import com.fh.service.handle.AppHandler;
@@ -55,7 +55,7 @@ public class BaseService {
 			RequestBody requestBody) {
 		ResponseBody responseBody = null;
 		responseBody = appHandlers.get(
-				IYiMingConstants.APP_HANDLER.get(requestBody.getMethod()))
+				AppConstants.APP_HANDLER.get(requestBody.getMethod()))
 				.handle(httpServletRequest, requestBody);
 		logger.debug("接口调用成功!");
 		return responseBody;

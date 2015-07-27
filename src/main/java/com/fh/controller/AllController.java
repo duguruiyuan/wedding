@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fh.constants.IYiMingConstants;
+import com.fh.constants.AppConstants;
 import com.fh.service.BaseService;
 import com.fh.util.BusinessException;
 import com.fh.util.PropertiesReader;
@@ -48,7 +48,7 @@ public class AllController {
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ResponseBody handleIOException(Exception e) {
 		e.printStackTrace();
-		String key = IYiMingConstants.CODE_999;
+		String key = AppConstants.CODE_999;
 		String value = PropertiesReader.readAsString(key);
 		ErrorResponseBody responseBody = ErrorResponseBody.createErrorResponseBody(key, value);
 		return responseBody;

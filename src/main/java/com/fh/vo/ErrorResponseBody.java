@@ -1,6 +1,6 @@
 package com.fh.vo;
 
-import com.fh.constants.IYiMingConstants;
+import com.fh.constants.AppConstants;
 
 public class ErrorResponseBody extends ResponseBody {
 
@@ -11,7 +11,7 @@ public class ErrorResponseBody extends ResponseBody {
 
 	public static ErrorResponseBody createErrorResponseBody(String memo) {
 		ErrorResponseBody responseBody = new ErrorResponseBody();
-		responseBody.setStatus(IYiMingConstants.CODE_111);
+		responseBody.setStatus(AppConstants.CODE_111);
 		responseBody.setMemo(memo);
 		return responseBody;
 	}

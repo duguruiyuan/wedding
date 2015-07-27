@@ -7,8 +7,9 @@ import java.util.Map;
 
 import com.fh.vo.RequestBody;
 import com.fh.vo.request.RegisterReq;
+import com.fh.vo.request.ThirdRegisterReq;
 
-public class IYiMingConstants {
+public class AppConstants {
 
 	/**
 	 * 有效
@@ -56,6 +57,7 @@ public class IYiMingConstants {
 	public static final String EditPwd = "ep";
 	public static final String CreateVC = "cvc";
 	public static final String Register = "register";
+	public static final String ThirdRegister = "thirdR";
 	/* public static final String CreateCI = "cci"; */
 	public static final String Logout = "logout";
 	public static final String UploadAvatar = "ua";
@@ -69,6 +71,7 @@ public class IYiMingConstants {
 
 	static {
 		APP_HANDLER.put(LoginImpl, "loginImpl");
+		APP_HANDLER.put(ThirdRegister, "thirdRegister");
 		APP_HANDLER.put(EditPwd, "editPwd");
 		APP_HANDLER.put(CreateVC, "createVC");
 		APP_HANDLER.put(Register, "register");
@@ -89,6 +92,7 @@ public class IYiMingConstants {
 	public static final Map<String, Class<? extends RequestBody>> APP_VO = new HashMap<String, Class<? extends RequestBody>>();
 	static {
 		APP_VO.put(Register, RegisterReq.class);
+		APP_VO.put(ThirdRegister, ThirdRegisterReq.class);
 		/*APP_VO.put(LoginImpl, LoginReq.class);
 		APP_VO.put(EditPwd, EditPwdReq.class);
 		APP_VO.put(CreateVC, CreateVCReq.class);

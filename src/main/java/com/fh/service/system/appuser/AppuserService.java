@@ -4,15 +4,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.dozer.DozerBeanMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fh.dao.AppUserMapper;
 import com.fh.dao.DaoSupport;
+import com.fh.entity.AppUser;
 import com.fh.entity.Page;
-import com.fh.entity.system.User;
 import com.fh.util.PageData;
+import com.fh.util.UuidUtil;
+import com.fh.vo.ErrorResponseBody;
 import com.fh.vo.ResponseBody;
 import com.fh.vo.request.RegisterReq;
+import com.fh.vo.request.ThirdRegisterReq;
 
 @Service("appuserService")
 @Transactional
@@ -20,6 +26,10 @@ public class AppuserService {
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
+	@Autowired
+	private AppUserMapper appUserMapper;
+
+	private static final DozerBeanMapper mapper = new DozerBeanMapper();
 
 	// ======================================================================================
 
@@ -119,16 +129,16 @@ public class AppuserService {
 	// ======================================================================================
 
 	public ResponseBody register(RegisterReq registerReq) {
-		/*
-		 * if (userRepository.countByUsername(registerReq.getUsername()) > 0)
-		 * return ErrorResponseBody.createErrorResponseBody("用户名已存在"); if
-		 * (userRepository.countByMobile(registerReq.getMobile()) > 0) return
-		 * ErrorResponseBody.createErrorResponseBody("手机号已被绑定"); else {
-		 */
-		PageData user = new PageData();
-		user.put("USERNAME", registerReq.getUsername());
+
+		if (appUserMapper.countByUsername(registerReq.getUsername()) > 0)
+			return ErrorResponseBody.createErrorResponseBody("用户名已存在");
+		if (appUserMapper.countByMobile(registerReq.getPhone()) > 0)
+			return ErrorResponseBody.createErrorResponseBody("手机号已被绑定");
+
+		AppUser user = new AppUser();
+		mapper.map(registerReq, user);
 		try {
-			saveU(user);
+			appUserMapper.insert(user);
 			return ResponseBody.createResponseBody("保存用户成功");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,5 +146,28 @@ public class AppuserService {
 		}
 		return null;
 
+	}
+
+	public ResponseBody thirdRegister(ThirdRegisterReq registerReq) {
+
+		AppUser user = new AppUser();
+		mapper.map(registerReq, user);
+		user.setUsername(createUsername());
+		try {
+			appUserMapper.insert(user);
+			return ResponseBody.createResponseBody("保存用户成功");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public String createUsername() {
+		String username = UuidUtil.get10UUID();
+		if (appUserMapper.countByUsername(username) > 0)
+			return createUsername();
+		return username;
 	}
 }

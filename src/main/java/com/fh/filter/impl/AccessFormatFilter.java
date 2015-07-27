@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.fh.constants.IYiMingConstants;
+import com.fh.constants.AppConstants;
 import com.fh.filter.AppFilter;
 import com.fh.filter.AppFilterChain;
 import com.fh.filter.IYiMingSession;
@@ -29,11 +29,11 @@ public class AccessFormatFilter implements AppFilter {
 		try {
 			Map<String, String[]> paramters = httpServletRequest.getParameterMap();
 			// 参数map转化为bean
-			newBody = (RequestBody) MapUtil.convertMap(IYiMingConstants.APP_VO.get(requestBody.getMethod()), paramters);
+			newBody = (RequestBody) MapUtil.convertMap(AppConstants.APP_VO.get(requestBody.getMethod()), paramters);
 			IYiMingSession.put("requestBody", newBody);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			throw new BusinessException(IYiMingConstants.CODE_115, PropertiesReader.readAsString(IYiMingConstants.CODE_115));
+			throw new BusinessException(AppConstants.CODE_115, PropertiesReader.readAsString(AppConstants.CODE_115));
 		}
 		appFilterChain.doFilter(newBody, httpServletRequest);
 	}

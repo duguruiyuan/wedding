@@ -12,7 +12,7 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://115.29.248.18:3306/tuangou?characterEncoding=utf8"
+			connectionURL="jdbc:mysql://localhost:3306/tuangou?characterEncoding=utf8"
 			userId="root" password="root">
 		</jdbcConnection>
 
@@ -28,7 +28,8 @@
 
 
 		<!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
-		<sqlMapGenerator targetPackage="mybatis" targetProject="src/main/resources">
+		<sqlMapGenerator targetPackage="mybatis"
+			targetProject="src/main/resources">
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
@@ -37,36 +38,16 @@
 			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-		<table tableName="null"/>
-		<!-- <table tableName="short_message" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="user" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="validate_code" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="menu" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="role" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="admin" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="customer" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="business_man" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="product" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="main_type" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="voucher" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="order" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="order_detail" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> <table tableName="grade" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" 
-			/> -->
+		<table tableName=""></table>
+		<!-- <table tableName="sys_business_man" domainObjectName="BusinessMan"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false" />
+		<table tableName="sys_app_user" domainObjectName="AppUser"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false" /> -->
+
 
 	</context>
 </generatorConfiguration>

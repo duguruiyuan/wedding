@@ -8,9 +8,14 @@ public class UuidUtil {
 		String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
 		return uuid;
 	}
-	
+
+	public static String get10UUID() {
+		String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "")
+				.substring(0, 10);
+		return uuid;
+	}
+
 	public static void main(String[] args) {
 		System.out.println(get32UUID());
 	}
 }
-
