@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.fh.vo.RequestBody;
 import com.fh.vo.request.CreateVCReq;
+import com.fh.vo.request.LoginReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ThirdRegisterReq;
 import com.google.gson.Gson;
@@ -74,7 +75,7 @@ public class AppConstants {
 	public static final String GetVersion = "gv";
 
 	static {
-		APP_HANDLER.put(LoginImpl, "loginImpl");
+		APP_HANDLER.put(LoginImpl, "login");
 		APP_HANDLER.put(ThirdRegister, "thirdRegister");
 		APP_HANDLER.put(EditPwd, "editPwd");
 		APP_HANDLER.put(CreateVC, "createVC");
@@ -98,12 +99,14 @@ public class AppConstants {
 		APP_VO.put(Register, RegisterReq.class);
 		APP_VO.put(ThirdRegister, ThirdRegisterReq.class);
 		APP_VO.put(CreateVC, CreateVCReq.class);
-		/*APP_VO.put(LoginImpl, LoginReq.class);
+		APP_VO.put(LoginImpl, LoginReq.class);
+		APP_VO.put(Logout, RequestBody.class);
+		/*
 		APP_VO.put(EditPwd, EditPwdReq.class);
 		
 		
 		 APP_VO.put(CreateCI, RequestBody.class); 
-		APP_VO.put(Logout, RequestBody.class);
+		
 		APP_VO.put(UploadAvatar, RequestBody.class);
 		APP_VO.put(CompleteProfile, CompleteProfileReq.class);
 		APP_VO.put(GetProfile, RequestBody.class);

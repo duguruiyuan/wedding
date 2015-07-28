@@ -52,7 +52,7 @@ public class ValidateCodeService {
 			validateCodeMapper.insert(validateCode);
 			if (smsService.sendSms(code, createVCReq.getPhone()))
 				return ResponseBody.createResponseBody("创建验证码成功");
-			return ErrorResponseBody.createResponseBody("短信发送失败");
+			return ErrorResponseBody.createErrorResponseBody("短信发送失败");
 		}
 
 	}

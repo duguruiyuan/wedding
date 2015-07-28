@@ -46,7 +46,6 @@ public class RegisterReq extends RequestBody {
 		this.validateCode = validateCode;
 	}
 
-	@NotBlank
 	@Length(max = 20)
 	public String getCity() {
 		return city;
