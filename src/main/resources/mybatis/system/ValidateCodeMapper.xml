@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.ValidateCodeMapper">
+	<resultMap id="BaseResultMap" type="com.fh.entity.ValidateCode">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="version" property="version" jdbcType="BIGINT" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, version, code, expire_time, mobile
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_validate_code
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_validate_code
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.fh.entity.ValidateCode">
+		insert into sys_validate_code (id, version, code,
+		expire_time, mobile)
+		values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT},
+		#{code,jdbcType=VARCHAR},
+		#{expireTime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.fh.entity.ValidateCode">
+		insert into sys_validate_code
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="expireTime != null">
+				expire_time,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=BIGINT},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="expireTime != null">
+				#{expireTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.ValidateCode">
+		update sys_validate_code
+		<set>
+			<if test="version != null">
+				version = #{version,jdbcType=BIGINT},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="expireTime != null">
+				expire_time = #{expireTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fh.entity.ValidateCode">
+		update sys_validate_code
+		set version = #{version,jdbcType=BIGINT},
+		code = #{code,jdbcType=VARCHAR},
+		expire_time = #{expireTime,jdbcType=TIMESTAMP},
+		mobile = #{mobile,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="findOneByMobileAndExpireTimeGreaterThan" resultMap="BaseResultMap"
+		parameterType="pd">
+		select
+		<include refid="Base_Column_List" />
+		from sys_validate_code
+		where mobile = #{phone,jdbcType=VARCHAR}
+		and
+		expire_time > #{expireTime,jdbcType=TIMESTAMP}
+	</select>
+
+	<select id="countByMobileAndCodeAndExpireTimeGreaterThan"
+		resultType="int" parameterType="pd">
+		select
+		count(1)
+		from sys_validate_code
+		where mobile = #{phone,jdbcType=VARCHAR}
+		and code =
+		#{validateCode,jdbcType=VARCHAR}
+		and expire_time >
+		#{expireTime,jdbcType=TIMESTAMP}
+	</select>
+
+
+
+</mapper>

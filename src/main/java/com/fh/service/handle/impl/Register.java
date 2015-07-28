@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fh.service.handle.AppHandler;
 import com.fh.service.system.appuser.AppuserService;
-import com.fh.service.system.user.UserService;
+import com.fh.service.system.validatecode.ValidateCodeService;
+import com.fh.vo.ErrorResponseBody;
 import com.fh.vo.RequestBody;
 import com.fh.vo.ResponseBody;
 import com.fh.vo.request.RegisterReq;
@@ -20,15 +21,16 @@ public class Register implements AppHandler {
 	@Autowired
 	private AppuserService userService;
 
-/*	@Autowired
-	private ValidateCodeService validateCodeService;*/
+	@Autowired
+	private ValidateCodeService validateCodeService;
 
 	@Override
-	public ResponseBody handle(HttpServletRequest httpServletRequest, RequestBody requestBody) {
+	public ResponseBody handle(HttpServletRequest httpServletRequest,
+			RequestBody requestBody) {
 		RegisterReq registerReq = (RegisterReq) requestBody;
-		/*if (validateCodeService.validataCodeCheck(registerReq))*/
+		if (validateCodeService.validataCodeCheck(registerReq))
 			return userService.register(registerReq);
-		/*else
-			return ErrorResponseBody.createErrorResponseBody("手机号和验证码不匹配!");*/
+		return ErrorResponseBody.createErrorResponseBody("手机号和验证码不匹配!");
+
 	}
 }

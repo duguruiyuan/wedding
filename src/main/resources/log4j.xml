@@ -9,21 +9,21 @@
 			<param name="ConversionPattern" value="%d{yyyy HH:mm:ss} %-5p %c - %m%n" />
 		</layout>
 	</appender>
-	
+
 	<!-- Application Loggers -->
 	<logger name="com.fh">
 		<level value="info" />
 	</logger>
-	
+
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
-	</logger>	
-	
+	</logger>
+
 	<logger name="org.springframework.beans">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.context">
 		<level value="info" />
 	</logger>
@@ -42,10 +42,34 @@
 	<logger name="java.sql">
 		<level value="info" />
 	</logger>
+	 <loggers>
+    
+
+    <logger name="log4j.logger.com.ibatis" level="trace" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
+  
+   
+    <logger name="log4j.logger.org.mybatis" level="debug" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql" level="debug" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
+
+    <logger name="log4j.logger.java.sql.Statement" level="debug" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql.PreparedStatement" level="debug" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
+    <logger name="log4j.logger.java.sql.ResultSet" level="debug" additivity="false">
+      <appender-ref ref="Console"/>
+    </logger>
 	<!-- Root Logger -->
 	<root>
 		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
-	
+
 </log4j:configuration>

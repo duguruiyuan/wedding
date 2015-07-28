@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fh.vo.RequestBody;
+import com.fh.vo.request.CreateVCReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ThirdRegisterReq;
+import com.google.gson.Gson;
 
 public class AppConstants {
+	
+	public static final Gson GSON = new Gson();
 
 	/**
 	 * 有效
@@ -93,9 +97,10 @@ public class AppConstants {
 	static {
 		APP_VO.put(Register, RegisterReq.class);
 		APP_VO.put(ThirdRegister, ThirdRegisterReq.class);
+		APP_VO.put(CreateVC, CreateVCReq.class);
 		/*APP_VO.put(LoginImpl, LoginReq.class);
 		APP_VO.put(EditPwd, EditPwdReq.class);
-		APP_VO.put(CreateVC, CreateVCReq.class);
+		
 		
 		 APP_VO.put(CreateCI, RequestBody.class); 
 		APP_VO.put(Logout, RequestBody.class);

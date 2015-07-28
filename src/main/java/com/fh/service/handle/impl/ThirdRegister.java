@@ -20,18 +20,11 @@ public class ThirdRegister implements AppHandler {
 	@Autowired
 	private AppuserService userService;
 
-	/*
-	 * @Autowired private ValidateCodeService validateCodeService;
-	 */
-
 	@Override
 	public ResponseBody handle(HttpServletRequest httpServletRequest,
 			RequestBody requestBody) {
 		ThirdRegisterReq registerReq = (ThirdRegisterReq) requestBody;
-		/* if (validateCodeService.validataCodeCheck(registerReq)) */
 		return userService.thirdRegister(registerReq);
-		/*
-		 * else return ErrorResponseBody.createErrorResponseBody("手机号和验证码不匹配!");
-		 */
+
 	}
 }
