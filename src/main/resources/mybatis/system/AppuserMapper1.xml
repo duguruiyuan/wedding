@@ -352,6 +352,16 @@
 		where phone =
 		#{phone,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="countByName" parameterType="java.lang.String"
+		resultType="int">
+		select
+		count(1)
+		from
+		sys_app_user
+		where name =
+		#{name,jdbcType=VARCHAR}
+	</select>
 
 	<select id="findByUsername" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -360,6 +370,15 @@
 		from sys_app_user
 		where username =
 		#{username,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_app_user
+		where name =
+		#{name,jdbcType=VARCHAR}
 	</select>
 
 	<select id="findByThirdTypeAndOpenId" resultMap="BaseResultMap"

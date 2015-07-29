@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fh.constants.AppConstants;
 import com.fh.dao.AppUserMapper;
@@ -21,10 +23,12 @@ import com.fh.dao.DaoSupport;
 import com.fh.entity.AppUser;
 import com.fh.entity.Page;
 import com.fh.entity.system.User;
+import com.fh.service.system.file.FileService;
 import com.fh.util.PageData;
 import com.fh.util.UuidUtil;
 import com.fh.vo.ErrorResponseBody;
 import com.fh.vo.ResponseBody;
+import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.LoginReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ThirdRegisterReq;
@@ -140,23 +144,36 @@ public class AppuserService {
 
 	// ======================================================================================
 
-	public ResponseBody register(RegisterReq registerReq) {
+	public ResponseBody register(RegisterReq registerReq,
+			HttpServletRequest httpServletRequest) {
 
 		if (appUserMapper.countByUsername(registerReq.getUsername()) > 0)
 			return ErrorResponseBody.createErrorResponseBody("用户名已存在");
 		if (appUserMapper.countByMobile(registerReq.getPhone()) > 0)
 			return ErrorResponseBody.createErrorResponseBody("手机号已被绑定");
+		AppUser user = null;
+		if (httpServletRequest.getSession().getAttribute(AppConstants.TEMP_ID) == null) {
+			user = new AppUser();
+			mapper.map(registerReq, user);
+			user.setName(registerReq.getUsername());
 
-		AppUser user = new AppUser();
-		mapper.map(registerReq, user);
-		try {
 			appUserMapper.insert(user);
-			return ResponseBody.createResponseBody("保存用户成功");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			user = appUserMapper.findByUsername(user.getUsername());
+
+		} else {
+			Long userId = (Long) httpServletRequest.getSession().getAttribute(
+					AppConstants.TEMP_ID);
+			user = appUserMapper.selectByPrimaryKey(userId);
+			mapper.map(registerReq, user);
+			appUserMapper.updateByPrimaryKey(user);
+			httpServletRequest.getSession().removeAttribute(
+					AppConstants.TEMP_ID);
+
 		}
-		return null;
+		httpServletRequest.getSession().setAttribute(
+				AppConstants.SESSION_USER_ID, user.getUserId());
+		return ResponseBody.createResponseBody("保存用户成功");
 
 	}
 
@@ -169,38 +186,58 @@ public class AppuserService {
 		if (null == appUser) {
 			AppUser user = new AppUser();
 			mapper.map(registerReq, user);
-			user.setUsername(createUsername());
+			user.setName(createNickname());
 			ThirdRegisterResp registerResp = new ThirdRegisterResp();
 			try {
 				appUserMapper.insert(user);
 				registerResp.setStatus(AppConstants.CODE_000);
-				registerResp.setMemo("保存用户成功");
+				registerResp.setMemo("第三方尚未绑定手机");
 				registerResp.setFlag("2");
-				AppUser userInfo =appUserMapper.findByUsername(user.getUsername());
+				/*
+				 * AppUser userInfo
+				 * =appUserMapper.findByUsername(user.getUsername());
+				 * httpServletRequest.getSession().setAttribute(
+				 * AppConstants.SESSION_USER_ID, userInfo.getUserId());
+				 */
+				AppUser userInfo = appUserMapper.findByName(user.getName());
 				httpServletRequest.getSession().setAttribute(
-						AppConstants.SESSION_USER_ID, userInfo.getUserId());
+						AppConstants.TEMP_ID, userInfo.getUserId());
 				return registerResp;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return ErrorResponseBody.createErrorResponseBody("第三方注册失败");
 			}
-		} else {
+		} else if (!StringUtils.isEmpty(appUser.getUsername())) {
 			ThirdRegisterResp registerResp = new ThirdRegisterResp();
 			registerResp.setStatus(AppConstants.CODE_000);
 			registerResp.setMemo("第三方用户登录成功");
 			httpServletRequest.getSession().setAttribute(
 					AppConstants.SESSION_USER_ID, appUser.getUserId());
 			return registerResp;
+		} else {
+			ThirdRegisterResp registerResp = new ThirdRegisterResp();
+			registerResp.setStatus(AppConstants.CODE_000);
+			registerResp.setMemo("第三方尚未绑定手机");
+			registerResp.setFlag("2");
+			httpServletRequest.getSession().setAttribute(AppConstants.TEMP_ID,
+					appUser.getUserId());
+			return registerResp;
 		}
 
 	}
 
-	public String createUsername() {
-		String username = UuidUtil.get10UUID();
-		if (appUserMapper.countByUsername(username) > 0)
-			return createUsername();
-		return username;
+	public String createNickname() {
+		String name = UuidUtil.get10UUID();
+		if (appUserMapper.countByName(name) > 0)
+			return createNickname();
+		return name;
+	}
+
+	public void uploadImage(Long id, String imageUrl) {
+		AppUser user = appUserMapper.selectByPrimaryKey(id);
+		user.setImageUrl(imageUrl);
+		appUserMapper.updateByPrimaryKey(user);
 	}
 
 	/**
@@ -248,4 +285,47 @@ public class AppuserService {
 		return ResponseBody.createResponseBody("成功退出");
 
 	}
+
+	@Autowired
+	private FileService fileService;
+
+	public ResponseBody completeProfile(CompleteProfileReq completeProfileReq,
+			Long id, HttpServletRequest httpServletRequest) {
+		AppUser user = appUserMapper.selectByPrimaryKey(id);
+		user.setName(completeProfileReq.getNickName());
+		appUserMapper.updateByPrimaryKey(user);
+		if (httpServletRequest instanceof MultipartHttpServletRequest)
+			fileService
+					.uploadAvatar((MultipartHttpServletRequest) httpServletRequest);
+		return ResponseBody.createResponseBody("完善资料成功");
+
+	}
+
+	/**
+	 * @author SM
+	 * @description 修改密码
+	 */
+	public ResponseBody changePassword(HttpServletRequest httpServletRequest,
+			String oldPassword, String newPassword, String newPassword2) {
+
+		if (StringUtils.isEmpty(newPassword))
+			return ErrorResponseBody.createErrorResponseBody("新密码不能为空");
+
+		if (!newPassword.equals(newPassword2))
+			return ErrorResponseBody.createErrorResponseBody("新密码和重复密码必须一致");
+
+		AppUser user = appUserMapper
+				.selectByPrimaryKey((Long) httpServletRequest.getSession()
+						.getAttribute(AppConstants.SESSION_USER_ID));
+
+		if (oldPassword.equals(user.getPassword())) {
+			user.setPassword(newPassword);
+			appUserMapper.updateByPrimaryKey(user);
+			return ResponseBody.createResponseBody("修改密码成功");
+		} else {
+			return ErrorResponseBody.createErrorResponseBody("原密码不正确!");
+		}
+
+	}
+
 }

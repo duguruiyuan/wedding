@@ -27,10 +27,16 @@ public class Register implements AppHandler {
 	@Override
 	public ResponseBody handle(HttpServletRequest httpServletRequest,
 			RequestBody requestBody) {
-		RegisterReq registerReq = (RegisterReq) requestBody;
-		if (validateCodeService.validataCodeCheck(registerReq))
-			return userService.register(registerReq);
-		return ErrorResponseBody.createErrorResponseBody("手机号和验证码不匹配!");
+		try {
+			RegisterReq registerReq = (RegisterReq) requestBody;
+			if (validateCodeService.validataCodeCheck(registerReq))
+				return userService.register(registerReq, httpServletRequest);
+			return ErrorResponseBody.createErrorResponseBody("手机号和验证码不匹配!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ErrorResponseBody.createErrorResponseBody("保存用户失败");
+		}
 
 	}
 }

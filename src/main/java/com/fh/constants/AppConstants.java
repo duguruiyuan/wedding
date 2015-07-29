@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fh.vo.RequestBody;
+import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.CreateVCReq;
+import com.fh.vo.request.EditPwdReq;
 import com.fh.vo.request.LoginReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ThirdRegisterReq;
@@ -52,6 +54,7 @@ public class AppConstants {
 	public static final String SESSION_ERROR_COUNT = "ERROR_COUNT";
 	public static final String SESSION_CAP_TEXT = "CAP_TEXT";
 	public static final String SESSION_USER_ID = "USER_ID";
+	public static final String TEMP_ID = "TEMP_JJ";
 
 	public static final String MESSAGE_VC = "验证码";
 
@@ -101,14 +104,16 @@ public class AppConstants {
 		APP_VO.put(CreateVC, CreateVCReq.class);
 		APP_VO.put(LoginImpl, LoginReq.class);
 		APP_VO.put(Logout, RequestBody.class);
-		/*
 		APP_VO.put(EditPwd, EditPwdReq.class);
+		APP_VO.put(CompleteProfile, CompleteProfileReq.class);
+		/*
+		
 		
 		
 		 APP_VO.put(CreateCI, RequestBody.class); 
 		
 		APP_VO.put(UploadAvatar, RequestBody.class);
-		APP_VO.put(CompleteProfile, CompleteProfileReq.class);
+		
 		APP_VO.put(GetProfile, RequestBody.class);
 		APP_VO.put(GetProjectList, GetProjectListReq.class);
 		APP_VO.put(GetProjectDetail, GetProjectDetailReq.class);

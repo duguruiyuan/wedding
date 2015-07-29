@@ -17,10 +17,14 @@ public interface AppUserMapper {
 	int updateByPrimaryKey(AppUser record);
 
 	int countByUsername(String userName);
+	
+	int countByName(String name);
 
 	int countByMobile(String mobile);
 
 	AppUser findByUsername(String userName);
+	
+	AppUser findByName(String name);
 
 	AppUser findByThirdTypeAndOpenId(PageData data);
 }
