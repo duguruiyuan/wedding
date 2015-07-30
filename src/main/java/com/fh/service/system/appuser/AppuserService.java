@@ -22,7 +22,6 @@ import com.fh.dao.AppUserMapper;
 import com.fh.dao.DaoSupport;
 import com.fh.entity.AppUser;
 import com.fh.entity.Page;
-import com.fh.entity.system.User;
 import com.fh.service.system.file.FileService;
 import com.fh.util.PageData;
 import com.fh.util.UuidUtil;
@@ -32,6 +31,7 @@ import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.LoginReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ThirdRegisterReq;
+import com.fh.vo.response.GetProfileResp;
 import com.fh.vo.response.ThirdRegisterResp;
 
 @Service("appuserService")
@@ -325,6 +325,16 @@ public class AppuserService {
 		} else {
 			return ErrorResponseBody.createErrorResponseBody("原密码不正确!");
 		}
+
+	}
+
+	public ResponseBody getProfile(Long id, String contextPath) {
+		AppUser user = appUserMapper.selectByPrimaryKey(id);
+		GetProfileResp getProfileResp = new GetProfileResp();
+		mapper.map(user, getProfileResp);
+		getProfileResp.setStatus(AppConstants.CODE_000);
+		getProfileResp.setImageUrl(contextPath + "/file/getAvatar");
+		return getProfileResp;
 
 	}
 

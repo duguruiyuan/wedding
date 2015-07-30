@@ -30,7 +30,7 @@ public class AppConstants {
 	/**
 	 * APPSCRET
 	 */
-	public static final String APP_SCRET = "iyiming_zeus";
+	public static final String APP_SCRET = "tuangou_guizhou";
 
 	public static final String YMD = "yyyy-MM-dd";
 	public static final String YMD_HMS = "yyyy-MM-dd HH:mm:ss";
@@ -106,6 +106,7 @@ public class AppConstants {
 		APP_VO.put(Logout, RequestBody.class);
 		APP_VO.put(EditPwd, EditPwdReq.class);
 		APP_VO.put(CompleteProfile, CompleteProfileReq.class);
+		APP_VO.put(GetProfile, RequestBody.class);
 		/*
 		
 		
@@ -114,7 +115,7 @@ public class AppConstants {
 		
 		APP_VO.put(UploadAvatar, RequestBody.class);
 		
-		APP_VO.put(GetProfile, RequestBody.class);
+		
 		APP_VO.put(GetProjectList, GetProjectListReq.class);
 		APP_VO.put(GetProjectDetail, GetProjectDetailReq.class);
 		APP_VO.put(AtteOrCan, AttentionOrCancelReq.class);

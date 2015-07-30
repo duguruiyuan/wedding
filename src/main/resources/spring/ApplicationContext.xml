@@ -127,6 +127,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/rest/** = anon
+				/file/** = anon
 				/static/login/** = anon
 				/static/js/myjs/** = authc
 				/static/js/** = anon
@@ -150,6 +151,7 @@
 			<list>
 				<ref bean="accessFormatFilter" />
 				<ref bean="requestBodyJsr303Filter" />
+				<ref bean="signFilter" />
 				<ref bean="sessionFilter" />
 			</list>
 		</property>

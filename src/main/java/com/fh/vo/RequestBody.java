@@ -19,11 +19,6 @@ public class RequestBody implements Serializable {
 	private String method;
 
 	/**
-	 * 时间戳，格式为yyyy-MM-dd HH:mm:ss，例如：2013-05-06 13:52:03。API服务端允许客户端请求时间误差为6分钟。
-	 */
-	private String timestamp;
-
-	/**
 	 * 客户端传入参数，对其值进行倒序排序后，再进行拼接，然后MD5加密
 	 */
 	private String sign;
@@ -36,6 +31,16 @@ public class RequestBody implements Serializable {
 
 	public void setMethod(String method) {
 		this.method = method;
+	}
+
+	@NotBlank
+	@Size(max = 100)
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 
 
