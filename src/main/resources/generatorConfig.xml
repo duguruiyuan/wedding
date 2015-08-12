@@ -39,15 +39,15 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<table tableName=""></table>
-		<!-- <table tableName="sys_validate_code" domainObjectName="ValidateCode"
+		<!-- <table tableName="sys_business_man" domainObjectName="BusinessMan"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" />
-		<table tableName="sys_short_message" domainObjectName="ShortMessage"
+		<table tableName="sys_man_image" domainObjectName="ManImage"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false" />
- -->
+			selectByExampleQueryId="false" /> -->
+
 
 	</context>
 </generatorConfiguration>

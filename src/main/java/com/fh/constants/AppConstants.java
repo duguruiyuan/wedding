@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fh.vo.RequestBody;
+import com.fh.vo.request.BusinessManListReq;
 import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.CreateVCReq;
 import com.fh.vo.request.EditPwdReq;
@@ -71,7 +72,7 @@ public class AppConstants {
 	public static final String UploadAvatar = "ua";
 	public static final String CompleteProfile = "cp";
 	public static final String GetProfile = "gp";
-	public static final String GetProjectList = "gpl";
+	public static final String GetBusinessManList = "gbml";
 	public static final String GetProjectDetail = "gpd";
 	public static final String AtteOrCan = "aoc";
 	public static final String FeedBack = "fb";
@@ -88,7 +89,7 @@ public class AppConstants {
 		APP_HANDLER.put(UploadAvatar, "uploadAvatar");
 		APP_HANDLER.put(CompleteProfile, "completeProfile");
 		APP_HANDLER.put(GetProfile, "getProfile");
-		APP_HANDLER.put(GetProjectList, "getProjectList");
+		APP_HANDLER.put(GetBusinessManList, "businessManList");
 		APP_HANDLER.put(GetProjectDetail, "getProjectDetail");
 		APP_HANDLER.put(AtteOrCan, "attentionOrCancel");
 		APP_HANDLER.put(FeedBack, "feedBack");
@@ -107,6 +108,7 @@ public class AppConstants {
 		APP_VO.put(EditPwd, EditPwdReq.class);
 		APP_VO.put(CompleteProfile, CompleteProfileReq.class);
 		APP_VO.put(GetProfile, RequestBody.class);
+		APP_VO.put(GetBusinessManList, BusinessManListReq.class);
 		/*
 		
 		

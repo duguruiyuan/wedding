@@ -113,7 +113,7 @@ public class LoginController extends BaseController {
 						pd.put("LAST_LOGIN",DateUtil.getTime().toString());
 						userService.updateLastLogin(pd);
 						User user = new User();
-						user.setUSER_ID(pd.getString("USER_ID"));
+						user.setUSER_ID(pd.getLong("USER_ID"));
 						user.setUSERNAME(pd.getString("USERNAME"));
 						user.setPASSWORD(pd.getString("PASSWORD"));
 						user.setNAME(pd.getString("NAME"));

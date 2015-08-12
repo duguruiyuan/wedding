@@ -63,6 +63,10 @@ public class PageData extends HashMap implements Map{
 		return (String)get(key);
 	}
 	
+	public Long getLong(Object key) {
+		return (Long)get(key);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object put(Object key, Object value) {

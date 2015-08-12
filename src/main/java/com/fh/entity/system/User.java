@@ -13,7 +13,7 @@ import com.fh.entity.Page;
 * @version 1.0
  */
 public class User {
-	private String USER_ID;		//用户id
+	private Long USER_ID;		//用户id
 	private String USERNAME;	//用户名
 	private String PASSWORD; 	//密码
 	private String NAME;		//姓名
@@ -33,10 +33,10 @@ public class User {
 		SKIN = sKIN;
 	}
 	
-	public String getUSER_ID() {
+	public Long getUSER_ID() {
 		return USER_ID;
 	}
-	public void setUSER_ID(String uSER_ID) {
+	public void setUSER_ID(Long uSER_ID) {
 		USER_ID = uSER_ID;
 	}
 	public String getUSERNAME() {

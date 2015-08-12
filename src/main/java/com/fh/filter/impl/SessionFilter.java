@@ -17,7 +17,7 @@ import com.fh.vo.RequestBody;
 @Service
 public class SessionFilter implements AppFilter {
 
-	private static List<String> excludeUrl = Arrays.asList(AppConstants.LoginImpl,AppConstants.ThirdRegister, AppConstants.CreateVC, AppConstants.Register, AppConstants.GetProjectList, AppConstants.GetProjectDetail, AppConstants.GetVersion);
+	private static List<String> excludeUrl = Arrays.asList(AppConstants.LoginImpl,AppConstants.ThirdRegister, AppConstants.CreateVC, AppConstants.Register, AppConstants.GetBusinessManList, AppConstants.GetProjectDetail, AppConstants.GetVersion);
 
 	@Override
 	public void doFilter(RequestBody requestBody, HttpServletRequest httpServletRequest, AppFilterChain appFilterChain) {

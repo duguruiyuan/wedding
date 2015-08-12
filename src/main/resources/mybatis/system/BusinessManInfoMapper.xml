@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.BusinessManInfoMapper">
+
+	<select id="findBusinessManInfos" resultType="BusinessManInfo">
+		select * from (
+		<include refid="sqlBusinessManInfos"></include>) a
+		<if test="request.gradeOrder != null and request.gradeOrder">
+		   order by a.grade
+		</if>
+		<if test="request.gradeOrder != null and !request.gradeOrder">
+		    order by a.grade desc
+		</if>
+		<!-- <if test="request.salesOrder != null and request.salesOrder">
+		   order by s.grade
+		</if>
+		<if test="request.salesOrder != null and !request.salesOrder">
+		    order by s.grade desc
+		</if> -->
+		limit #{pageable.pageStart}, #{pageable.pageEnd}
+	</select>
+	
+		<select id="countBusinessManInfos" resultType="int">
+		select count(1) from 
+		(<include refid="sqlBusinessManInfos"></include>
+		) a
+	</select>
+
+	<sql id="sqlBusinessManInfos">
+		SELECT u.user_id userId,
+		s.type_id typeId,
+		u.`NAME` NAME, '1' typeName , s.`address` address 
+		, IFNULL(s.grade,0) grade
+		,s.`tuan_flag` tuanFlag, s.`cu_flag` cuFlag,s.`ding_flag`
+		dingFlag,s.`pai_flag` paiFlag,
+		CONCAT('file/',s.`user_id`) mainImageUrl
+		FROM sys_business_man s ,sys_user u WHERE s.`user_id`= u.`USER_ID`
+		<if test="request.name != null and request.name  != ''">
+		   and u.name like #{request.name}
+		</if>
+		<if test="request.typeId != null and request.typeId  != ''">
+		   and s.typeId = #{request.typeId}
+		</if>
+	</sql>
+</mapper>
