@@ -17,16 +17,24 @@ import com.fh.vo.RequestBody;
 @Service
 public class SessionFilter implements AppFilter {
 
-	private static List<String> excludeUrl = Arrays.asList(AppConstants.LoginImpl,AppConstants.ThirdRegister, AppConstants.CreateVC, AppConstants.Register, AppConstants.GetBusinessManList, AppConstants.GetProjectDetail, AppConstants.GetVersion);
+	private static List<String> excludeUrl = Arrays.asList(
+			AppConstants.LoginImpl, AppConstants.ThirdRegister,
+			AppConstants.CreateVC, AppConstants.Register,
+			AppConstants.GetBusinessManList, AppConstants.GetBusinessManDetail,
+			AppConstants.GetProductList, AppConstants.GetVersion,
+			AppConstants.GetProductDetail);
 
 	@Override
-	public void doFilter(RequestBody requestBody, HttpServletRequest httpServletRequest, AppFilterChain appFilterChain) {
+	public void doFilter(RequestBody requestBody,
+			HttpServletRequest httpServletRequest, AppFilterChain appFilterChain) {
 
 		try {
 			if (!excludeUrl.contains(requestBody.getMethod())) {
-				if (null == httpServletRequest.getSession().getAttribute(AppConstants.SESSION_USER_ID)) {
+				if (null == httpServletRequest.getSession().getAttribute(
+						AppConstants.SESSION_USER_ID)) {
 					String key = AppConstants.CODE_113;
-					throw new BusinessException(key, PropertiesReader.readAsString(key));
+					throw new BusinessException(key,
+							PropertiesReader.readAsString(key));
 				}
 			}
 		} catch (Exception e) {

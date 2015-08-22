@@ -19,6 +19,14 @@ public class BusinessMan {
 
     private Long mainImageId;
 
+    private String address;
+
+    private Long salesCount;
+
+    private String phone;
+
+    private String name;
+
     public Long getUserId() {
         return userId;
     }
@@ -89,5 +97,37 @@ public class BusinessMan {
 
     public void setMainImageId(Long mainImageId) {
         this.mainImageId = mainImageId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public Long getSalesCount() {
+        return salesCount;
+    }
+
+    public void setSalesCount(Long salesCount) {
+        this.salesCount = salesCount;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 }

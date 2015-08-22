@@ -5,13 +5,18 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fh.service.handle.impl.ProductList;
 import com.fh.vo.RequestBody;
+import com.fh.vo.request.BusinessManDetailReq;
 import com.fh.vo.request.BusinessManListReq;
 import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.CreateVCReq;
 import com.fh.vo.request.EditPwdReq;
 import com.fh.vo.request.LoginReq;
+import com.fh.vo.request.ProductDetailReq;
+import com.fh.vo.request.ProductListReq;
 import com.fh.vo.request.RegisterReq;
+import com.fh.vo.request.ShoppingCartListReq;
 import com.fh.vo.request.ThirdRegisterReq;
 import com.google.gson.Gson;
 
@@ -73,10 +78,13 @@ public class AppConstants {
 	public static final String CompleteProfile = "cp";
 	public static final String GetProfile = "gp";
 	public static final String GetBusinessManList = "gbml";
-	public static final String GetProjectDetail = "gpd";
 	public static final String AtteOrCan = "aoc";
 	public static final String FeedBack = "fb";
 	public static final String GetVersion = "gv";
+	public static final String GetBusinessManDetail = "gbmd";
+	public static final String GetProductList = "gpl";
+	public static final String GetProductDetail = "gpd";
+	public static final String ShoppingCartList = "gscl";
 
 	static {
 		APP_HANDLER.put(LoginImpl, "login");
@@ -90,11 +98,13 @@ public class AppConstants {
 		APP_HANDLER.put(CompleteProfile, "completeProfile");
 		APP_HANDLER.put(GetProfile, "getProfile");
 		APP_HANDLER.put(GetBusinessManList, "businessManList");
-		APP_HANDLER.put(GetProjectDetail, "getProjectDetail");
+		APP_HANDLER.put(GetBusinessManDetail, "businessManDetail");
 		APP_HANDLER.put(AtteOrCan, "attentionOrCancel");
 		APP_HANDLER.put(FeedBack, "feedBack");
 		APP_HANDLER.put(GetVersion, "getVersion");
-
+		APP_HANDLER.put(GetProductList, "productList");
+		APP_HANDLER.put(GetProductDetail, "productDetail");	
+		APP_HANDLER.put(ShoppingCartList, "shoppingCartList");	
 	}
 
 	/* 接口处理器 */
@@ -109,6 +119,10 @@ public class AppConstants {
 		APP_VO.put(CompleteProfile, CompleteProfileReq.class);
 		APP_VO.put(GetProfile, RequestBody.class);
 		APP_VO.put(GetBusinessManList, BusinessManListReq.class);
+		APP_VO.put(GetBusinessManDetail, BusinessManDetailReq.class);
+		APP_VO.put(GetProductList, ProductListReq.class);
+		APP_VO.put(GetProductDetail, ProductDetailReq.class);
+		APP_VO.put(ShoppingCartList, ShoppingCartListReq.class);
 		/*
 		
 		

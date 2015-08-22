@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.fh.entity.Product" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="old_price" property="oldPrice" jdbcType="DECIMAL" />
+    <result column="new_price" property="newPrice" jdbcType="DECIMAL" />
+    <result column="recommend" property="recommend" jdbcType="BIT" />
+    <result column="top_grade" property="topGrade" jdbcType="DOUBLE" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="type_id" property="typeId" jdbcType="BIGINT" />
+    <result column="sales_count" property="salesCount" jdbcType="BIGINT" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="notice" property="notice" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, detail, old_price, new_price, recommend, top_grade, user_id, type_id, sales_count, 
+    info, notice
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bus_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bus_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fh.entity.Product" >
+    insert into bus_product (id, name, detail, 
+      old_price, new_price, recommend, 
+      top_grade, user_id, type_id, 
+      sales_count, info, notice
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+      #{oldPrice,jdbcType=DECIMAL}, #{newPrice,jdbcType=DECIMAL}, #{recommend,jdbcType=BIT}, 
+      #{topGrade,jdbcType=DOUBLE}, #{userId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT}, 
+      #{salesCount,jdbcType=BIGINT}, #{info,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fh.entity.Product" >
+    insert into bus_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="oldPrice != null" >
+        old_price,
+      </if>
+      <if test="newPrice != null" >
+        new_price,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="topGrade != null" >
+        top_grade,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="salesCount != null" >
+        sales_count,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="notice != null" >
+        notice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPrice != null" >
+        #{oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="newPrice != null" >
+        #{newPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="topGrade != null" >
+        #{topGrade,jdbcType=DOUBLE},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="salesCount != null" >
+        #{salesCount,jdbcType=BIGINT},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.Product" >
+    update bus_product
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPrice != null" >
+        old_price = #{oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="newPrice != null" >
+        new_price = #{newPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="topGrade != null" >
+        top_grade = #{topGrade,jdbcType=DOUBLE},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="salesCount != null" >
+        sales_count = #{salesCount,jdbcType=BIGINT},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fh.entity.Product" >
+    update bus_product
+    set name = #{name,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      old_price = #{oldPrice,jdbcType=DECIMAL},
+      new_price = #{newPrice,jdbcType=DECIMAL},
+      recommend = #{recommend,jdbcType=BIT},
+      top_grade = #{topGrade,jdbcType=DOUBLE},
+      user_id = #{userId,jdbcType=BIGINT},
+      type_id = #{typeId,jdbcType=BIGINT},
+      sales_count = #{salesCount,jdbcType=BIGINT},
+      info = #{info,jdbcType=VARCHAR},
+      notice = #{notice,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

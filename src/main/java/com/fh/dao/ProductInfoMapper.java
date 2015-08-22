@@ -7,14 +7,14 @@ import org.apache.ibatis.annotations.Param;
 import com.fh.entity.BmiRequest;
 import com.fh.entity.BusinessManInfo;
 import com.fh.entity.MybatisPageable;
+import com.fh.entity.ProductInfo;
 
-public interface BusinessManInfoMapper {
+public interface ProductInfoMapper {
 
-	List<BusinessManInfo> findBusinessManInfos(
+	List<ProductInfo> findProductInfos(
 			@Param(value = "request") BmiRequest request,
 			@Param(value = "pageable") MybatisPageable pageable);
 
-	BusinessManInfo findBusinessManInfo(@Param(value = "userId") long userId);
+	ProductInfo findProductInfo(@Param(value = "id") long id);
 
-	Integer countBusinessManInfos(@Param(value = "request") BmiRequest request);
 }

@@ -43,7 +43,7 @@ public class AllController {
 	}
 
 	@ExceptionHandler(BusinessException.class)
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseBody handleIOException(BusinessException e) {
 		e.printStackTrace();
 		ErrorResponseBody responseBody = ErrorResponseBody
