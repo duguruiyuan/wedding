@@ -17,6 +17,7 @@ import com.fh.vo.request.ProductDetailReq;
 import com.fh.vo.request.ProductListReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ShoppingCartListReq;
+import com.fh.vo.request.ShoppingReq;
 import com.fh.vo.request.ThirdRegisterReq;
 import com.google.gson.Gson;
 
@@ -85,6 +86,8 @@ public class AppConstants {
 	public static final String GetProductList = "gpl";
 	public static final String GetProductDetail = "gpd";
 	public static final String ShoppingCartList = "gscl";
+	public static final String Shopping = "shop";
+
 
 	static {
 		APP_HANDLER.put(LoginImpl, "login");
@@ -105,6 +108,8 @@ public class AppConstants {
 		APP_HANDLER.put(GetProductList, "productList");
 		APP_HANDLER.put(GetProductDetail, "productDetail");	
 		APP_HANDLER.put(ShoppingCartList, "shoppingCartList");	
+		APP_HANDLER.put(Shopping, "shopping");	
+
 	}
 
 	/* 接口处理器 */
@@ -123,6 +128,7 @@ public class AppConstants {
 		APP_VO.put(GetProductList, ProductListReq.class);
 		APP_VO.put(GetProductDetail, ProductDetailReq.class);
 		APP_VO.put(ShoppingCartList, ShoppingCartListReq.class);
+		APP_VO.put(Shopping, ShoppingReq.class);
 		/*
 		
 		

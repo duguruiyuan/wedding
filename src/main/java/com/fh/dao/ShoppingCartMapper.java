@@ -14,4 +14,6 @@ public interface ShoppingCartMapper {
     int updateByPrimaryKeySelective(ShoppingCart record);
 
     int updateByPrimaryKey(ShoppingCart record);
+    
+    ShoppingCart selectByProductId(Long productId,Long userId);
 }
