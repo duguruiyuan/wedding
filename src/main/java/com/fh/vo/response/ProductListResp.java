@@ -14,14 +14,14 @@ public class ProductListResp extends ResponseBody {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private List<ProductInfo> ProductInfos = new ArrayList<ProductInfo>();
+	private List<ProductInfo> productInfos = new ArrayList<ProductInfo>();
 
 	public List<ProductInfo> getProductInfos() {
-		return ProductInfos;
+		return productInfos;
 	}
 
 	public void setProductInfos(List<ProductInfo> productInfos) {
-		ProductInfos = productInfos;
+		this.productInfos = productInfos;
 	}
 
 }

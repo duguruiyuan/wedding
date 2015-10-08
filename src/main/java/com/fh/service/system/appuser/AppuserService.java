@@ -333,7 +333,7 @@ public class AppuserService {
 		GetProfileResp getProfileResp = new GetProfileResp();
 		mapper.map(user, getProfileResp);
 		getProfileResp.setStatus(AppConstants.CODE_000);
-		getProfileResp.setImageUrl(contextPath + "/file/getAvatar");
+		getProfileResp.setImageUrl(contextPath + "/file/getAvatar/"+id);
 		return getProfileResp;
 
 	}

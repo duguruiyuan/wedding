@@ -5,18 +5,24 @@
 	<select id="findBusinessManInfos" resultType="BusinessManInfo">
 		select * from (
 		<include refid="sqlBusinessManInfos"></include>) a
-		<if test="request.gradeOrder != null and request.gradeOrder">
-		   order by a.grade
+		<if test="request.gradeOrder != null or request.salesOrder != null">
+		   order by
 		</if>
-		<if test="request.gradeOrder != null and !request.gradeOrder">
-		    order by a.grade desc
+		<if test="request.gradeOrder != null and request.gradeOrder == 1">
+		   a.grade
 		</if>
-		<!-- <if test="request.salesOrder != null and request.salesOrder">
-		   order by s.grade
+		<if test="request.gradeOrder != null and request.gradeOrder == 2">
+		   a.grade desc
 		</if>
-		<if test="request.salesOrder != null and !request.salesOrder">
-		    order by s.grade desc
-		</if> -->
+		<if test="request.gradeOrder != null and request.salesOrder != null">
+		   ,
+		</if>
+		<if test="request.salesOrder != null and request.salesOrder == 1">
+		    a.sales_count
+		</if>
+		<if test="request.salesOrder != null and request.salesOrder == 2">
+		   a.sales_count desc 
+		</if>
 		limit #{pageable.pageStart}, #{pageable.pageEnd}
 	</select>
 	
@@ -38,7 +44,8 @@
 		, IFNULL(s.grade,0) grade
 		,s.`tuan_flag` tuanFlag, s.`cu_flag` cuFlag,s.`ding_flag`
 		dingFlag,s.`pai_flag` paiFlag,
-		CONCAT('file/',s.`user_id`) mainImageUrl
+		CONCAT('file/',s.`user_id`) mainImageUrl,
+		s.`sales_count` sales_count
 		FROM sys_business_man s ,sys_user u,sys_main_type m WHERE s.`user_id`= u.`USER_ID` and s.type_id = m.id
 		<if test="request.name != null and request.name  != ''">
 		   and u.name like #{request.name}

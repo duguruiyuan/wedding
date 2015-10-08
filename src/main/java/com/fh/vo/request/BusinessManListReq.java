@@ -13,9 +13,9 @@ public class BusinessManListReq extends PageRequest {
 
 	private String name;
 
-	private boolean gradeOrder;
+	private String gradeOrder;
 
-	private boolean salesOrder;
+	private String salesOrder;
 
 	private String typeId;
 
@@ -27,21 +27,7 @@ public class BusinessManListReq extends PageRequest {
 		this.name = name;
 	}
 
-	public boolean isGradeOrder() {
-		return gradeOrder;
-	}
 
-	public void setGradeOrder(boolean gradeOrder) {
-		this.gradeOrder = gradeOrder;
-	}
-
-	public boolean isSalesOrder() {
-		return salesOrder;
-	}
-
-	public void setSalesOrder(boolean salesOrder) {
-		this.salesOrder = salesOrder;
-	}
 
 	public String getTypeId() {
 		return typeId;
@@ -49,6 +35,22 @@ public class BusinessManListReq extends PageRequest {
 
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
+	}
+
+	public String getGradeOrder() {
+		return gradeOrder;
+	}
+
+	public void setGradeOrder(String gradeOrder) {
+		this.gradeOrder = gradeOrder;
+	}
+
+	public String getSalesOrder() {
+		return salesOrder;
+	}
+
+	public void setSalesOrder(String salesOrder) {
+		this.salesOrder = salesOrder;
 	}
 
 }

@@ -20,10 +20,10 @@ public class GetFileService {
 	@Autowired
 	private FileService fileService;
 
-	public byte[] getAvatar(HttpServletRequest httpServletRequest)
+	public byte[] getAvatar(HttpServletRequest httpServletRequest,Long id)
 			throws IOException {
 		/*fileFilterChain.doFilter(new RequestBody(), httpServletRequest);*/
-		return fileService.getAvatar(httpServletRequest);
+		return fileService.getAvatar(id);
 	}
 
 }
