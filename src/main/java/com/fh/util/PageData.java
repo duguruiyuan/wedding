@@ -63,8 +63,8 @@ public class PageData extends HashMap implements Map{
 		return (String)get(key);
 	}
 	
-	public Long getLong(Object key) {
-		return (Long)get(key);
+	public String getLong(Object key) {
+		return (String)get(key);
 	}
 	
 	@SuppressWarnings("unchecked")

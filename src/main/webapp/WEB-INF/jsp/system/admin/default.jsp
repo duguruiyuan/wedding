@@ -24,11 +24,11 @@
 
 			<div id="page-content" class="clearfix">
 
-				<div class="page-header position-relative">
+			<!-- 	<div class="page-header position-relative">
 					<h1>
 						后台首页 <small><i class="icon-double-angle-right"></i> </small>
 					</h1>
-				</div>
+				</div> -->
 				<!--/page-header-->
 
 				<div class="row-fluid">
