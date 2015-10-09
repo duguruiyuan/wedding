@@ -219,7 +219,10 @@
 	<select id="orderlistPage" parameterType="page" resultType="pd">
 		select o.id,
 		o.status,
-		o.price		
+		o.price,
+		o.created_date,
+		a.username,
+		p.name		
 		from bus_order o,bus_product p,sys_app_user a
 		where o.product_id = p.id AND o.user_id = a.user_id
 		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 用户名检索 -->

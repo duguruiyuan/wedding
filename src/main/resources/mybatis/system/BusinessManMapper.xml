@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fh.dao.BusinessManMapper">
+<mapper namespace="BusinessManMapper">
 	<resultMap id="BaseResultMap" type="com.fh.entity.BusinessMan">
 		<id column="user_id" property="userId" jdbcType="BIGINT" />
 		<result column="type_id" property="typeId" jdbcType="BIGINT" />
@@ -192,7 +192,7 @@
 	</update>
 
 	<!-- 商户列表(全部) -->
-	<select id="listAllBusinessMan" parameterType="pd" resultType="pd">
+	<select id="listAllBusinessMan" parameterType="page" resultType="pd">
 		select b.USER_ID,
 		b.type_id,
 		b.remark

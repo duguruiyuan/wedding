@@ -25,27 +25,19 @@
 	<div class="row-fluid">
 	
 			<!-- 检索  -->
-			<form action="happuser/listUsers.do" method="post" name="userForm" id="userForm">
+			<form action="order/listOrder.do" method="post" name="userForm" id="userForm">
 			<table border='0'>
 				<tr>
 				
 					<td>
 						<span class="input-icon">
-							<input autocomplete="off" id="nav-search-input" type="text" name="USERNAME" value="${pd.USERNAME }" placeholder="这里输入关键词" />
+							<input autocomplete="off" id="nav-search-input" type="text" name="USERNAME" value="${pd.username }" placeholder="这里输入用户名" />
 							<i id="nav-search-icon" class="icon-search"></i>
 						</span>
 					</td>
 					
 					<td><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart" value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期"/></td>
-					<td><input class="span10 date-picker" name="lastLoginEnd" id="lastLoginEnd" value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="到期日期"/></td>
-					<td style="vertical-align:top;"> 
-					 	<select class="chzn-select" name="ROLE_ID" id="role_id" data-placeholder="请选择等级" style="vertical-align:top;width: 120px;">
-						<option value=""></option>
-						<c:forEach items="${roleList}" var="role">
-							<option value="${role.ROLE_ID }" <c:if test="${pd.ROLE_ID==role.ROLE_ID}">selected</c:if>>${role.ROLE_NAME }</option>
-						</c:forEach>
-					  	</select>
-					</td>
+					<td><input class="span10 date-picker" name="lastLoginEnd" id="lastLoginEnd" value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期"/></td>
 					<td style="vertical-align:top;"> 
 					 	<select class="chzn-select" name="STATUS" id="STATUS" data-placeholder="状态" style="vertical-align:top;width: 79px;">
 						<option value=""></option>
@@ -72,6 +64,8 @@
 						</th>
 						<th>序号</th>
 						<th>订单编号</th>
+						<th>用户名</th>
+						<th>产品名</th>
 						<th>状态</th>
 						<th>价格</th>
 						<th>产品名称</th>
@@ -94,6 +88,8 @@
 								</td>
 								<td class='center' style="width: 30px;">${vs.index+1}</td>
 								<td>${order.id }</td>
+								<td>${order.username }</td>
+								<td>${order.name }</td>
 								<td>${order.status }</td>
 								<td>${order.price }</td>
 								<td>${order.price }</td>

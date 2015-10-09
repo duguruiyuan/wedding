@@ -32,6 +32,7 @@ public class BusinessManController extends BaseController {
 			mv.addObject("businessManList", businessManList);
 			mv.addObject("pd", pd);
 		} catch (Exception e) {
+			System.out.println(e);
 		}
 
 		return mv;

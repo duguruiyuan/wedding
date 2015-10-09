@@ -22,7 +22,6 @@ import com.fh.util.PageData;
 import com.fh.vo.RequestBody;
 import com.fh.vo.ResponseBody;
 import com.fh.vo.request.BusinessManDetailReq;
-import com.fh.vo.request.BusinessManListReq;
 import com.fh.vo.response.BusinessManDetailResp;
 import com.fh.vo.response.BusinessManListResp;
 
