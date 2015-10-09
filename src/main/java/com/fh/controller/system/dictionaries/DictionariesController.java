@@ -35,7 +35,10 @@ public class DictionariesController extends BaseController {
 	@Resource(name="dictionariesService")
 	private DictionariesService dictionariesService;
 	
-
+	/**
+	 * 列表
+	 */
+	List<PageData> szdList;
 	
 	/**
 	 * 保存
@@ -79,12 +82,7 @@ public class DictionariesController extends BaseController {
 		
 	}
 
-	
-	/**
-	 * 列表
-	 */
-	List<PageData> szdList;
-	@RequestMapping
+	@RequestMapping(value="")
 	public ModelAndView list(Page page)throws Exception{
 		
 		ModelAndView mv = this.getModelAndView();
@@ -202,7 +200,6 @@ public class DictionariesController extends BaseController {
 		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}
-		
 	}
 	
 	/**
@@ -231,6 +228,4 @@ public class DictionariesController extends BaseController {
 		return AppUtil.returnObject(new PageData(), map);
 		
 	}
-	
-
 }
