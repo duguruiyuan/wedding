@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,15 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.constants.Constants;
 import com.fh.controller.base.BaseController;
-import com.fh.dao.DictionaryMapper;
-import com.fh.entity.Dictionary;
 import com.fh.entity.Page;
 import com.fh.entity.system.Role;
-import com.fh.service.system.appuser.AppuserService;
-import com.fh.service.system.dictionaries.DictionariesService;
-import com.fh.service.system.order.OrderService;
+import com.fh.service.system.order.OrderDetailService;
 import com.fh.service.system.role.RoleService;
 import com.fh.util.AppUtil;
 import com.fh.util.Const;
@@ -41,58 +35,21 @@ import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 
 /**
- * 订单Controller
+ * 订单明细Service
  * 
  * @author wujinsong
  *
  */
 @Controller
-@RequestMapping(value = "/order")
-public class OrderController extends BaseController {
-	String menuUrl = "order/listOrder.do"; // 菜单地址(权限用)
-	@Resource(name = "orderService")
-	private OrderService orderService;
+@RequestMapping(value = "/orderDetail")
+public class OrderDetailController extends BaseController {
+
+	// 菜单地址(权限用)
+	String menuUrl = "orderDetail/listOrderDetail.do";
+	@Resource(name = "orderDetailService")
+	private OrderDetailService orderDetailService;
 	@Resource(name = "roleService")
 	private RoleService roleService;
-	@Resource(name = "dictionariesService")
-	private DictionariesService dictionariesService;
-	@Autowired
-	private DictionaryMapper dictionaryMapper;
-
-	/**
-	 * 保存订单
-	 * 
-	 * @param out
-	 * @return
-	 * @throws Exception
-	 * @author wujinsong
-	 */
-	@RequestMapping(value = "/saveOrder")
-	public ModelAndView saveU(PrintWriter out) throws Exception {
-		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-
-		// 订单id
-		pd.put("ID", this.get32UUID());
-		// 订单状态
-		pd.put("STATUS", pd.get("STATUS"));
-		// 金额
-		pd.put("PRICE", pd.get("PRICE"));
-		// 产品ID
-		pd.put("PRODUCT_ID", pd.get("PRODUCT_ID"));
-		pd.put("CREATED_DATE", new Date());
-
-		try {
-			orderService.saveOrder(pd);
-			mv.addObject("msg", "success");
-		} catch (Exception e) {
-			mv.addObject("msg", "failed");
-		}
-
-		mv.setViewName("save_result");
-		return mv;
-	}
 
 	/**
 	 * 修改订单
@@ -107,36 +64,32 @@ public class OrderController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-
+		if (pd.getString("PASSWORD") != null && !"".equals(pd.getString("PASSWORD"))) {
+			pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
+		}
 		if (Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
-			orderService.editOrder(pd);
+			orderDetailService.editU(pd);
 		}
 		mv.addObject("msg", "success");
 		mv.setViewName("save_result");
-
 		return mv;
 	}
 
 	/**
-	 * 去修改订单页面
-	 * 
-	 * @return
-	 * @author wujinsong
+	 * 去修改用户页面
 	 */
-	@RequestMapping(value = "/goEditOrder")
-	public ModelAndView goEditOrder() {
+	@RequestMapping(value = "/goEditU")
+	public ModelAndView goEditU() {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try {
 			List<Role> roleList = roleService.listAllappERRoles(); // 列出所有二级角色
-			pd = orderService.findById(pd); // 根据ID读取
-			mv.setViewName("system/order/order_edit");
+			pd = orderDetailService.findById(pd); // 根据ID读取
+			mv.setViewName("system/appuser/appuser_edit");
 			mv.addObject("msg", "editU");
 			mv.addObject("pd", pd);
 			mv.addObject("roleList", roleList);
-			List<Dictionary> orderStates = dictionaryMapper.findByPBM(Constants.ORDER_STATE);
-			mv.addObject("orderStates", orderStates);
 		} catch (Exception e) {
 			logger.error(e.toString(), e);
 		}
@@ -167,7 +120,7 @@ public class OrderController extends BaseController {
 	/**
 	 * 显示用户列表
 	 */
-	@RequestMapping(value = "/listOrder")
+	@RequestMapping(value = "/listOrderDetail")
 	public ModelAndView listUsers(Page page) {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -182,8 +135,10 @@ public class OrderController extends BaseController {
 			}
 
 			page.setPd(pd);
-			List<PageData> orderList = orderService.orderlistPage(page); // 列出用户列表
-			List<Role> roleList = roleService.listAllappERRoles(); // 列出所有会员二级角色
+			// 列出用户列表
+			List<PageData> orderList = orderDetailService.listPdPageOrderDetail(page);
+			// 列出所有会员二级角色
+			List<Role> roleList = roleService.listAllappERRoles();
 
 			mv.setViewName("system/order/order_list");
 			mv.addObject("orderList", orderList);
@@ -206,7 +161,7 @@ public class OrderController extends BaseController {
 		try {
 			pd = this.getPageData();
 			if (Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-				orderService.deleteOrder(pd);
+				orderDetailService.deleteU(pd);
 			}
 			out.write("success");
 			out.close();
@@ -232,7 +187,7 @@ public class OrderController extends BaseController {
 			if (null != USER_IDS && !"".equals(USER_IDS)) {
 				String ArrayUSER_IDS[] = USER_IDS.split(",");
 				if (Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-					orderService.deleteAllOrders(ArrayUSER_IDS);
+					orderDetailService.deleteAllU(ArrayUSER_IDS);
 				}
 				pd.put("msg", "ok");
 			} else {
@@ -295,7 +250,7 @@ public class OrderController extends BaseController {
 
 				dataMap.put("titles", titles);
 
-				List<PageData> userList = orderService.listAllOrders(pd);
+				List<PageData> userList = orderDetailService.listAllOrderDetails(pd);
 				List<PageData> varList = new ArrayList<PageData>();
 				for (int i = 0; i < userList.size(); i++) {
 					PageData vpd = new PageData();

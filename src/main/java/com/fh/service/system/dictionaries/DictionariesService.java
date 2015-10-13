@@ -53,7 +53,4 @@ public class DictionariesService{
 		dao.delete("DictionariesMapper.delete", pd);
 		
 	}
-
-	
-	
 }

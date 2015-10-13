@@ -20,7 +20,7 @@
 		<typeAlias type="com.fh.entity.BusinessManInfo" alias="BusinessManInfo" />
 		<typeAlias type="com.fh.entity.ProductInfo" alias="ProductInfo" />
 		<typeAlias type="com.fh.entity.ShoppingCartInfo" alias="ShoppingCartInfo" />
-
+		<typeAlias type="com.fh.entity.Dictionary" alias="Dictionary" />
 
 	</typeAliases>
 
