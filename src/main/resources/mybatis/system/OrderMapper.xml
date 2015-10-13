@@ -27,16 +27,18 @@
 	<!-- 通过id获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select
-		ID,
-		STATUS,
-		PRICE,
-		PRODUCT_ID,
-		USER_ID,
-		CREATED_DATE
+		o.ID,
+		o.STATUS,
+		o.PRICE,
+		o.PRODUCT_ID,
+		o.USER_ID,
+		o.CREATED_DATE,
+		a.USERNAME,
+		p.NAME
 		from
-		BUS_ORDER
-		where
-		ID =
+		BUS_ORDER o,sys_app_user a,bus_product p
+		where o.user_id = a.USER_ID AND o.product_id = p.id AND
+		o.ID =
 		#{ID}
 	</select>
 
@@ -53,42 +55,51 @@
 		where o.product_id = p.id AND
 		o.user_id = a.user_id
 		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 用户名检索 -->
-			and (
-			u.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-			or
-			u.EMAIL LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-			or
-			u.NUMBER LIKE
-			CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-			)
+			and 
+			a.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
 		</if>
-		<if test="pd.ROLE_ID != null and pd.ROLE_ID != ''"><!-- 角色检索 -->
-			and u.ROLE_ID=#{pd.ROLE_ID}
+		<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''"><!-- 产品名称检索 -->
+			and p.name=#{pd.PRODUCTNAME}
 		</if>
 		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 到期时间检索 -->
-			and u.END_TIME &gt;= #{pd.lastLoginStart}
+			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
 		</if>
 		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 到期时间检索 -->
-			and u.END_TIME &lt;= #{pd.lastLoginEnd}
+			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
 		</if>
 		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
-			and u.STATUS=#{pd.STATUS}
+			and o.STATUS=#{pd.STATUS}
 		</if>
 	</select>
 
 	<!-- 订单列表(全部) -->
 	<select id="listAllOrders" parameterType="pd" resultType="pd">
-		select
-		ID,
-		STATUS,
-		PRICE,
-		PRODUCT_ID,
-		USER_ID,
-		CREATED_DATE
+		select o.id,
+		o.status,
+		o.price,
+		o.created_date,
+		a.username,
+		p.name
 		from
-		BUS_ORDER
-		from
-		BUS_ORDER
+		bus_order o,bus_product p,sys_app_user a
+		where o.product_id = p.id AND
+		o.user_id = a.user_id
+		<if test="USERNAME != null and USERNAME != ''"><!-- 用户名检索 -->
+			and 
+			a.USERNAME LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
+		</if>
+	<!-- 	<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''">产品名称检索
+			and p.name=#{pd.PRODUCTNAME}
+		</if>
+		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''">到期时间检索
+			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
+		</if>
+		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''">到期时间检索
+			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
+		</if>
+		<if test="pd.STATUS != null and pd.STATUS != ''">状态检索
+			and o.STATUS=#{pd.STATUS}
+		</if> -->
 	</select>
 
 	<!-- 删除订单 -->

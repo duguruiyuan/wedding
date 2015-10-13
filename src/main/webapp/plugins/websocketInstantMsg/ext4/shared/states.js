@@ -15,7 +15,7 @@ If you are unsure which license is appropriate for your use, please contact the 
 // some data used in the examples
 Ext.namespace('Ext.example');
 
-Ext.example.states = [
+/*Ext.example.states = [
         ['AL', 'Alabama', 'The Heart of Dixie'],
         ['AK', 'Alaska', 'The Land of the Midnight Sun'],
         ['AZ', 'Arizona', 'The Grand Canyon State'],
@@ -68,3 +68,4 @@ Ext.example.states = [
         ['WI', 'Wisconsin', "America's Dairyland"],
         ['WY', 'Wyoming', 'Like No Place on Earth']
     ];
+*/

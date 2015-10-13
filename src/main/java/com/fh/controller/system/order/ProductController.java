@@ -45,9 +45,9 @@ import com.fh.util.PageData;
  *
  */
 @Controller
-@RequestMapping(value = "/order")
-public class OrderController extends BaseController {
-	String menuUrl = "order/listOrder.do"; // 菜单地址(权限用)
+@RequestMapping(value = "/product")
+public class ProductController extends BaseController {
+	String menuUrl = "order/listProduct.do"; // 菜单地址(权限用)
 	@Resource(name = "orderService")
 	private OrderService orderService;
 	@Resource(name = "roleService")
@@ -58,15 +58,15 @@ public class OrderController extends BaseController {
 	private DictionaryMapper dictionaryMapper;
 
 	/**
-	 * 保存订单
+	 * 保存产品
 	 * 
 	 * @param out
 	 * @return
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	@RequestMapping(value = "/saveOrder")
-	public ModelAndView saveU(PrintWriter out) throws Exception {
+	@RequestMapping(value = "/saveProduct")
+	public ModelAndView saveProduct(PrintWriter out) throws Exception {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -93,15 +93,15 @@ public class OrderController extends BaseController {
 	}
 
 	/**
-	 * 修改订单
+	 * 修改产品
 	 * 
 	 * @param out
 	 * @return
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	@RequestMapping(value = "/editOrder")
-	public ModelAndView editU(PrintWriter out) throws Exception {
+	@RequestMapping(value = "/editProduct")
+	public ModelAndView editProduct(PrintWriter out) throws Exception {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -116,13 +116,13 @@ public class OrderController extends BaseController {
 	}
 
 	/**
-	 * 去修改订单页面
+	 * 去修改产品页面
 	 * 
 	 * @return
 	 * @author wujinsong
 	 */
-	@RequestMapping(value = "/goEditOrder")
-	public ModelAndView goEditOrder() {
+	@RequestMapping(value = "/goEditProduct")
+	public ModelAndView goEditProduct() {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -142,10 +142,12 @@ public class OrderController extends BaseController {
 	}
 
 	/**
-	 * 去新增用户页面
+	 * 去新增产品页面
+	 * @return
+	 * @author wujinsong
 	 */
-	@RequestMapping(value = "/goAddU")
-	public ModelAndView goAddU() {
+	@RequestMapping(value = "/goAddProduct")
+	public ModelAndView goAddProduct() {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -163,9 +165,9 @@ public class OrderController extends BaseController {
 	}
 
 	/**
-	 * 显示用户列表
+	 * 显示产品列表
 	 */
-	@RequestMapping(value = "/listOrder")
+	@RequestMapping(value = "/listProduct")
 	public ModelAndView listUsers(Page page) {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -214,10 +216,10 @@ public class OrderController extends BaseController {
 	}
 
 	/**
-	 * 删除用户
+	 * 删除产品
 	 */
-	@RequestMapping(value = "/deleteU")
-	public void deleteU(PrintWriter out) {
+	@RequestMapping(value = "/deleteProduct")
+	public void deleteProduct(PrintWriter out) {
 		PageData pd = new PageData();
 		try {
 			pd = this.getPageData();
@@ -235,9 +237,9 @@ public class OrderController extends BaseController {
 	/**
 	 * 批量删除
 	 */
-	@RequestMapping(value = "/deleteAllU")
+	@RequestMapping(value = "/deleteAllProducts")
 	@ResponseBody
-	public Object deleteAllU() {
+	public Object deleteAllProducts() {
 		PageData pd = new PageData();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
@@ -266,7 +268,7 @@ public class OrderController extends BaseController {
 	}
 
 	/*
-	 * 导出会员信息到excel
+	 * 导出产品信息到excel
 	 * 
 	 * @return
 	 */

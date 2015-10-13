@@ -118,7 +118,7 @@
 
 	<!-- 根据父编码查找字典 -->
 	<select id="findByPBM" resultType="Dictionary">
-		select * from
+		select ZD_ID as zdId,NAME as name,BIANMA as bianMa,ORDY_BY as ordyBy,PARENT_ID as parentId,JB as jb,P_BM as pBm from
 		sys_dictionaries d
 		where d.P_BM = #{pBm}
 	</select>
