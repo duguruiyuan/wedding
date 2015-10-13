@@ -29,9 +29,11 @@
 										name="USERNAME" value="${pd.USERNAME }" placeholder="这里输入购买用户" />
 										<i id="nav-search-icon" class="icon-search"></i>
 								</span></td>
-								<td><span class="input-icon"> <input autocomplete="off"
-										id="nav-search-input" type="text" name="PRODUCTNAME"
-										value="${pd.PRODUCTNAME }" placeholder="这里输入产品名称" /> <i id="nav-search-icon" class="icon-search"></i>
+								<td><span class="input-icon"> <input
+										autocomplete="off" id="nav-search-input" type="text"
+										name="PRODUCTNAME" value="${pd.PRODUCTNAME }"
+										placeholder="这里输入产品名称" /> <i id="nav-search-icon"
+										class="icon-search"></i>
 								</span></td>
 								<td><input class="span10 date-picker" name="lastLoginStart"
 									id="lastLoginStart" value="${pd.lastLoginStart}" type="text"
@@ -73,11 +75,16 @@
 									<th class="center"><label><input type="checkbox"
 											id="zcheckbox" /><span class="lbl"></span></label></th>
 									<th>序号</th>
-									<th>订单编号</th>
-									<th>购买用户</th>
-									<th>产品名称</th>
-									<th>状态</th>
-									<th>价格</th>
+									<th>名称</th>
+									<th>详情</th>
+									<th>旧价格</th>
+									<th>新价格</th>
+									<th>推荐语</th>
+									<th>评分</th>
+									<th>商品分类</th>
+									<th>销量</th>
+									<th>商品信息</th>
+									<th>购买须知</th>
 									<th><i class="icon-time hidden-phone"></i>创建日期</th>
 									<th class="center">操作</th>
 								</tr>
@@ -87,20 +94,26 @@
 
 								<!-- 开始循环 -->
 								<c:choose>
-									<c:when test="${not empty orderList}">
+									<c:when test="${not empty productList}">
 										<c:if test="${QX.cha == 1 }">
-											<c:forEach items="${orderList}" var="order" varStatus="vs">
+											<c:forEach items="${productList}" var="product"
+												varStatus="vs">
 
 												<tr>
 													<td class='center' style="width: 30px;"><label><input
 															type='checkbox' name='ids' /><span class="lbl"></span></label></td>
 													<td class='center' style="width: 30px;">${vs.index+1}</td>
-													<td>${order.id }</td>
-													<td>${order.username }</td>
-													<td>${order.name }</td>
-													<td>${order.status }</td>
-													<td>${order.price }</td>
-													<td>${order.created_date }</td>
+													<td>${product.NAME }</td>
+													<td>${product.DETAIL }</td>
+													<td>${product.OLD_PRICE }</td>
+													<td>${product.NEW_PRICE }</td>
+													<td>${product.RECOMMEND }</td>
+													<td>${product.TOP_GRADE }</td>
+													<td>${product.TYPE_ID }</td>
+													<td>${product.SALES_COUNT }</td>
+													<td>${product.INFO }</td>
+													<td>${product.NOTICE }</td>
+													<td>${product.CREATED_DATE }</td>
 													<td style="width: 60px;" class="center">
 														<div class='hidden-phone visible-desktop btn-group'>
 															<c:if test="${QX.edit != 1 && QX.del != 1 }">
@@ -109,7 +122,7 @@
 																	class="icon-lock" title="无权限"></i></span>
 															</c:if>
 															<c:if test="${QX.edit == 1 }">
-																<a title="编辑" onclick="editOrder('${order.id }');"
+																<a title="编辑" onclick="editOrder('${product.id }');"
 																	class="btn btn-mini btn-info" data-rel="tooltip"
 																	title="" data-placement="left"><i class="icon-edit"></i></a>
 															</c:if>
@@ -118,7 +131,7 @@
 																<c:otherwise>
 																	<c:if test="${QX.del == 1 }">
 																		<a title="取消订单"
-																			onclick="delOrder('${order.id }','${order.id }');"
+																			onclick="delOrder('${product.id }','${product.id }');"
 																			class="btn btn-mini btn-danger" data-rel="tooltip"
 																			title="" data-placement="left"><i
 																			class="icon-trash"></i> </a>
@@ -147,15 +160,14 @@
 						<div class="page-header position-relative">
 							<table style="width: 100%;">
 								<tr>
-									<td style="vertical-align: top;">
-										<%-- <c:if test="${QX.add == 1 }">
-					<a class="btn btn-small btn-success" onclick="add();">新增</a>
-					</c:if> --%> <c:if test="${QX.del == 1 }">
+									<td style="vertical-align: top;"><c:if
+											test="${QX.add == 1 }">
+											<a class="btn btn-small btn-success" onclick="add();">新增</a>
+										</c:if> <c:if test="${QX.del == 1 }">
 											<a class="btn btn-small btn-danger"
 												onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除"><i
 												class='icon-trash'></i></a>
-										</c:if>
-									</td>
+										</c:if></td>
 									<td style="vertical-align: top;"><div class="pagination"
 											style="float: right; padding-top: 0px; margin-top: 0px;">${page.pageStr}</div></td>
 								</tr>

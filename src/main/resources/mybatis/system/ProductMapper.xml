@@ -174,4 +174,41 @@
       notice = #{notice,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <!-- 产品列表（分页） -->
+	<select id="productlistPage" parameterType="page" resultType="pd">
+		select 
+		p.ID,
+		p.NAME,
+		p.DETAIL,
+		p.OLD_PRICE,
+		p.NEW_PRICE,
+		p.RECOMMEND,
+		p.TOP_GRADE,
+		p.USER_ID,
+		p.TYPE_ID,
+		p.SALES_COUNT,
+		p.INFO,
+		p.NOTICE,
+		p.CREATED_DATE
+		from
+		bus_product p
+		where 1=1
+		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 用户名检索 -->
+			and 
+			a.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
+		</if>
+		<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''"><!-- 产品名称检索 -->
+			and p.name=#{pd.PRODUCTNAME}
+		</if>
+		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 到期时间检索 -->
+			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
+		</if>
+		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 到期时间检索 -->
+			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
+		</if>
+		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
+			and o.STATUS=#{pd.STATUS}
+		</if>
+	</select>
 </mapper>

@@ -24,13 +24,19 @@ import com.fh.vo.request.ProductDetailReq;
 import com.fh.vo.response.ProductDetailResp;
 import com.fh.vo.response.ProductListResp;
 
+/**
+ * 产品service
+ * 
+ * @author wujinsong
+ *
+ */
 @Service("productService")
 @Transactional
 public class ProductService {
 
 	@Autowired
 	private ProductInfoMapper productInfoMapper;
-	
+
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 
@@ -41,10 +47,8 @@ public class ProductService {
 	public ResponseBody productList(RequestBody requestBody) {
 		BmiRequest bmiRequest = new BmiRequest();
 		MAPPER.map(requestBody, bmiRequest);
-		List<ProductInfo> productInfos = productInfoMapper.findProductInfos(
-				bmiRequest,
-				new MybatisPageable(Integer.valueOf(bmiRequest.getPageSize()),
-						Integer.valueOf(bmiRequest.getPageNo())));
+		List<ProductInfo> productInfos = productInfoMapper.findProductInfos(bmiRequest, new MybatisPageable(
+				Integer.valueOf(bmiRequest.getPageSize()), Integer.valueOf(bmiRequest.getPageNo())));
 		ProductListResp productListResp = new ProductListResp();
 		productListResp.setProductInfos(productInfos);
 		return productListResp;
@@ -54,14 +58,13 @@ public class ProductService {
 	public ResponseBody productDetail(RequestBody requestBody) {
 
 		ProductDetailReq detailReq = (ProductDetailReq) requestBody;
-		ProductInfo productInfo = productInfoMapper.findProductInfo(detailReq
-				.getId());
+		ProductInfo productInfo = productInfoMapper.findProductInfo(detailReq.getId());
 		ProductDetailResp productDetailResp = new ProductDetailResp();
 		productDetailResp.setProductInfo(productInfo);
 		return productDetailResp;
 
 	}
-	
+
 	/**
 	 * 根据id获取产品
 	 * 
@@ -80,7 +83,7 @@ public class ProductService {
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void saveOrder(PageData pd) throws Exception {
+	public void saveProduct(PageData pd) throws Exception {
 		dao.update("ProductMapper.saveProduct", pd);
 	}
 
@@ -91,7 +94,7 @@ public class ProductService {
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void editOrder(PageData pd) throws Exception {
+	public void editProduct(PageData pd) throws Exception {
 		dao.update("ProductMapper.editProduct", pd);
 	}
 
@@ -102,7 +105,7 @@ public class ProductService {
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void deleteOrder(PageData pd) throws Exception {
+	public void deleteProduct(PageData pd) throws Exception {
 		dao.delete("ProductMapper.deleteProduct", pd);
 	}
 
@@ -113,7 +116,7 @@ public class ProductService {
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void deleteAllOrders(String[] ORDER_IDS) throws Exception {
+	public void deleteAllProducts(String[] ORDER_IDS) throws Exception {
 		dao.delete("ProductMapper.deleteAllProducts", ORDER_IDS);
 	}
 
@@ -126,9 +129,9 @@ public class ProductService {
 	 * @author wujinsong
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PageData> orderlistPage(Page pd) throws Exception {
+	public List<PageData> productlistPage(Page pd) throws Exception {
 		logger.info("获取产品列表");
-		return (List<PageData>) dao.findForList("ProductMapper.productlistPage", pd);
+		return (List<PageData>) dao.findForList("com.fh.dao.ProductMapper.productlistPage", pd);
 	}
 
 	/**
@@ -140,7 +143,7 @@ public class ProductService {
 	 * @author wujinsong
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PageData> listAllOrders(PageData pd) throws Exception {
+	public List<PageData> listAllProducts(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("ProductMapper.listAllProducts", pd);
 	}
 

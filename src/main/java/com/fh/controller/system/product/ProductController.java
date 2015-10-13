@@ -1,4 +1,4 @@
-package com.fh.controller.system.order;
+package com.fh.controller.system.product;
 
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -31,6 +31,7 @@ import com.fh.entity.Page;
 import com.fh.entity.system.Role;
 import com.fh.service.system.dictionaries.DictionariesService;
 import com.fh.service.system.order.OrderService;
+import com.fh.service.system.product.ProductService;
 import com.fh.service.system.role.RoleService;
 import com.fh.util.AppUtil;
 import com.fh.util.Const;
@@ -48,8 +49,8 @@ import com.fh.util.PageData;
 @RequestMapping(value = "/product")
 public class ProductController extends BaseController {
 	String menuUrl = "order/listProduct.do"; // 菜单地址(权限用)
-	@Resource(name = "orderService")
-	private OrderService orderService;
+	@Resource(name = "productService")
+	private ProductService productService;
 	@Resource(name = "roleService")
 	private RoleService roleService;
 	@Resource(name = "dictionariesService")
@@ -82,7 +83,7 @@ public class ProductController extends BaseController {
 		pd.put("CREATED_DATE", new Date());
 
 		try {
-			orderService.saveOrder(pd);
+			productService.saveProduct(pd);
 			mv.addObject("msg", "success");
 		} catch (Exception e) {
 			mv.addObject("msg", "failed");
@@ -107,7 +108,7 @@ public class ProductController extends BaseController {
 		pd = this.getPageData();
 
 		if (Jurisdiction.buttonJurisdiction(menuUrl, "edit")) {
-			orderService.editOrder(pd);
+			productService.editProduct(pd);
 		}
 		mv.addObject("msg", "success");
 		mv.setViewName("save_result");
@@ -128,7 +129,7 @@ public class ProductController extends BaseController {
 		pd = this.getPageData();
 		try {
 			List<Role> roleList = roleService.listAllappERRoles(); // 列出所有二级角色
-			pd = orderService.findById(pd); // 根据ID读取
+			pd = productService.findById(pd); // 根据ID读取
 			mv.setViewName("system/order/order_edit");
 			mv.addObject("msg", "editOrder");
 			mv.addObject("pd", pd);
@@ -197,14 +198,14 @@ public class ProductController extends BaseController {
 
 
 			page.setPd(pd);
-			List<PageData> orderList = orderService.orderlistPage(page); // 列出用户列表
+			List<PageData> productList = productService.productlistPage(page); // 列出用户列表
 			List<Role> roleList = roleService.listAllappERRoles(); // 列出所有会员二级角色
 			
 			List<Dictionary> orderStates = dictionaryMapper.findByPBM(Constants.ORDER_STATE);
 			mv.addObject("orderStates", orderStates);
 
-			mv.setViewName("system/order/order_list");
-			mv.addObject("orderList", orderList);
+			mv.setViewName("system/product/product_list");
+			mv.addObject("productList", productList);
 			mv.addObject("roleList", roleList);
 			mv.addObject("pd", pd);
 			mv.addObject(Const.SESSION_QX, this.getHC()); // 按钮权限
@@ -224,7 +225,7 @@ public class ProductController extends BaseController {
 		try {
 			pd = this.getPageData();
 			if (Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-				orderService.deleteOrder(pd);
+				productService.deleteProduct(pd);
 			}
 			out.write("success");
 			out.close();
@@ -250,7 +251,7 @@ public class ProductController extends BaseController {
 			if (null != USER_IDS && !"".equals(USER_IDS)) {
 				String ArrayUSER_IDS[] = USER_IDS.split(",");
 				if (Jurisdiction.buttonJurisdiction(menuUrl, "del")) {
-					orderService.deleteAllOrders(ArrayUSER_IDS);
+					productService.deleteAllProducts(ArrayUSER_IDS);
 				}
 				pd.put("msg", "ok");
 			} else {
@@ -319,7 +320,7 @@ public class ProductController extends BaseController {
 
 				dataMap.put("titles", titles);
 
-				List<PageData> userList = orderService.listAllOrders(pd);
+				List<PageData> userList = productService.listAllProducts(pd);
 				List<PageData> varList = new ArrayList<PageData>();
 				for (int i = 0; i < userList.size(); i++) {
 					PageData vpd = new PageData();
