@@ -30,7 +30,6 @@ import com.fh.entity.Dictionary;
 import com.fh.entity.Page;
 import com.fh.entity.system.Role;
 import com.fh.service.system.dictionaries.DictionariesService;
-import com.fh.service.system.order.OrderService;
 import com.fh.service.system.product.ProductService;
 import com.fh.service.system.role.RoleService;
 import com.fh.util.AppUtil;
@@ -48,7 +47,7 @@ import com.fh.util.PageData;
 @Controller
 @RequestMapping(value = "/product")
 public class ProductController extends BaseController {
-	String menuUrl = "order/listProduct.do"; // 菜单地址(权限用)
+	String menuUrl = "product/listProduct.do"; // 菜单地址(权限用)
 	@Resource(name = "productService")
 	private ProductService productService;
 	@Resource(name = "roleService")
@@ -71,18 +70,8 @@ public class ProductController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-
-		// 订单id
-		pd.put("ID", this.get32UUID());
-		// 订单状态
-		pd.put("STATUS", pd.get("STATUS"));
-		// 金额
-		pd.put("PRICE", pd.get("PRICE"));
-		// 产品ID
-		pd.put("PRODUCT_ID", pd.get("PRODUCT_ID"));
-		pd.put("CREATED_DATE", new Date());
-
 		try {
+			pd.put("created_date", new Date());
 			productService.saveProduct(pd);
 			mv.addObject("msg", "success");
 		} catch (Exception e) {
@@ -129,9 +118,9 @@ public class ProductController extends BaseController {
 		pd = this.getPageData();
 		try {
 			List<Role> roleList = roleService.listAllappERRoles(); // 列出所有二级角色
-			pd = productService.findById(pd); // 根据ID读取
-			mv.setViewName("system/order/order_edit");
-			mv.addObject("msg", "editOrder");
+			pd = productService.selectByPrimaryKey(pd); // 根据ID读取
+			mv.setViewName("system/product/product_edit");
+			mv.addObject("msg", "editProduct");
 			mv.addObject("pd", pd);
 			mv.addObject("roleList", roleList);
 			List<Dictionary> orderStates = dictionaryMapper.findByPBM(Constants.ORDER_STATE);
@@ -155,8 +144,8 @@ public class ProductController extends BaseController {
 		try {
 			List<Role> roleList;
 			roleList = roleService.listAllappERRoles(); // 列出所有二级角色
-			mv.setViewName("system/appuser/appuser_edit");
-			mv.addObject("msg", "saveU");
+			mv.setViewName("system/product/product_edit");
+			mv.addObject("msg", "saveProduct");
 			mv.addObject("pd", pd);
 			mv.addObject("roleList", roleList);
 		} catch (Exception e) {

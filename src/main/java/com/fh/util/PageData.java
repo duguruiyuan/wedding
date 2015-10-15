@@ -73,7 +73,7 @@ public class PageData extends HashMap implements Map {
 	public Long getLong(Object key) {
 		Object p = get(key);
 		if(p != null) {
-			return (Long) get(key);
+			return Long.valueOf(String.valueOf(get(key)));
 		}
 	
 		return 0l;

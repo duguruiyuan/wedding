@@ -59,7 +59,7 @@
 			a.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
 		</if>
 		<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''"><!-- 产品名称检索 -->
-			and p.name=#{pd.PRODUCTNAME}
+			and p.name LIKE CONCAT(CONCAT('%', #{pd.PRODUCTNAME}),'%')
 		</if>
 		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 到期时间检索 -->
 			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}

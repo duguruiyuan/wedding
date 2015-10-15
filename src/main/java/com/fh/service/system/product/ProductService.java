@@ -73,7 +73,7 @@ public class ProductService {
 	 * @author wujinsong
 	 */
 	public PageData findById(PageData pd) throws Exception {
-		return (PageData) dao.findForObject("ProductMapper.findById", pd);
+		return (PageData) dao.findForObject("com.fh.dao.ProductMapper.ProductMapper.findById", pd);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class ProductService {
 	 * @author wujinsong
 	 */
 	public void saveProduct(PageData pd) throws Exception {
-		dao.update("ProductMapper.saveProduct", pd);
+		dao.update("com.fh.dao.ProductMapper.saveProduct", pd);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class ProductService {
 	 * @author wujinsong
 	 */
 	public void editProduct(PageData pd) throws Exception {
-		dao.update("ProductMapper.editProduct", pd);
+		dao.update("com.fh.dao.ProductMapper.updateById", pd);
 	}
 
 	/**
@@ -147,4 +147,20 @@ public class ProductService {
 		return (List<PageData>) dao.findForList("ProductMapper.listAllProducts", pd);
 	}
 
+	/**
+	 * 根据主键查找
+	 * 
+	 * @param id
+	 * @return
+	 * @author wujinsong
+	 */
+	public PageData selectByPrimaryKey(PageData pd) {
+		try {
+			return (PageData) dao.findForObject("com.fh.dao.ProductMapper.findById", pd);
+		} catch (Exception e) {
+
+		}
+
+		return null;
+	}
 }

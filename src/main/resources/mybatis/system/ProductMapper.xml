@@ -178,37 +178,179 @@
   <!-- 产品列表（分页） -->
 	<select id="productlistPage" parameterType="page" resultType="pd">
 		select 
-		p.ID,
-		p.NAME,
-		p.DETAIL,
-		p.OLD_PRICE,
-		p.NEW_PRICE,
-		p.RECOMMEND,
-		p.TOP_GRADE,
-		p.USER_ID,
-		p.TYPE_ID,
-		p.SALES_COUNT,
-		p.INFO,
-		p.NOTICE,
-		p.CREATED_DATE
+		p.id,
+		p.name,
+		p.detail,
+		p.old_price,
+		p.new_price,
+		p.recommend,
+		p.top_grade,
+		p.user_id,
+		p.type_id,
+		p.sales_count,
+		p.info,
+		p.notice,
+		p.created_date
 		from
 		bus_product p
 		where 1=1
-		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 用户名检索 -->
-			and 
-			a.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-		</if>
-		<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''"><!-- 产品名称检索 -->
-			and p.name=#{pd.PRODUCTNAME}
+		<if test="pd.productname != null and pd.productname != ''"><!-- 产品名称检索 -->
+			and p.name LIKE CONCAT(CONCAT('%', #{pd.productname}),'%')
 		</if>
 		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 到期时间检索 -->
-			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
+			and p.created_date &gt;= #{pd.lastLoginStart}
 		</if>
 		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 到期时间检索 -->
-			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
+			and p.created_date &lt;= #{pd.lastLoginEnd}
 		</if>
 		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
-			and o.STATUS=#{pd.STATUS}
+			and o.status=#{pd.status}
 		</if>
 	</select>
+	
+		<!-- 通过id获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+			p.id,
+			p.name,
+			p.detail,
+			p.old_price,
+			p.new_price,
+			p.recommend,
+			p.top_grade,
+			p.user_id,
+			p.type_id,
+			p.sales_count,
+			p.info,
+			p.notice,
+			p.created_date
+		from
+		bus_product p
+		where 
+		p.id =
+		#{id}
+	</select>
+	
+<update id="updateById" parameterType="pd" >
+    update bus_product
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="old_price != null" >
+        old_price = #{old_price,jdbcType=DECIMAL},
+      </if>
+      <if test="new_price != null" >
+        new_price = #{new_price,jdbcType=DECIMAL},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="top_grade != null" >
+        top_grade = #{top_grade,jdbcType=DOUBLE},
+      </if>
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="type_id != null" >
+        type_id = #{type_id,jdbcType=BIGINT},
+      </if>
+      <if test="sales_count != null" >
+        sales_count = #{sales_count,jdbcType=BIGINT},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="created_date != null" >
+        created_date = #{created_date,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <insert id="saveProduct" parameterType="pd" >
+    insert into bus_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="old_price != null" >
+        old_price,
+      </if>
+      <if test="new_price != null" >
+        new_price,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="top_grade != null" >
+        top_grade,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="type_id != null" >
+        type_id,
+      </if>
+      <if test="sales_count != null" >
+        sales_count,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="notice != null" >
+        notice,
+      </if>
+      <if test="created_date != null" >
+        created_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="old_price != null" >
+        #{old_price,jdbcType=DECIMAL},
+      </if>
+      <if test="new_price != null" >
+        #{new_price,jdbcType=DECIMAL},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="top_grade != null" >
+        #{top_grade,jdbcType=DOUBLE},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="type_id != null" >
+        #{type_id,jdbcType=BIGINT},
+      </if>
+      <if test="sales_count != null" >
+        #{sales_count,jdbcType=BIGINT},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=VARCHAR},
+      </if>
+       <if test="created_date != null" >
+        #{created_date,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

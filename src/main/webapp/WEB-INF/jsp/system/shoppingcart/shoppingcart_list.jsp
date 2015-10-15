@@ -20,10 +20,15 @@
 			<div class="row-fluid">
 				<div class="row-fluid">
 					<!-- 检索  -->
-					<form action="product/listProduct.do" method="post" name="userForm"
+					<form action="shoppingCart/listOrder.do" method="post" name="userForm"
 						id="userForm">
 						<table border="0px">
 							<tr>
+								<td><span class="input-icon"> <input
+										autocomplete="off" id="nav-search-input" type="text"
+										name="username" value="${pd.username }" placeholder="这里输入购买用户" />
+										<i id="nav-search-icon" class="icon-search"></i>
+								</span></td>
 								<td><span class="input-icon"> <input
 										autocomplete="off" id="nav-search-input" type="text"
 										name="productname" value="${pd.productname }"
@@ -44,19 +49,19 @@
 										<option value="">全部</option>
 										<c:forEach items="${orderStates}" var="o">
 											<option value="${o.name }"
-												<c:if test="${o.name == pd.STATUS }">selected</c:if>>${o.name }</option>
+												<c:if test="${o.name == pd.status }">selected</c:if>>${o.name }</option>
 										</c:forEach>
 								</select></td>
 								<td style="vertical-align: top;"><button
 										class="btn btn-mini btn-light" onclick="search();" title="检索">
 										<i id="nav-search-icon" class="icon-search"></i>
 									</button></td>
-								<c:if test="${QX.cha == 1 }">
+								<%-- 	<c:if test="${QX.cha == 1 }">
 									<td style="vertical-align: top;"><a
 										class="btn btn-mini btn-light" onclick="toExcel();"
 										title="导出到EXCEL"><i id="nav-search-icon"
 											class="icon-download-alt"></i></a></td>
-								</c:if>
+								</c:if> --%>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -70,16 +75,11 @@
 									<th class="center"><label><input type="checkbox"
 											id="zcheckbox" /><span class="lbl"></span></label></th>
 									<th>序号</th>
-									<th>名称</th>
-									<th>详情</th>
-									<th>旧价格</th>
-									<th>新价格</th>
-									<th>是否推荐</th>
-									<th>评分</th>
-									<th>商品分类</th>
-									<th>销量</th>
-									<th>商品信息</th>
-									<th>购买须知</th>
+									<th>购物车编号</th>
+									<th>购买用户</th>
+									<th>产品名称</th>
+									<th>状态</th>
+									<th>数量</th>
 									<th><i class="icon-time hidden-phone"></i>创建日期</th>
 									<th class="center">操作</th>
 								</tr>
@@ -89,31 +89,20 @@
 
 								<!-- 开始循环 -->
 								<c:choose>
-									<c:when test="${not empty productList}">
+									<c:when test="${not empty shoppingCartList}">
 										<c:if test="${QX.cha == 1 }">
-											<c:forEach items="${productList}" var="product"
-												varStatus="vs">
+											<c:forEach items="${shoppingCartList}" var="shoppingCart" varStatus="vs">
 
 												<tr>
 													<td class='center' style="width: 30px;"><label><input
 															type='checkbox' name='ids' /><span class="lbl"></span></label></td>
 													<td class='center' style="width: 30px;">${vs.index+1}</td>
-													<td>${product.name }</td>
-													<td>${product.detail }</td>
-													<td>${product.old_price }</td>
-													<td>${product.new_price }</td>
-													<td><c:choose>
-														<c:when test="${product.recommend}">推荐</c:when>
-														<c:otherwise>
-															普通
-														</c:otherwise>
-													</c:choose></td>
-													<td>${product.top_grade }</td>
-													<td>${product.type_id }</td>
-													<td>${product.sales_count }</td>
-													<td>${product.info }</td>
-													<td>${product.notice }</td>
-													<td>${product.created_date }</td>
+													<td>${shoppingCart.id }</td>
+													<td>${shoppingCart.username }</td>
+													<td>${shoppingCart.name }</td>
+													<td>${shoppingCart.status }</td>
+													<td>${shoppingCart.count }</td>
+													<td>${shoppingCart.created_date }</td>
 													<td style="width: 60px;" class="center">
 														<div class='hidden-phone visible-desktop btn-group'>
 															<c:if test="${QX.edit != 1 && QX.del != 1 }">
@@ -122,16 +111,16 @@
 																	class="icon-lock" title="无权限"></i></span>
 															</c:if>
 															<c:if test="${QX.edit == 1 }">
-																<a title="编辑" onclick="editProduct('${product.id }');"
+																<a title="编辑" onclick="editOrder('${shoppingCart.id }');"
 																	class="btn btn-mini btn-info" data-rel="tooltip"
 																	title="" data-placement="left"><i class="icon-edit"></i></a>
 															</c:if>
 															<c:choose>
-																<c:when test="${user.username=='admin'}"></c:when>
+																<c:when test="${user.USERNAME=='admin'}"></c:when>
 																<c:otherwise>
 																	<c:if test="${QX.del == 1 }">
-																		<a title="删除"
-																			onclick="delOrder('${product.id }','${product.id }');"
+																		<a title="取消购物车"
+																			onclick="delOrder('${shoppingCart.id }','${shoppingCart.id }');"
 																			class="btn btn-mini btn-danger" data-rel="tooltip"
 																			title="" data-placement="left"><i
 																			class="icon-trash"></i> </a>
@@ -160,14 +149,15 @@
 						<div class="page-header position-relative">
 							<table style="width: 100%;">
 								<tr>
-									<td style="vertical-align: top;"><c:if
-											test="${QX.add == 1 }">
-											<a class="btn btn-small btn-success" onclick="add();">新增</a>
-										</c:if> <c:if test="${QX.del == 1 }">
+									<td style="vertical-align: top;">
+										<%-- <c:if test="${QX.add == 1 }">
+					<a class="btn btn-small btn-success" onclick="add();">新增</a>
+					</c:if> --%> <c:if test="${QX.del == 1 }">
 											<a class="btn btn-small btn-danger"
 												onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除"><i
 												class='icon-trash'></i></a>
-										</c:if></td>
+										</c:if>
+									</td>
 									<td style="vertical-align: top;"><div class="pagination"
 											style="float: right; padding-top: 0px; margin-top: 0px;">${page.pageStr}</div></td>
 								</tr>
@@ -224,10 +214,10 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="新增商品";
-			 diag.URL = '<%=basePath%>product/goAddProduct.do';
+			 diag.Title ="新增订单";
+			 diag.URL = '<%=basePath%>happuser/goAddU.do';
 			 diag.Width = 450;
-			 diag.Height = 555;
+			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -243,14 +233,14 @@
 		}
 		
 		//修改
-		function editProduct(id){
+		function editOrder(id){
 			top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="编辑商品";
-			 diag.URL = '<%=basePath%>product/goEditProduct.do?id='+id;
+			 diag.Title ="编辑订单";
+			 diag.URL = '<%=basePath%>shoppingCart/goEditOrder.do?ID='+id;
 			 diag.Width = 350;
-			 diag.Height = 555;
+			 diag.Height = 355;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 nextPage(${page.currentPage});
@@ -375,7 +365,7 @@
 			var lastLoginEnd = $("#lastLoginEnd").val();
 			var PRODUCTNAME = $("#PRODUCTNAME").val();
 			var STATUS = $("#STATUS").val();
-			window.location.href='<%=basePath%>product/excel.do?USERNAME='+USERNAME+'&lastLoginStart='+lastLoginStart+'&lastLoginEnd='+lastLoginEnd+'&PRODUCTNAME='+PRODUCTNAME+'&STATUS='+STATUS;
+			window.location.href='<%=basePath%>shoppingCart/excel.do?USERNAME='+USERNAME+'&lastLoginStart='+lastLoginStart+'&lastLoginEnd='+lastLoginEnd+'&PRODUCTNAME='+PRODUCTNAME+'&STATUS='+STATUS;
 		}
 	</script>
 </body>

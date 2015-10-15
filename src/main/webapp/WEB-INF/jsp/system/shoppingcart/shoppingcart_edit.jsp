@@ -38,20 +38,19 @@
 
 	//保存
 	function save() {
-		debugger;
-		if ($("#new_price").val() == "") {
-			$("#new_price").val(0);
-		} else if (isNaN(Number($("#new_price").val()))) {
+		if ($("#PRICE").val() == "") {
+			$("#PRICE").val(0);
+		} else if (isNaN(Number($("#PRICE").val()))) {
 
-			$("#new_price").tips({
+			$("#PRICE").tips({
 				side : 3,
 				msg : '输入数字',
 				bg : '#AE81FF',
 				time : 3
 			});
 
-			$("#new_price").focus();
-			$("#new_price").val(0);
+			$("#PRICE").focus();
+			$("#PRICE").val(0);
 			return false;
 		}
 
@@ -62,54 +61,44 @@
 </script>
 </head>
 <body>
-	<form action="product/${msg }.do" name="userForm" id="userForm"
+	<form action="order/${msg }.do" name="userForm" id="userForm"
 		method="post">
-		<input type="hidden" name="id" id="id"
-			value="${pd.id }" />
+		<input type="hidden" name="ID" id="ID"
+			value="${pd.ID }" />
 		<div id="zhongxin">
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
-					<th>商品名称</th>
-					<td><input type="text" name="name" id="name"  value="${pd.name }"  maxlength="32" placeholder="这里输入商品名称" title="名称"/></td>
+					<th>订单编号</th>
+					<td><label>${pd.ID }</label></td>
 				</tr>
 				<tr>
-					<th>老价格</th>
-					<td><input type="number" name="old_price" id="old_price"  value="${pd.old_price }"  maxlength="32" placeholder="这里输入老价格" title="老价格" /></td>
+					<th>购买用户</th>
+					<td><label>${pd.USERNAME}</label></td>
 				</tr>
 				<tr>
-					<th>新价格</th>
-					<td><input type="number" name="new_price" id="new_price"  value="${pd.new_price }"  maxlength="32" placeholder="这里输入新价格" title="新价格" /></td>
+					<th>产品名称</th>
+					<td><label>${pd.NAME}</label></td>
 				</tr>
 				<tr class="info">
-					<th>是否推荐</th>
-					<td><select class="chzn-select" name="recommend" id="recommend"
+					<th>订单状态</th>
+					<td><select class="chzn-select" name="STATUS" id="STATUS"
 						data-placeholder="请选择订单状态" style="vertical-align: top;"
 						title="订单状态">
-							<option value="1" <c:if test="${pd.recommend}">selected</c:if>>是</option>
-							<option value="0" <c:if test="${!pd.recommend}">selected</c:if>>否</option>
+							<option value=""></option>
+							<c:forEach items="${orderStates}" var="o">
+								<option value="${o.name }"
+									<c:if test="${o.name == pd.STATUS }">selected</c:if>>${o.name }</option>
+							</c:forEach>
 					</select></td>
 				</tr>
 				<tr>
-					<th>商品分类</th>
-					<td></td>
+					<th>订单金额</th>
+					<td><input type="text" id="PRICE" name="PRICE"
+						value="${pd.PRICE }" /></td>
 				</tr>
 				<tr>
-					<th>商品详情</th>
-					<td><textarea id="detail" name="detail" rows="10" cols="60">
-						${pd.detail }
-					</textarea></td>
-				</tr>
-				<tr>
-					<th>商品信息</th>
-					<td><textarea id="info" name="info" rows="10" cols="60">
-						${pd.info }
-					</textarea></td>
-				</tr>
-				<tr>
-					<th>购买须知</th>
-					<td><textarea id="notice" name="notice" rows="10" cols="60">
-						${pd.notice }
-					</textarea></td>
+					<th>创建日期</th>
+					<td><label>${pd.CREATED_DATE}</label></td>
 				</tr>
 				<tr>
 					<td style="text-align: center;" colspan="2"><a
