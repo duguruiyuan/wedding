@@ -25,5 +25,11 @@ public class GetFileService {
 		/*fileFilterChain.doFilter(new RequestBody(), httpServletRequest);*/
 		return fileService.getAvatar(id);
 	}
+	
+	public byte[] getManImage(Long id)
+			throws IOException {
+		/*fileFilterChain.doFilter(new RequestBody(), httpServletRequest);*/
+		return fileService.getManImage(id);
+	}
 
 }

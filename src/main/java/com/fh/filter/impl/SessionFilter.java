@@ -22,7 +22,7 @@ public class SessionFilter implements AppFilter {
 			AppConstants.CreateVC, AppConstants.Register,
 			AppConstants.GetBusinessManList, AppConstants.GetBusinessManDetail,
 			AppConstants.GetProductList, AppConstants.GetVersion,
-			AppConstants.GetProductDetail);
+			AppConstants.GetProductDetail,AppConstants.MainType);
 
 	@Override
 	public void doFilter(RequestBody requestBody,

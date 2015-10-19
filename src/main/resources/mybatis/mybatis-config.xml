@@ -21,6 +21,9 @@
 		<typeAlias type="com.fh.entity.ProductInfo" alias="ProductInfo" />
 		<typeAlias type="com.fh.entity.ShoppingCartInfo" alias="ShoppingCartInfo" />
 		<typeAlias type="com.fh.entity.Dictionary" alias="Dictionary" />
+		<typeAlias type="com.fh.entity.ManImage" alias="ManImage" />
+
+		<typeAlias type="com.fh.entity.MainType" alias="MainType" />
 
 	</typeAliases>
 

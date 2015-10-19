@@ -13,6 +13,8 @@ public class ProductListReq extends PageRequest {
 
 	private String name;
 
+	private Long manId;
+
 	private boolean gradeOrder;
 
 	private boolean salesOrder;
@@ -49,6 +51,14 @@ public class ProductListReq extends PageRequest {
 
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
+	}
+
+	public Long getManId() {
+		return manId;
+	}
+
+	public void setManId(Long manId) {
+		this.manId = manId;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.fh.service.system.businessman;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fh.dao.BusinessManInfoMapper;
 import com.fh.dao.BusinessManMapper;
 import com.fh.dao.DaoSupport;
+import com.fh.dao.ManImageMapper;
 import com.fh.entity.BmiRequest;
 import com.fh.entity.BusinessManInfo;
+import com.fh.entity.ManImage;
 import com.fh.entity.MybatisPageable;
 import com.fh.entity.Page;
 import com.fh.util.PageData;
@@ -57,23 +60,36 @@ public class BusinessManService {
 		BmiRequest bmiRequest = new BmiRequest();
 		MAPPER.map(requestBody, bmiRequest);
 		List<BusinessManInfo> businessManInfos = businessManInfoMapper
-				.findBusinessManInfos(bmiRequest, new MybatisPageable(Integer.valueOf(bmiRequest.getPageSize()),Integer.valueOf(bmiRequest.getPageNo())));
+				.findBusinessManInfos(
+						bmiRequest,
+						new MybatisPageable(Integer.valueOf(bmiRequest
+								.getPageSize()), Integer.valueOf(bmiRequest
+								.getPageNo())));
 		BusinessManListResp businessManListResp = new BusinessManListResp();
 		businessManListResp.setBusinessManInfos(businessManInfos);
 		return businessManListResp;
 
 	}
-	
+
+	@Autowired
+	ManImageMapper imageMapper;
+
 	public ResponseBody businessManDetail(RequestBody requestBody) {
-		
-		BusinessManDetailReq detailReq  =(BusinessManDetailReq) requestBody;
-		BusinessManInfo businessManInfo = businessManInfoMapper.findBusinessManInfo(detailReq.getId());
+
+		BusinessManDetailReq detailReq = (BusinessManDetailReq) requestBody;
+		BusinessManInfo businessManInfo = businessManInfoMapper
+				.findBusinessManInfo(detailReq.getId());
 		BusinessManDetailResp businessManDetailResp = new BusinessManDetailResp();
 		businessManDetailResp.setBusinessManInfo(businessManInfo);
+		List<ManImage> list = imageMapper.findByUserId(detailReq.getId());
+		List<String> imageList = new ArrayList<String>();
+		for (ManImage image : list) {
+			String url = "/file/getManImage/" + image.getId();
+			imageList.add(url);
+		}
+		businessManDetailResp.getBusinessManInfo().setImageList(imageList);
 		return businessManDetailResp;
 
 	}
-	
-	
-	
+
 }

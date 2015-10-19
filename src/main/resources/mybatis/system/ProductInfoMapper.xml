@@ -46,6 +46,9 @@
 		<if test="request.name != null and request.name  != ''">
 			and p.name like #{request.name}
 		</if>
+		<if test="request.manId != null and request.manId  != ''">
+			and p.user_id = #{request.manId}
+		</if>
 		<if test="request.typeId != null and request.typeId  != ''">
 			and p.typeId = #{request.typeId}
 		</if>

@@ -1,82 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fh.dao.ManImageMapper" >
-  <resultMap id="BaseResultMap" type="com.fh.entity.ManImage" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, url, name
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from sys_man_image
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from sys_man_image
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.fh.entity.ManImage" >
-    insert into sys_man_image (id, user_id, url, 
-      name)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.fh.entity.ManImage" >
-    insert into sys_man_image
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.ManImage" >
-    update sys_man_image
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fh.entity.ManImage" >
-    update sys_man_image
-    set user_id = #{userId,jdbcType=BIGINT},
-      url = #{url,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+<mapper namespace="com.fh.dao.ManImageMapper">
+	<resultMap id="BaseResultMap" type="com.fh.entity.ManImage">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="mainFlag" property="mainflag" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, url, name, mainFlag
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_man_image
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sys_man_image
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.fh.entity.ManImage">
+		insert into sys_man_image (id, user_id, url,
+		name, mainFlag)
+		values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
+		#{url,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR}, #{mainflag,jdbcType=BIT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.fh.entity.ManImage">
+		insert into sys_man_image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="mainflag != null">
+				mainFlag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mainflag != null">
+				#{mainflag,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.ManImage">
+		update sys_man_image
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mainflag != null">
+				mainFlag = #{mainflag,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fh.entity.ManImage">
+		update sys_man_image
+		set user_id = #{userId,jdbcType=BIGINT},
+		url = #{url,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		mainFlag = #{mainflag,jdbcType=BIT}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+
+	
+	<select id="findByUserId" resultType="ManImage">
+		select
+		<include refid="Base_Column_List" />
+		from
+		sys_man_image d
+		<if test="userId != null">
+		where d.user_id = #{userId}
+		</if>
+	</select>
 </mapper>

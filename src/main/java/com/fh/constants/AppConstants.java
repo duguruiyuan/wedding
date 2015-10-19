@@ -13,6 +13,7 @@ import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.CreateVCReq;
 import com.fh.vo.request.EditPwdReq;
 import com.fh.vo.request.LoginReq;
+import com.fh.vo.request.MainTypeReq;
 import com.fh.vo.request.ProductDetailReq;
 import com.fh.vo.request.ProductListReq;
 import com.fh.vo.request.RegisterReq;
@@ -87,6 +88,7 @@ public class AppConstants {
 	public static final String GetProductDetail = "gpd";
 	public static final String ShoppingCartList = "gscl";
 	public static final String Shopping = "shop";
+	public static final String MainType = "mt";
 
 
 	static {
@@ -109,6 +111,7 @@ public class AppConstants {
 		APP_HANDLER.put(GetProductDetail, "productDetail");	
 		APP_HANDLER.put(ShoppingCartList, "shoppingCartList");	
 		APP_HANDLER.put(Shopping, "shopping");	
+		APP_HANDLER.put(MainType, "mainType");	
 
 	}
 
@@ -129,6 +132,7 @@ public class AppConstants {
 		APP_VO.put(GetProductDetail, ProductDetailReq.class);
 		APP_VO.put(ShoppingCartList, ShoppingCartListReq.class);
 		APP_VO.put(Shopping, ShoppingReq.class);
+		APP_VO.put(MainType, MainTypeReq.class);
 		/*
 		
 		
