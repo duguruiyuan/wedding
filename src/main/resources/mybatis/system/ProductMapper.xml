@@ -206,6 +206,9 @@
 		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
 			and o.status=#{pd.status}
 		</if>
+		<if test="pd.recommend != null and pd.recommend != ''"><!-- 是否推荐-->
+			and p.recommend=#{pd.recommend}
+		</if>
 	</select>
 	
 		<!-- 通过id获取数据 -->

@@ -83,8 +83,8 @@
 				<tr class="info">
 					<th>是否推荐</th>
 					<td><select class="chzn-select" name="recommend" id="recommend"
-						data-placeholder="请选择订单状态" style="vertical-align: top;"
-						title="订单状态">
+						data-placeholder="请选择是否推荐" style="vertical-align: top;"
+						title="是否推荐">
 							<option value="1" <c:if test="${pd.recommend}">selected</c:if>>是</option>
 							<option value="0" <c:if test="${!pd.recommend}">selected</c:if>>否</option>
 					</select></td>

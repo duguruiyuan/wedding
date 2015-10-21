@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fh.dao.BusinessManInfoMapper;
-import com.fh.dao.BusinessManMapper;
 import com.fh.dao.DaoSupport;
 import com.fh.entity.BmiRequest;
 import com.fh.entity.BusinessManInfo;
@@ -25,15 +24,18 @@ import com.fh.vo.request.BusinessManDetailReq;
 import com.fh.vo.response.BusinessManDetailResp;
 import com.fh.vo.response.BusinessManListResp;
 
+/**
+ * 商户Service
+ * 
+ * @author wujinsong
+ *
+ */
 @Service("businessManService")
 @Transactional
 public class BusinessManService {
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
-
-	@Autowired
-	private BusinessManMapper businessManMapper;
 
 	private static final DozerBeanMapper MAPPER = new DozerBeanMapper();
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -45,9 +47,9 @@ public class BusinessManService {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public List<PageData> listAllBusinessMan(Page page) throws Exception {
-		return (List<PageData>) dao.findForList(
-				"BusinessManMapper.listAllBusinessMan", page);
+		return (List<PageData>) dao.findForList("BusinessManMapper.listAllBusinessMan", page);
 	}
 
 	@Autowired
@@ -56,24 +58,122 @@ public class BusinessManService {
 	public ResponseBody businessManList(RequestBody requestBody) {
 		BmiRequest bmiRequest = new BmiRequest();
 		MAPPER.map(requestBody, bmiRequest);
-		List<BusinessManInfo> businessManInfos = businessManInfoMapper
-				.findBusinessManInfos(bmiRequest, new MybatisPageable(Integer.valueOf(bmiRequest.getPageSize()),Integer.valueOf(bmiRequest.getPageNo())));
+		List<BusinessManInfo> businessManInfos = businessManInfoMapper.findBusinessManInfos(bmiRequest,
+				new MybatisPageable(Integer.valueOf(bmiRequest.getPageSize()),
+						Integer.valueOf(bmiRequest.getPageNo())));
 		BusinessManListResp businessManListResp = new BusinessManListResp();
 		businessManListResp.setBusinessManInfos(businessManInfos);
 		return businessManListResp;
 
 	}
-	
+
 	public ResponseBody businessManDetail(RequestBody requestBody) {
-		
-		BusinessManDetailReq detailReq  =(BusinessManDetailReq) requestBody;
+
+		BusinessManDetailReq detailReq = (BusinessManDetailReq) requestBody;
 		BusinessManInfo businessManInfo = businessManInfoMapper.findBusinessManInfo(detailReq.getId());
 		BusinessManDetailResp businessManDetailResp = new BusinessManDetailResp();
 		businessManDetailResp.setBusinessManInfo(businessManInfo);
 		return businessManDetailResp;
 
 	}
-	
-	
-	
+
+	/**
+	 * 根据id获取商户
+	 * 
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	public PageData findById(PageData pd) throws Exception {
+		return (PageData) dao.findForObject("BusinessManMapper.findById", pd);
+	}
+
+	/**
+	 * 新增商户
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	public void saveBusinessMan(PageData pd) throws Exception {
+		dao.update("BusinessManMapper.saveBusinessMan", pd);
+	}
+
+	/**
+	 * 修改商户
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	public void editBusinessMan(PageData pd) throws Exception {
+		dao.update("BusinessManMapper.updateById", pd);
+	}
+
+	/**
+	 * 删除商户
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	public void deleteBusinessMan(PageData pd) throws Exception {
+		dao.delete("BusinessManMapper.deleteBusinessMan", pd);
+	}
+
+	/**
+	 * 批量删除商户
+	 * 
+	 * @param BUSINESSMAN_IDS
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	public void deleteAllBusinessMans(String[] BUSINESSMAN_IDS) throws Exception {
+		dao.delete("BusinessManMapper.deleteAllBusinessMans", BUSINESSMAN_IDS);
+	}
+
+	/**
+	 * 商户列表(分页)
+	 * 
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> businessManListPage(Page pd) throws Exception {
+		logger.info("获取商户列表");
+		return (List<PageData>) dao.findForList("BusinessManMapper.businessManListPage", pd);
+	}
+
+	/**
+	 * 获取所有产品
+	 * 
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAllBusinessMans(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("BusinessManMapper.listAllBusinessMans", pd);
+	}
+
+	/**
+	 * 根据主键查找
+	 * 
+	 * @param id
+	 * @return
+	 * @author wujinsong
+	 */
+	public PageData selectByPrimaryKey(PageData pd) {
+		try {
+			return (PageData) dao.findForObject("BusinessManMapper.findById", pd);
+		} catch (Exception e) {
+
+		}
+
+		return null;
+	}
 }

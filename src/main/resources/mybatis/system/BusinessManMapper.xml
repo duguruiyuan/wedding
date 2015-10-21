@@ -17,7 +17,8 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		user_id, type_id, remark, grade, tuan_flag, cu_flag, ding_flag, pai_flag,
+		user_id, type_id, remark, grade, tuan_flag, cu_flag,
+		ding_flag, pai_flag,
 		main_image_id,
 		address, sales_count, phone, name
 	</sql>
@@ -29,20 +30,25 @@
 		where user_id = #{userId,jdbcType=BIGINT}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from sys_business_man
+		delete from
+		sys_business_man
 		where user_id = #{userId,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="com.fh.entity.BusinessMan">
-		insert into sys_business_man (user_id, type_id, remark,
+		insert into sys_business_man
+		(user_id, type_id, remark,
 		grade, tuan_flag, cu_flag, ding_flag,
 		pai_flag, main_image_id, address,
 		sales_count, phone, name
 		)
-		values (#{userId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT},
+		values
+		(#{userId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT},
 		#{remark,jdbcType=VARCHAR},
-		#{grade,jdbcType=INTEGER}, #{tuanFlag,jdbcType=BIT}, #{cuFlag,jdbcType=BIT},
+		#{grade,jdbcType=INTEGER},
+		#{tuanFlag,jdbcType=BIT}, #{cuFlag,jdbcType=BIT},
 		#{dingFlag,jdbcType=BIT},
-		#{paiFlag,jdbcType=BIT}, #{mainImageId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR},
+		#{paiFlag,jdbcType=BIT},
+		#{mainImageId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR},
 		#{salesCount,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR}
 		)
@@ -175,27 +181,227 @@
 		where user_id = #{userId,jdbcType=BIGINT}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.fh.entity.BusinessMan">
-		update sys_business_man
+		update
+		sys_business_man
 		set type_id = #{typeId,jdbcType=BIGINT},
-		remark = #{remark,jdbcType=VARCHAR},
+		remark =
+		#{remark,jdbcType=VARCHAR},
 		grade = #{grade,jdbcType=INTEGER},
 		tuan_flag = #{tuanFlag,jdbcType=BIT},
 		cu_flag = #{cuFlag,jdbcType=BIT},
 		ding_flag = #{dingFlag,jdbcType=BIT},
-		pai_flag = #{paiFlag,jdbcType=BIT},
-		main_image_id = #{mainImageId,jdbcType=BIGINT},
+		pai_flag =
+		#{paiFlag,jdbcType=BIT},
+		main_image_id =
+		#{mainImageId,jdbcType=BIGINT},
 		address = #{address,jdbcType=VARCHAR},
 		sales_count = #{salesCount,jdbcType=BIGINT},
-		phone = #{phone,jdbcType=VARCHAR},
+		phone =
+		#{phone,jdbcType=VARCHAR},
 		name = #{name,jdbcType=VARCHAR}
-		where user_id = #{userId,jdbcType=BIGINT}
+		where user_id
+		= #{userId,jdbcType=BIGINT}
 	</update>
 
-	<!-- 商户列表(全部) -->
-	<select id="listAllBusinessMan" parameterType="page" resultType="pd">
-		select b.USER_ID,
-		b.type_id,
-		b.remark
-		from SYS_BUSINESS_MAN b
+	<!-- 商户列表（分页） -->
+	<select id="businessManListPage" parameterType="page" resultType="pd">
+		select
+		p.user_id,
+		p.type_id,
+		p.remark,
+		p.grade,
+		p.tuan_flag,
+		p.cu_flag,
+		p.ding_flag,
+		p.pai_flag,
+		p.main_image_id,
+		p.address,
+		p.sales_count,
+		p.phone,
+		p.name,
+		p.created_date
+		from
+		sys_business_man p
+		where 1=1
+		<!-- 用户名称检索 -->
+		<if test="pd.name != null and pd.name != ''">
+			and p.name LIKE CONCAT(CONCAT('%', #{pd.name}),'%')
+		</if>
+		<!-- 到期时间检索 -->
+		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''">
+			and p.created_date &gt;= #{pd.lastLoginStart}
+		</if>
+		<!-- 到期时间检索 -->
+		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''">
+			and p.created_date &lt;= #{pd.lastLoginEnd}
+		</if>
+		<if test="pd.ding_flag != null and pd.ding_flag != ''">
+			and p.ding_flag=#{pd.ding_flag}
+		</if>
 	</select>
+
+	<!-- 通过id获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		p.user_id,
+		p.type_id,
+		p.remark,
+		p.grade,
+		p.tuan_flag,
+		p.cu_flag,
+		p.ding_flag,
+		p.pai_flag,
+		p.main_image_id,
+		p.address,
+		p.sales_count,
+		p.phone,
+		p.name,
+		p.created_date
+		from
+		sys_business_man p
+		where
+		p.id =
+		#{id}
+	</select>
+
+	<update id="updateById" parameterType="pd">
+		update sys_business_man
+		<set>
+			<if test="user_id != null">
+				user_id = #{user_id,jdbcType=BIGINT},
+			</if>
+			<if test="type_id != null">
+				type_id = #{type_id,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+				grade = #{grade,jdbcType=INTEGER},
+			</if>
+			<if test="tuan_flag != null">
+				tuan_flag = #{tuan_flag,jdbcType=BIT},
+			</if>
+			<if test="cu_flag != null">
+				cu_flag = #{cu_flag,jdbcType=BIT},
+			</if>
+			<if test="ding_flag != null">
+				ding_flag = #{ding_flag,jdbcType=BIT},
+			</if>
+			<if test="pai_flag != null">
+				pai_flag = #{pai_flag,jdbcType=BIT},
+			</if>
+			<if test="main_image_id != null">
+				main_image_id = #{main_image_id,jdbcType=BIGINT},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="sales_count != null">
+				sales_count = #{sales_count,jdbcType=BIGINT},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="created_date != null">
+				created_date = #{created_date,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<insert id="saveBusinessMan" parameterType="pd">
+		insert into sys_business_man
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="user_id != null">
+				user_id,
+			</if>
+			<if test="type_id != null">
+				type_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="grade != null">
+				grade,
+			</if>
+			<if test="tuan_flag != null">
+				tuan_flag,
+			</if>
+			<if test="cu_flag != null">
+				cu_flag,
+			</if>
+			<if test="ding_flag != null">
+				ding_flag,
+			</if>
+			<if test="pai_flag != null">
+				pai_flag,
+			</if>
+			<if test="main_image_id != null">
+				main_image_id,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="sales_count != null">
+				sales_count,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="created_date != null">
+				created_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="user_id != null">
+				#{user_id,jdbcType=BIGINT},
+			</if>
+			<if test="type_id != null">
+				#{type_id,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+				#{grade,jdbcType=INTEGER},
+			</if>
+			<if test="tuan_flag != null">
+				#{tuan_flag,jdbcType=BIT},
+			</if>
+			<if test="cu_flag != null">
+				#{cu_flag,jdbcType=BIT},
+			</if>
+			<if test="ding_flag != null">
+				#{ding_flag,jdbcType=BIT},
+			</if>
+			<if test="pai_flag != null">
+				#{pai_flag,jdbcType=BIT},
+			</if>
+			<if test="main_image_id != null">
+				#{main_image_id,jdbcType=BIGINT},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="sales_count != null">
+				#{sales_count,jdbcType=BIGINT},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="created_date != null">
+				#{created_date,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
 </mapper>
