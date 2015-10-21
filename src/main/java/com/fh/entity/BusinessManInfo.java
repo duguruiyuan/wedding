@@ -1,11 +1,13 @@
 package com.fh.entity;
 
+import java.util.List;
+
 public class BusinessManInfo {
 
 	private Long userId;
 
 	private Long typeId;
-	
+
 	private String name;
 
 	private String typeName;
@@ -25,6 +27,11 @@ public class BusinessManInfo {
 	private Boolean paiFlag;
 
 	private String mainImageUrl;
+
+	private List<String> imageList;
+
+	private String phone;
+	
 
 	public Long getUserId() {
 		return userId;
@@ -121,5 +128,23 @@ public class BusinessManInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public List<String> getImageList() {
+		return imageList;
+	}
+
+	public void setImageList(List<String> imageList) {
+		this.imageList = imageList;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	
 
 }

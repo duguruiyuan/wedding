@@ -42,17 +42,18 @@ public class FileController {
 		outputStream.close();
 	}
 
-	/*
-	 * @RequestMapping(value = "/getProjectImage/{id}/{version}", method = {
-	 * RequestMethod.GET }) public void getAvatar(HttpServletRequest
-	 * httpServletRequest, HttpServletResponse httpServletResponse,
-	 * @PathVariable Long id, @PathVariable Long version) throws IOException,
-	 * InterruptedException { httpServletResponse.setContentType("image/png");
-	 * OutputStream outputStream = new
-	 * BufferedOutputStream(httpServletResponse.getOutputStream());
-	 * outputStream.write(getFileService.getProjectImage(httpServletRequest,
-	 * id)); outputStream.flush(); outputStream.close(); }
-	 */
+	@RequestMapping(value = "/getManImage/{id}", method = { RequestMethod.GET })
+	public void getManImage(HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, @PathVariable Long id) throws IOException,
+			InterruptedException {
+		httpServletResponse.setContentType("image/png");
+		OutputStream outputStream = new BufferedOutputStream(
+				httpServletResponse.getOutputStream());
+		outputStream.write(getFileService.getManImage(id));
+		outputStream.flush();
+		outputStream.close();
+	}
+
 	@ExceptionHandler(BusinessException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ResponseBody handleIOException(BusinessException e) {

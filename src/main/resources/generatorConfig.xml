@@ -12,8 +12,8 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/tuangou?characterEncoding=utf8"
-			userId="root" password="root">
+			connectionURL="jdbc:mysql://115.29.248.18:3306/tuangou?characterEncoding=utf8"
+			userId="freetech" password="123456">
 		</jdbcConnection>
 
 		<javaTypeResolver>
@@ -38,15 +38,15 @@
 			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-		<!-- <table tableName=""></table> -->
-		<table tableName="sys_business_man" domainObjectName="BusinessMan"
+		<table tableName=""></table>
+			<!--<table tableName="sys_man_image" domainObjectName="ManImage"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" />
-		<table tableName="bus_shopping_cart" domainObjectName="ShoppingCart"
+ 	<table tableName="bus_shopping_cart" domainObjectName="ShoppingCart"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false" /> 
+			selectByExampleQueryId="false" /> -->
 
 
 	</context>

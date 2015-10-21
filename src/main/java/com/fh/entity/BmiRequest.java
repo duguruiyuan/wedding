@@ -3,6 +3,8 @@ package com.fh.entity;
 public class BmiRequest {
 
 	private String name;
+	
+	private Long manId;
 
 	private String gradeOrder;
 
@@ -61,6 +63,14 @@ public class BmiRequest {
 
 	public void setSalesOrder(String salesOrder) {
 		this.salesOrder = salesOrder;
+	}
+
+	public Long getManId() {
+		return manId;
+	}
+
+	public void setManId(Long manId) {
+		this.manId = manId;
 	}
 
 }

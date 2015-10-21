@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fh.constants.AppConstants;
 import com.fh.dao.AppUserMapper;
+import com.fh.dao.ManImageMapper;
 import com.fh.service.system.appuser.AppuserService;
 import com.fh.util.FileUtil;
 import com.fh.vo.ResponseBody;
@@ -66,6 +67,18 @@ public class FileService {
 		else
 			return FileUtil.download(appUserMapper.selectByPrimaryKey(id)
 					.getImageUrl());
+
+	}
+
+	@Autowired
+	ManImageMapper manImageMapper;
+
+	public byte[] getManImage(Long id) throws IOException {
+		if (StringUtils.isEmpty(manImageMapper.selectByPrimaryKey(id).getUrl()))
+			return new byte[0];
+		else
+			return FileUtil.download(manImageMapper.selectByPrimaryKey(id)
+					.getUrl());
 
 	}
 }

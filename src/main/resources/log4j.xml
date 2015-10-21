@@ -42,7 +42,7 @@
 	<logger name="java.sql">
 		<level value="info" />
 	</logger>
-	 <loggers>
+	 
     
 
     <logger name="log4j.logger.com.ibatis" level="trace" additivity="false">

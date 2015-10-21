@@ -9,6 +9,8 @@ public class ManImage {
 
     private String name;
 
+    private Boolean mainflag;
+
     public Long getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class ManImage {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Boolean getMainflag() {
+        return mainflag;
+    }
+
+    public void setMainflag(Boolean mainflag) {
+        this.mainflag = mainflag;
     }
 }

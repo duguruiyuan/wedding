@@ -45,7 +45,8 @@
 		,s.`tuan_flag` tuanFlag, s.`cu_flag` cuFlag,s.`ding_flag`
 		dingFlag,s.`pai_flag` paiFlag,
 		CONCAT('file/',s.`user_id`) mainImageUrl,
-		s.`sales_count` sales_count
+		s.`sales_count` sales_count,
+		s.phone phone
 		FROM sys_business_man s ,sys_user u,sys_main_type m WHERE s.`user_id`= u.`USER_ID` and s.type_id = m.id
 		<if test="request.name != null and request.name  != ''">
 		   and u.name like #{request.name}
