@@ -3,6 +3,8 @@ package com.fh.service.system.order;
 import java.util.List;
 
 import javax.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.fh.dao.DaoSupport;
@@ -22,8 +24,10 @@ public class OrderDetailService {
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	/**
-	 * 根据id获取订单详情
+	 * 根据id获取订单明细
 	 * 
 	 * @param pd
 	 * @return
@@ -35,49 +39,61 @@ public class OrderDetailService {
 	}
 
 	/**
-	 * 修改订单明细
+	 * 新增订单明细
 	 * 
 	 * @param pd
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void editU(PageData pd) throws Exception {
-		dao.update("OrderDetailMapper.editOrder", pd);
+	public void saveOrderDetail(PageData pd) throws Exception {
+		dao.update("OrderDetailMapper.saveOrder", pd);
 	}
 
 	/**
-	 * 删除订单明细
+	 * 保存订单明细
 	 * 
 	 * @param pd
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void deleteU(PageData pd) throws Exception {
-		dao.delete("OrderDetailMapper.deleteOrder", pd);
+	public void editOrderDetail(PageData pd) throws Exception {
+		dao.update("OrderMapper.editOrderDetail", pd);
+	}
+
+	/**
+	 * 删除订单
+	 * 
+	 * @param pd
+	 * @throws Exception
+	 * @author wujinsong
+	 */
+	public void deleteOrderDetail(PageData pd) throws Exception {
+		dao.delete("OrderMapper.deleteOrderDetail", pd);
 	}
 
 	/**
 	 * 批量删除订单明细
 	 * 
-	 * @param ORDER_IDS
+	 * @param ORDER_DETAIL_IDS
 	 * @throws Exception
 	 * @author wujinsong
 	 */
-	public void deleteAllU(String[] ORDER_IDS) throws Exception {
-		dao.delete("OrderDetailMapper.deleteAllOrders", ORDER_IDS);
+	public void deleteAllOrderDetails(String[] ORDER_DETAIL_IDS) throws Exception {
+		dao.delete("OrderMapper.deleteAllOrderDetails", ORDER_DETAIL_IDS);
 	}
 
 	/**
-	 * 订单明细列表
+	 * 订单明细(分页)
 	 * 
-	 * @param page
+	 * @param pd
 	 * @return
 	 * @throws Exception
 	 * @author wujinsong
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PageData> listPdPageOrderDetail(Page page) throws Exception {
-		return (List<PageData>) dao.findForList("OrderDetailMapper.orderDetailListPage", page);
+	public List<PageData> orderDetailListPage(Page pd) throws Exception {
+		logger.info("获取订单明细列表");
+		return (List<PageData>) dao.findForList("OrderDetailMapper.orderDetailListPage", pd);
 	}
 
 	/**
@@ -90,6 +106,6 @@ public class OrderDetailService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAllOrderDetails(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("OrderDetailMapper.listAllOrderDetails", pd);
+		return (List<PageData>) dao.findForList("OrderMapper.listAllOrderDetails", pd);
 	}
 }

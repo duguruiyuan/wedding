@@ -3,277 +3,110 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="OrderDetailMapper">
 
-	<!-- 修改订单 -->
-	<update id="editOrder" parameterType="pd">
-		update BUS_ORDER
+	<!-- 修改订单明细 -->
+	<update id="editOrderDetail" parameterType="pd">
+		update BUS_ORDER_Detail
 		<set>
-			<if test="PASSWORD != null and PASSWORD != ''">
-				STATUS = #{STATUS},
+			<if test="flow_id != null and flow_id != ''">
+				flow_id = #{flow_id},
 			</if>
-			<if test="PASSWORD != null and PASSWORD != ''">
-				PRICE = #{PRICE},
+			<if test="price != null and price != ''">
+				price = #{price},
 			</if>
-			<if test="PASSWORD != null and PASSWORD != ''">
-				PRODUCT_ID =
-				#{PRODUCT_ID},
+			<if test="order_id != null and order_id != ''">
+				order_id =
+				#{order_id},
 			</if>
-			<if test="PASSWORD != null and PASSWORD != ''">
+			<if test="product_id != null and product_id != ''">
 				USER_ID = #{USER_ID},
-			</if>
-			<if test="PASSWORD != null and PASSWORD != ''">
-				,PASSWORD = #{PASSWORD}
 			</if>
 		</set>
 		where
 		ID = #{ID}
 	</update>
 
-	<!-- 通过user_id获取数据 -->
-	<select id="findByUiId" parameterType="pd" resultType="pd">
-		select
-		USER_ID,
-		USERNAME,
-		PASSWORD,
-		NAME,
-		RIGHTS,
-		ROLE_ID,
-		LAST_LOGIN,
-		IP,
-		STATUS,
-		BZ,
-		PHONE,
-		SFID,
-		START_TIME,
-		END_TIME,
-		YEARS,
-		EMAIL,
-		NUMBER
+	<!-- 通过id获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		id,
+		flow_id,
+		price,
+		order_id,
+		product_id
 		from
-		SYS_APP_USER
+		BUS_ORDER_Detail
 		where
-		USER_ID = #{USER_ID}
+		id = #{id}
 	</select>
 
-	<!-- 通过邮箱获取数据 -->
-	<select id="findByUE" parameterType="pd" resultType="pd">
-		select
-		USER_ID,
-		USERNAME,
-		PASSWORD,
-		NAME,
-		RIGHTS,
-		ROLE_ID,
-		LAST_LOGIN,
-		IP,
-		STATUS,
-		BZ,
-		PHONE,
-		SFID,
-		START_TIME,
-		END_TIME,
-		YEARS,
-		EMAIL,
-		NUMBER
-		from
-		SYS_APP_USER
-		where
-		EMAIL = #{EMAIL}
-		<if test="USERNAME != null and USERNAME != ''">
-			and USERNAME != #{USERNAME}
-		</if>
-	</select>
-
-	<!-- 通过编号获取数据 -->
-	<select id="findByUN" parameterType="pd" resultType="pd">
-		select
-		USER_ID,
-		USERNAME,
-		PASSWORD,
-		NAME,
-		RIGHTS,
-		ROLE_ID,
-		LAST_LOGIN,
-		IP,
-		STATUS,
-		BZ,
-		PHONE,
-		SFID,
-		START_TIME,
-		END_TIME,
-		YEARS,
-		EMAIL,
-		NUMBER
-		from
-		SYS_APP_USER
-		where
-		NUMBER = #{NUMBER}
-		<if test="USERNAME != null and USERNAME != ''">
-			and USERNAME != #{USERNAME}
-		</if>
-	</select>
-
-	<!-- 通过USERNAME获取数据 -->
-	<select id="findByUId" parameterType="pd" resultType="pd">
-		select
-		USER_ID,
-		USERNAME,
-		PASSWORD,
-		NAME,
-		RIGHTS,
-		ROLE_ID,
-		LAST_LOGIN,
-		IP,
-		STATUS,
-		BZ,
-		PHONE,
-		SFID,
-		START_TIME,
-		END_TIME,
-		YEARS,
-		EMAIL,
-		NUMBER
-		from
-		SYS_APP_USER
-		where
-		USERNAME = #{USERNAME}
-	</select>
-
-	<!-- 新增app用户 -->
-	<insert id="saveU" parameterType="pd" useGeneratedKeys="true"
-		keyProperty="user_id">
-		insert into SYS_APP_USER (
-		USERNAME,
-		PASSWORD,
-		NAME,
-		RIGHTS,
-		ROLE_ID,
-		LAST_LOGIN,
-		IP,
-		STATUS,
-		BZ,
-		PHONE,
-		SFID,
-		START_TIME,
-		END_TIME,
-		YEARS,
-		EMAIL,
-		NUMBER
-		) values (
-		#{USERNAME},
-		#{PASSWORD},
-		#{NAME},
-		#{RIGHTS},
-		#{ROLE_ID},
-		#{LAST_LOGIN},
-		#{IP},
-		#{STATUS},
-		#{BZ},
-		#{PHONE},
-		#{SFID},
-		#{START_TIME},
-		#{END_TIME},
-		#{YEARS},
-		#{EMAIL},
-		#{NUMBER}
-		)
-	</insert>
-	<!-- 订单列表（分页） -->
+	<!-- 订单明细列表（分页） -->
 	<select id="orderDetailListPage" parameterType="page"
 		resultType="pd">
 		select o.id,
-		o.status,
+		o.flow_id,
 		o.price,
+		o.order_id,
 		o.created_date,
 		a.username,
 		p.name
 		from
-		bus_order o,bus_product p,sys_app_user a
-		where o.product_id = p.id AND
-		o.user_id = a.user_id
-		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 用户名检索 -->
-			and (
-			u.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-			or
-			u.EMAIL LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-			or
-			u.NUMBER LIKE
-			CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-			)
+		bus_order_detail o,bus_order b, bus_product p,sys_app_user
+		a
+		where o.product_id = p.id AND o.order_id = b.id and
+		b.user_id =
+		a.user_id
+		<!-- 用户名检索 -->
+		<if test="pd.username != null and pd.username != ''">
+			and
+			a.username LIKE CONCAT(CONCAT('%', #{pd.username}),'%')
 		</if>
-		<if test="pd.ROLE_ID != null and pd.ROLE_ID != ''"><!-- 角色检索 -->
-			and u.ROLE_ID=#{pd.ROLE_ID}
+		<!-- 产品名称检索 -->
+		<if test="pd.productname != null and pd.productname != ''">
+			and p.name LIKE CONCAT(CONCAT('%', #{pd.productname}),'%')
 		</if>
-		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 到期时间检索 -->
-			and u.END_TIME &gt;= #{pd.lastLoginStart}
+		<!-- 到期时间检索 -->
+		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''">
+			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
 		</if>
-		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 到期时间检索 -->
-			and u.END_TIME &lt;= #{pd.lastLoginEnd}
+		<!-- 到期时间检索 -->
+		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''">
+			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
 		</if>
-		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
-			and u.STATUS=#{pd.STATUS}
-		</if>
-	</select>
-
-	<!-- 用户列表(全部) -->
-	<select id="listAllUser" parameterType="pd" resultType="pd">
-		select u.USER_ID,
-		u.USERNAME,
-		u.PASSWORD,
-		u.LAST_LOGIN,
-		u.NAME,
-		u.IP,
-		u.END_TIME,
-		u.YEARS,
-		u.STATUS,
-		u.EMAIL,
-		u.SFID,
-		u.PHONE,
-		u.NUMBER,
-		r.ROLE_ID,
-		r.ROLE_NAME
-		from SYS_APP_USER u, SYS_ROLE r
-		where u.ROLE_ID =
-		r.ROLE_ID
-		and 1 = 1
-		and r.PARENT_ID = '7'
-
-		<if test="USERNAME != null and USERNAME != ''"><!-- 用户名检索 -->
-			and (
-			u.USERNAME LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-			or
-			u.EMAIL
-			LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-			or
-			u.NUMBER LIKE
-			CONCAT(CONCAT('%', #{USERNAME}),'%')
-			)
-		</if>
-		<if test="ROLE_ID != null and ROLE_ID != ''"><!-- 角色检索 -->
-			and u.ROLE_ID=#{ROLE_ID}
-		</if>
-		<if test="lastLoginStart!=null and lastLoginStart!=''"><!-- 到期时间检索 -->
-			and u.END_TIME &gt;= #{lastLoginStart}
-		</if>
-		<if test="lastLoginEnd!=null and lastLoginEnd!=''"><!-- 到期时间检索 -->
-			and u.END_TIME &lt;= #{lastLoginEnd}
-		</if>
-		<if test="STATUS != null and STATUS != ''"><!-- 状态检索 -->
-			and u.STATUS=#{STATUS}
+		<if test="pd.flow_id != null and pd.flow_id != ''"><!-- 状态检索 -->
+			and o.flow_id=#{pd.flow_id}
 		</if>
 	</select>
 
-	<!-- 删除用户 -->
-	<delete id="deleteU" parameterType="pd">
-		delete from SYS_APP_USER
+	<!-- 订单明细列表(全部) -->
+	<select id="listAllOrders" parameterType="pd" resultType="pd">
+		select
+		o.id,
+		o.flow_id,
+		o.price,
+		o.order_id,
+		o.created_date,
+		a.username,
+		p.name
+		from
+		bus_order_detail o,bus_order b, bus_product p,sys_app_user
+		a
+		where o.product_id = p.id AND o.order_id = b.id and
+		b.user_id =
+		a.user_id
+	</select>
+
+	<!-- 删除订单明细 -->
+	<delete id="deleteOrderDetail" parameterType="pd">
+		delete from
+		BUS_ORDER_DETAIL
 		where
-		USER_ID = #{USER_ID}
+		ID = #{ID}
 	</delete>
 
-	<!-- 批量删除用户 -->
-	<delete id="deleteAllU" parameterType="String">
-		delete from SYS_APP_USER
+	<!-- 批量删除订单明细 -->
+	<delete id="deleteAllOrderDetails" parameterType="String">
+		delete from BUS_ORDER_DETAIL
 		where
-		USER_ID in
+		ID in
 		<foreach item="item" index="index" collection="array" open="("
 			separator="," close=")">
 			#{item}
