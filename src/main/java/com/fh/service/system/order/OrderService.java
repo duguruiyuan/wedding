@@ -1,21 +1,44 @@
 package com.fh.service.system.order;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fh.dao.BusinessManMapper;
 import com.fh.dao.DaoSupport;
+import com.fh.dao.OrderDetailMapper;
+import com.fh.dao.OrderMapper;
+import com.fh.dao.ProductMapper;
+import com.fh.dao.ShoppingCartInfoMapper;
+import com.fh.dao.ShoppingCartMapper;
+import com.fh.entity.BusinessMan;
+import com.fh.entity.Order;
 import com.fh.entity.Page;
+import com.fh.entity.Product;
+import com.fh.entity.ShoppingCart;
 import com.fh.util.PageData;
+import com.fh.vo.RequestBody;
+import com.fh.vo.ResponseBody;
+import com.fh.vo.request.OrderReq;
+import com.fh.vo.request.OrderReq.OrderDetail;
+import com.fh.vo.response.OrderResp;
 
 /**
  * 订单Service
  * 
  * @author wujinsong
- *
+ * 
  */
 @Service("orderService")
 @Transactional
@@ -24,7 +47,66 @@ public class OrderService {
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 
+	@Autowired
+	private OrderMapper orderMapper;
+
+	@Autowired
+	private BusinessManMapper businessManMapper;
+
+	@Autowired
+	private OrderDetailMapper orderDetailMapper;
+
+	@Autowired
+	private ProductMapper productMapper;
+
+	@Autowired
+	ShoppingCartMapper shoppingCartMapper;
+
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+
+	public ResponseBody order(OrderReq orderReq, Long userId) {
+		Map<Long, List<OrderDetail>> orderMap = new HashMap<Long, List<OrderDetail>>();
+		for (OrderDetail orderDetail : orderReq.getOrderList()) {
+			Product product = productMapper.selectByPrimaryKey(orderDetail
+					.getProductId());
+			BusinessMan businessMan = businessManMapper
+					.selectByPrimaryKey(product.getUserId());
+			List<OrderDetail> orderDetails = orderMap.get(businessMan
+					.getUserId());
+			if (CollectionUtils.isEmpty(orderDetails)) {
+				orderDetails = new ArrayList<OrderReq.OrderDetail>();
+			}
+			orderDetails.add(orderDetail);
+			orderMap.put(businessMan.getUserId(), orderDetails);
+		}
+		List<Long> orderIds = new ArrayList<Long>();
+		for (Long id : orderMap.keySet()) {
+			List<OrderDetail> details = orderMap.get(id);
+			Order order = new Order();
+			order.setFlowId("待付款");
+			//order.setCreatedDate(new Date());
+			order.setUserId(userId);
+			order.setBusinessManId(id);
+			orderMapper.insert(order);
+			for (OrderDetail detail : details) {
+				com.fh.entity.OrderDetail detail2 = new com.fh.entity.OrderDetail();
+				detail2.setCount(detail.getCount());
+				if (detail.getShoppingCartId() != null) {
+					shoppingCartMapper.deleteByPrimaryKey(detail
+							.getShoppingCartId());
+				}
+				detail2.setFlowId("待付款");
+				detail2.setProductId(detail.getProductId());
+				orderDetailMapper.insert(detail2);
+			}
+			orderIds.add(order.getId());
+		}
+		OrderResp orderResp = new OrderResp();
+		orderResp.setStatus("000000");
+		orderResp.setOrderIds(orderIds);
+		return orderResp;
+
+	}
 
 	/**
 	 * 根据id获取订单
@@ -92,7 +174,8 @@ public class OrderService {
 	@SuppressWarnings("unchecked")
 	public List<PageData> orderlistPage(Page pd) throws Exception {
 		logger.info("获取订单列表");
-		return (List<PageData>) dao.findForList("OrderMapper.orderlistPage", pd);
+		return (List<PageData>) dao
+				.findForList("OrderMapper.orderlistPage", pd);
 	}
 
 	/**
@@ -105,6 +188,7 @@ public class OrderService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAllOrders(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("OrderMapper.listAllOrders", pd);
+		return (List<PageData>) dao
+				.findForList("OrderMapper.listAllOrders", pd);
 	}
 }

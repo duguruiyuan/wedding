@@ -1,5 +1,7 @@
 package com.fh.entity;
 
+import java.util.Date;
+
 public class BusinessMan {
     private Long userId;
 
@@ -26,6 +28,8 @@ public class BusinessMan {
     private String phone;
 
     private String name;
+
+    private Date createdDate;
 
     public Long getUserId() {
         return userId;
@@ -129,5 +133,13 @@ public class BusinessMan {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

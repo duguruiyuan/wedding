@@ -1,197 +1,203 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="BusinessManMapper">
-	<resultMap id="BaseResultMap" type="com.fh.entity.BusinessMan">
-		<id column="user_id" property="userId" jdbcType="BIGINT" />
-		<result column="type_id" property="typeId" jdbcType="BIGINT" />
-		<result column="remark" property="remark" jdbcType="VARCHAR" />
-		<result column="grade" property="grade" jdbcType="INTEGER" />
-		<result column="tuan_flag" property="tuanFlag" jdbcType="BIT" />
-		<result column="cu_flag" property="cuFlag" jdbcType="BIT" />
-		<result column="ding_flag" property="dingFlag" jdbcType="BIT" />
-		<result column="pai_flag" property="paiFlag" jdbcType="BIT" />
-		<result column="main_image_id" property="mainImageId" jdbcType="BIGINT" />
-		<result column="address" property="address" jdbcType="VARCHAR" />
-		<result column="sales_count" property="salesCount" jdbcType="BIGINT" />
-		<result column="phone" property="phone" jdbcType="VARCHAR" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		user_id, type_id, remark, grade, tuan_flag, cu_flag, ding_flag, pai_flag,
-		main_image_id,
-		address, sales_count, phone, name
-	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from sys_business_man
-		where user_id = #{userId,jdbcType=BIGINT}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from sys_business_man
-		where user_id = #{userId,jdbcType=BIGINT}
-	</delete>
-	<insert id="insert" parameterType="com.fh.entity.BusinessMan">
-		insert into sys_business_man (user_id, type_id, remark,
-		grade, tuan_flag, cu_flag, ding_flag,
-		pai_flag, main_image_id, address,
-		sales_count, phone, name
-		)
-		values (#{userId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT},
-		#{remark,jdbcType=VARCHAR},
-		#{grade,jdbcType=INTEGER}, #{tuanFlag,jdbcType=BIT}, #{cuFlag,jdbcType=BIT},
-		#{dingFlag,jdbcType=BIT},
-		#{paiFlag,jdbcType=BIT}, #{mainImageId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR},
-		#{salesCount,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR}
-		)
-	</insert>
-	<insert id="insertSelective" parameterType="com.fh.entity.BusinessMan">
-		insert into sys_business_man
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="userId != null">
-				user_id,
-			</if>
-			<if test="typeId != null">
-				type_id,
-			</if>
-			<if test="remark != null">
-				remark,
-			</if>
-			<if test="grade != null">
-				grade,
-			</if>
-			<if test="tuanFlag != null">
-				tuan_flag,
-			</if>
-			<if test="cuFlag != null">
-				cu_flag,
-			</if>
-			<if test="dingFlag != null">
-				ding_flag,
-			</if>
-			<if test="paiFlag != null">
-				pai_flag,
-			</if>
-			<if test="mainImageId != null">
-				main_image_id,
-			</if>
-			<if test="address != null">
-				address,
-			</if>
-			<if test="salesCount != null">
-				sales_count,
-			</if>
-			<if test="phone != null">
-				phone,
-			</if>
-			<if test="name != null">
-				name,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="userId != null">
-				#{userId,jdbcType=BIGINT},
-			</if>
-			<if test="typeId != null">
-				#{typeId,jdbcType=BIGINT},
-			</if>
-			<if test="remark != null">
-				#{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="grade != null">
-				#{grade,jdbcType=INTEGER},
-			</if>
-			<if test="tuanFlag != null">
-				#{tuanFlag,jdbcType=BIT},
-			</if>
-			<if test="cuFlag != null">
-				#{cuFlag,jdbcType=BIT},
-			</if>
-			<if test="dingFlag != null">
-				#{dingFlag,jdbcType=BIT},
-			</if>
-			<if test="paiFlag != null">
-				#{paiFlag,jdbcType=BIT},
-			</if>
-			<if test="mainImageId != null">
-				#{mainImageId,jdbcType=BIGINT},
-			</if>
-			<if test="address != null">
-				#{address,jdbcType=VARCHAR},
-			</if>
-			<if test="salesCount != null">
-				#{salesCount,jdbcType=BIGINT},
-			</if>
-			<if test="phone != null">
-				#{phone,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.BusinessMan">
-		update sys_business_man
-		<set>
-			<if test="typeId != null">
-				type_id = #{typeId,jdbcType=BIGINT},
-			</if>
-			<if test="remark != null">
-				remark = #{remark,jdbcType=VARCHAR},
-			</if>
-			<if test="grade != null">
-				grade = #{grade,jdbcType=INTEGER},
-			</if>
-			<if test="tuanFlag != null">
-				tuan_flag = #{tuanFlag,jdbcType=BIT},
-			</if>
-			<if test="cuFlag != null">
-				cu_flag = #{cuFlag,jdbcType=BIT},
-			</if>
-			<if test="dingFlag != null">
-				ding_flag = #{dingFlag,jdbcType=BIT},
-			</if>
-			<if test="paiFlag != null">
-				pai_flag = #{paiFlag,jdbcType=BIT},
-			</if>
-			<if test="mainImageId != null">
-				main_image_id = #{mainImageId,jdbcType=BIGINT},
-			</if>
-			<if test="address != null">
-				address = #{address,jdbcType=VARCHAR},
-			</if>
-			<if test="salesCount != null">
-				sales_count = #{salesCount,jdbcType=BIGINT},
-			</if>
-			<if test="phone != null">
-				phone = #{phone,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				name = #{name,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where user_id = #{userId,jdbcType=BIGINT}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.fh.entity.BusinessMan">
-		update sys_business_man
-		set type_id = #{typeId,jdbcType=BIGINT},
-		remark = #{remark,jdbcType=VARCHAR},
-		grade = #{grade,jdbcType=INTEGER},
-		tuan_flag = #{tuanFlag,jdbcType=BIT},
-		cu_flag = #{cuFlag,jdbcType=BIT},
-		ding_flag = #{dingFlag,jdbcType=BIT},
-		pai_flag = #{paiFlag,jdbcType=BIT},
-		main_image_id = #{mainImageId,jdbcType=BIGINT},
-		address = #{address,jdbcType=VARCHAR},
-		sales_count = #{salesCount,jdbcType=BIGINT},
-		phone = #{phone,jdbcType=VARCHAR},
-		name = #{name,jdbcType=VARCHAR}
-		where user_id = #{userId,jdbcType=BIGINT}
-	</update>
-
-	<!-- 商户列表(全部) -->
+<mapper namespace="com.fh.dao.BusinessManMapper" >
+  <resultMap id="BaseResultMap" type="com.fh.entity.BusinessMan" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="type_id" property="typeId" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="tuan_flag" property="tuanFlag" jdbcType="BIT" />
+    <result column="cu_flag" property="cuFlag" jdbcType="BIT" />
+    <result column="ding_flag" property="dingFlag" jdbcType="BIT" />
+    <result column="pai_flag" property="paiFlag" jdbcType="BIT" />
+    <result column="main_image_id" property="mainImageId" jdbcType="BIGINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="sales_count" property="salesCount" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="created_date" property="createdDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, type_id, remark, grade, tuan_flag, cu_flag, ding_flag, pai_flag, main_image_id, 
+    address, sales_count, phone, name, created_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_business_man
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_business_man
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fh.entity.BusinessMan" >
+    insert into sys_business_man (user_id, type_id, remark, 
+      grade, tuan_flag, cu_flag, ding_flag, 
+      pai_flag, main_image_id, address, 
+      sales_count, phone, name, 
+      created_date)
+    values (#{userId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=INTEGER}, #{tuanFlag,jdbcType=BIT}, #{cuFlag,jdbcType=BIT}, #{dingFlag,jdbcType=BIT}, 
+      #{paiFlag,jdbcType=BIT}, #{mainImageId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
+      #{salesCount,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{createdDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fh.entity.BusinessMan" >
+    insert into sys_business_man
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="tuanFlag != null" >
+        tuan_flag,
+      </if>
+      <if test="cuFlag != null" >
+        cu_flag,
+      </if>
+      <if test="dingFlag != null" >
+        ding_flag,
+      </if>
+      <if test="paiFlag != null" >
+        pai_flag,
+      </if>
+      <if test="mainImageId != null" >
+        main_image_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="salesCount != null" >
+        sales_count,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="tuanFlag != null" >
+        #{tuanFlag,jdbcType=BIT},
+      </if>
+      <if test="cuFlag != null" >
+        #{cuFlag,jdbcType=BIT},
+      </if>
+      <if test="dingFlag != null" >
+        #{dingFlag,jdbcType=BIT},
+      </if>
+      <if test="paiFlag != null" >
+        #{paiFlag,jdbcType=BIT},
+      </if>
+      <if test="mainImageId != null" >
+        #{mainImageId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="salesCount != null" >
+        #{salesCount,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.BusinessMan" >
+    update sys_business_man
+    <set >
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="tuanFlag != null" >
+        tuan_flag = #{tuanFlag,jdbcType=BIT},
+      </if>
+      <if test="cuFlag != null" >
+        cu_flag = #{cuFlag,jdbcType=BIT},
+      </if>
+      <if test="dingFlag != null" >
+        ding_flag = #{dingFlag,jdbcType=BIT},
+      </if>
+      <if test="paiFlag != null" >
+        pai_flag = #{paiFlag,jdbcType=BIT},
+      </if>
+      <if test="mainImageId != null" >
+        main_image_id = #{mainImageId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="salesCount != null" >
+        sales_count = #{salesCount,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=DATE},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fh.entity.BusinessMan" >
+    update sys_business_man
+    set type_id = #{typeId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=INTEGER},
+      tuan_flag = #{tuanFlag,jdbcType=BIT},
+      cu_flag = #{cuFlag,jdbcType=BIT},
+      ding_flag = #{dingFlag,jdbcType=BIT},
+      pai_flag = #{paiFlag,jdbcType=BIT},
+      main_image_id = #{mainImageId,jdbcType=BIGINT},
+      address = #{address,jdbcType=VARCHAR},
+      sales_count = #{salesCount,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=DATE}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 商户列表(全部) -->
 	<select id="listAllBusinessMan" parameterType="page" resultType="pd">
 		select b.USER_ID,
 		b.type_id,

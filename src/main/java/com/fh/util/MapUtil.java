@@ -59,6 +59,7 @@ public class MapUtil {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static Map<String, Object> changeGetParameterMap(HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
 		Map<String, String[]> properties = request.getParameterMap();
 		// 返回值Map
 		Map<String, Object> returnMap = new HashMap<String, Object>();
