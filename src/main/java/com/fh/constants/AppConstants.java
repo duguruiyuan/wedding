@@ -14,9 +14,11 @@ import com.fh.vo.request.CreateVCReq;
 import com.fh.vo.request.EditPwdReq;
 import com.fh.vo.request.LoginReq;
 import com.fh.vo.request.MainTypeReq;
+import com.fh.vo.request.OrderListReq;
 import com.fh.vo.request.OrderReq;
 import com.fh.vo.request.ProductDetailReq;
 import com.fh.vo.request.ProductListReq;
+import com.fh.vo.request.RatingReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ShoppingCartListReq;
 import com.fh.vo.request.ShoppingReq;
@@ -24,7 +26,7 @@ import com.fh.vo.request.ThirdRegisterReq;
 import com.google.gson.Gson;
 
 public class AppConstants {
-	
+
 	public static final Gson GSON = new Gson();
 
 	/**
@@ -91,7 +93,8 @@ public class AppConstants {
 	public static final String Shopping = "shop";
 	public static final String MainType = "mt";
 	public static final String Order = "order";
-
+	public static final String Rating = "rating";
+	public static final String OrderList = "ol";
 
 	static {
 		APP_HANDLER.put(LoginImpl, "login");
@@ -110,11 +113,13 @@ public class AppConstants {
 		APP_HANDLER.put(FeedBack, "feedBack");
 		APP_HANDLER.put(GetVersion, "getVersion");
 		APP_HANDLER.put(GetProductList, "productList");
-		APP_HANDLER.put(GetProductDetail, "productDetail");	
-		APP_HANDLER.put(ShoppingCartList, "shoppingCartList");	
-		APP_HANDLER.put(Shopping, "shopping");	
-		APP_HANDLER.put(MainType, "mainType");	
-		APP_HANDLER.put(Order, "order");	
+		APP_HANDLER.put(GetProductDetail, "productDetail");
+		APP_HANDLER.put(ShoppingCartList, "shoppingCartList");
+		APP_HANDLER.put(Shopping, "shopping");
+		APP_HANDLER.put(MainType, "mainType");
+		APP_HANDLER.put(Order, "order");
+		APP_HANDLER.put(Rating, "rating");
+		APP_HANDLER.put(OrderList, "orderList");
 
 	}
 
@@ -137,20 +142,8 @@ public class AppConstants {
 		APP_VO.put(Shopping, ShoppingReq.class);
 		APP_VO.put(MainType, MainTypeReq.class);
 		APP_VO.put(Order, OrderReq.class);
-		/*
-		
-		
-		
-		 APP_VO.put(CreateCI, RequestBody.class); 
-		
-		APP_VO.put(UploadAvatar, RequestBody.class);
-		
-		
-		APP_VO.put(GetProjectList, GetProjectListReq.class);
-		APP_VO.put(GetProjectDetail, GetProjectDetailReq.class);
-		APP_VO.put(AtteOrCan, AttentionOrCancelReq.class);
-		APP_VO.put(FeedBack, FeedBackReq.class);
-		APP_VO.put(GetVersion, GetVersionReq.class);*/
+		APP_VO.put(Rating, RatingReq.class);
+		APP_VO.put(OrderList, OrderListReq.class);
 
 	}
 }

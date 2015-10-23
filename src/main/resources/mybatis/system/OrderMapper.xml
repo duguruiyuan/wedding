@@ -23,7 +23,7 @@
     delete from bus_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fh.entity.Order" >
+  <insert id="insert" parameterType="com.fh.entity.Order" useGeneratedKeys="true" keyProperty="id">
     insert into bus_order (id, flow_id, total_price, 
       user_id, created_date, pay_time, 
       business_man_id)

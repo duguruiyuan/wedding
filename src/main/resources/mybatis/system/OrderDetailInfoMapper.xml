@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.OrderDetailInfoMapper">
+
+	<select id="findOrderDetailInfos" resultType="OrderDetailInfo">
+		<include refid="sqlOrderDetailInfos"></include>
+	</select>
+
+	<select id="findOrderInfo" resultType="OrderInfo">
+		<include refid="sqlOrderInfo"></include>
+		limit 1
+	</select>
+
+
+
+	<sql id="sqlOrderDetailInfos">
+		SELECT
+		d.`id` id,
+		d.`flow_id` flowId ,
+		d.`deal_price` dealPrice,
+		p.`new_price` price,
+		p.`id` productId,
+		p.`name` productName,
+		p.`info`
+		productInfo,
+		d.`count` count,
+		'' mainImageUrl
+		FROM
+		bus_order o,
+		bus_order_detail d,
+		bus_product p
+		WHERE o.`id` = d.`order_id`
+		and p.id =
+		d.product_id
+		<if test="orderId != null and orderId  != ''">
+			and d.order_id = #{orderId}
+		</if>
+	</sql>
+
+	<sql id="sqlOrderInfo">
+		SELECT
+		p.`id` id,
+		b.`user_id` userId ,
+		p.`type_id` typeId,
+		p.`name` NAME,
+		m.`name` typeName,
+		b.`address` address,
+		p.`detail` detail,
+		b.`phone`
+		phone,
+		p.`old_price` oldPrice,
+		p.`new_price` newPrice,
+		p.`recommend`
+		recommend,
+		p.`top_grade` topGrade,
+		p.`sales_count` salesCount,
+		p.`info`
+		info,
+		p.`notice` notice
+		FROM
+		bus_product p,
+		sys_business_man b,
+		sys_main_type m
+		WHERE p.`user_id` = b.`user_id`
+		AND m.`id` = p.`type_id`
+		<if test="id != null">
+			and p.id = #{id}
+		</if>
+	</sql>
+</mapper>

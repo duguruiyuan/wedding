@@ -6,7 +6,7 @@ import java.util.Date;
 public class Order {
     private Long id;
 
-    private String flowId;
+	private String flowId ="未付款";
 
     private BigDecimal totalPrice;
 
