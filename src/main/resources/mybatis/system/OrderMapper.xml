@@ -1,453 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="OrderMapper">
-	<!-- 修改订单 -->
-	<update id="editOrder" parameterType="pd">
-		update BUS_ORDER
-		<set>
-			<if test="STATUS != null and STATUS != ''">
-				STATUS = #{STATUS},
-			</if>
-			<if test="PRICE != null and PRICE != ''">
-				PRICE = #{PRICE},
-			</if>
-			<if test="PRODUCT_ID != null and PRODUCT_ID != ''">
-				PRODUCT_ID =
-				#{PRODUCT_ID},
-			</if>
-			<if test="USER_ID != null and USER_ID != ''">
-				USER_ID = #{USER_ID},
-			</if>
-		</set>
-		where
-		ID = #{ID}
-	</update>
-
-	<!-- 通过id获取数据 -->
-	<select id="findById" parameterType="pd" resultType="pd">
-		select
-		o.ID,
-		o.STATUS,
-		o.PRICE,
-		o.PRODUCT_ID,
-		o.USER_ID,
-		o.CREATED_DATE,
-		a.USERNAME,
-		p.NAME
-		from
-		BUS_ORDER o,sys_app_user a,bus_product p
-		where o.user_id = a.USER_ID AND o.product_id = p.id AND
-		o.ID =
-		#{ID}
-	</select>
-
-	<!-- 订单列表（分页） -->
-	<select id="orderlistPage" parameterType="page" resultType="pd">
-		select o.id,
-		o.status,
-		o.price,
-		o.created_date,
-		a.username,
-		p.name
-		from
-		bus_order o,bus_product p,sys_app_user a
-		where o.product_id = p.id AND
-		o.user_id = a.user_id
-		<if test="pd.USERNAME != null and pd.USERNAME != ''"><!-- 用户名检索 -->
-			and 
-			a.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
-		</if>
-		<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''"><!-- 产品名称检索 -->
-			and p.name LIKE CONCAT(CONCAT('%', #{pd.PRODUCTNAME}),'%')
-		</if>
-		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 到期时间检索 -->
-			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
-		</if>
-		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 到期时间检索 -->
-			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
-		</if>
-		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
-			and o.STATUS=#{pd.STATUS}
-		</if>
-	</select>
-
-	<!-- 订单列表(全部) -->
-	<select id="listAllOrders" parameterType="pd" resultType="pd">
-		select o.id,
-		o.status,
-		o.price,
-		o.created_date,
-		a.username,
-		p.name
-		from
-		bus_order o,bus_product p,sys_app_user a
-		where o.product_id = p.id AND
-		o.user_id = a.user_id
-		<if test="USERNAME != null and USERNAME != ''"><!-- 用户名检索 -->
-			and 
-			a.USERNAME LIKE CONCAT(CONCAT('%', #{USERNAME}),'%')
-		</if>
-	<!-- 	<if test="pd.PRODUCTNAME != null and pd.PRODUCTNAME != ''">产品名称检索
-			and p.name=#{pd.PRODUCTNAME}
-		</if>
-		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''">到期时间检索
-			and o.CREATED_DATE &gt;= #{pd.lastLoginStart}
-		</if>
-		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''">到期时间检索
-			and o.CREATED_DATE &lt;= #{pd.lastLoginEnd}
-		</if>
-		<if test="pd.STATUS != null and pd.STATUS != ''">状态检索
-			and o.STATUS=#{pd.STATUS}
-		</if> -->
-	</select>
-
-	<!-- 删除订单 -->
-	<delete id="deleteOrder" parameterType="pd">
-		delete from BUS_ORDER
-		where
-		ID = #{ID}
-	</delete>
-
-	<!-- 批量删除订单 -->
-	<delete id="deleteAllOrders" parameterType="String">
-		delete from BUS_ORDER
-		where
-		ID in
-		<foreach item="item" index="index" collection="array" open="("
-			separator="," close=")">
-			#{item}
-		</foreach>
-	</delete>
-
-	<resultMap id="BaseResultMap" type="com.fh.entity.AppUser">
-		<id column="USER_ID" property="userId" jdbcType="BIGINT" />
-		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
-		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
-		<result column="NAME" property="name" jdbcType="VARCHAR" />
-		<result column="RIGHTS" property="rights" jdbcType="VARCHAR" />
-		<result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
-		<result column="LAST_LOGIN" property="lastLogin" jdbcType="VARCHAR" />
-		<result column="IP" property="ip" jdbcType="VARCHAR" />
-		<result column="STATUS" property="status" jdbcType="VARCHAR" />
-		<result column="BZ" property="bz" jdbcType="VARCHAR" />
-		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
-		<result column="SFID" property="sfid" jdbcType="VARCHAR" />
-		<result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
-		<result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
-		<result column="YEARS" property="years" jdbcType="INTEGER" />
-		<result column="NUMBER" property="number" jdbcType="VARCHAR" />
-		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
-		<result column="THIRD_TYPE" property="thirdType" jdbcType="VARCHAR" />
-		<result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
-		<result column="city" property="city" jdbcType="VARCHAR" />
-		<result column="province" property="province" jdbcType="VARCHAR" />
-		<result column="sex" property="sex" jdbcType="VARCHAR" />
-		<result column="address" property="address" jdbcType="VARCHAR" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		USER_ID, USERNAME, PASSWORD, NAME, RIGHTS, ROLE_ID,
-		LAST_LOGIN, IP, STATUS,
-		BZ, PHONE,
-		SFID, START_TIME, END_TIME, YEARS,
-		NUMBER, EMAIL, THIRD_TYPE, image_url,
-		city, province,
-		sex, address
-	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from sys_app_user
-		where USER_ID = #{userId,jdbcType=BIGINT}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from
-		sys_app_user
-		where USER_ID = #{userId,jdbcType=BIGINT}
-	</delete>
-	<insert id="insert" parameterType="com.fh.entity.AppUser">
-		insert into sys_app_user
-		(USER_ID, USERNAME, PASSWORD,
-		NAME, RIGHTS, ROLE_ID,
-		LAST_LOGIN, IP,
-		STATUS,
-		BZ, PHONE, SFID, START_TIME,
-		END_TIME, YEARS, NUMBER,
-		EMAIL,
-		THIRD_TYPE, image_url,
-		city, province, sex,
-		address)
-		values
-		(#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},
-		#{password,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR},
-		#{rights,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR},
-		#{lastLogin,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
-		#{status,jdbcType=VARCHAR},
-		#{bz,jdbcType=VARCHAR},
-		#{phone,jdbcType=VARCHAR}, #{sfid,jdbcType=VARCHAR},
-		#{startTime,jdbcType=VARCHAR},
-		#{endTime,jdbcType=VARCHAR},
-		#{years,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR},
-		#{email,jdbcType=VARCHAR}, #{thirdType,jdbcType=VARCHAR},
-		#{imageUrl,jdbcType=VARCHAR},
-		#{city,jdbcType=VARCHAR},
-		#{province,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
-		#{address,jdbcType=VARCHAR})
-	</insert>
-	<insert id="insertSelective" parameterType="com.fh.entity.AppUser">
-		insert into sys_app_user
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="userId != null">
-				USER_ID,
-			</if>
-			<if test="username != null">
-				USERNAME,
-			</if>
-			<if test="password != null">
-				PASSWORD,
-			</if>
-			<if test="name != null">
-				NAME,
-			</if>
-			<if test="rights != null">
-				RIGHTS,
-			</if>
-			<if test="roleId != null">
-				ROLE_ID,
-			</if>
-			<if test="lastLogin != null">
-				LAST_LOGIN,
-			</if>
-			<if test="ip != null">
-				IP,
-			</if>
-			<if test="status != null">
-				STATUS,
-			</if>
-			<if test="bz != null">
-				BZ,
-			</if>
-			<if test="phone != null">
-				PHONE,
-			</if>
-			<if test="sfid != null">
-				SFID,
-			</if>
-			<if test="startTime != null">
-				START_TIME,
-			</if>
-			<if test="endTime != null">
-				END_TIME,
-			</if>
-			<if test="years != null">
-				YEARS,
-			</if>
-			<if test="number != null">
-				NUMBER,
-			</if>
-			<if test="email != null">
-				EMAIL,
-			</if>
-			<if test="thirdType != null">
-				THIRD_TYPE,
-			</if>
-			<if test="imageUrl != null">
-				image_url,
-			</if>
-			<if test="city != null">
-				city,
-			</if>
-			<if test="province != null">
-				province,
-			</if>
-			<if test="sex != null">
-				sex,
-			</if>
-			<if test="address != null">
-				address,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="userId != null">
-				#{userId,jdbcType=BIGINT},
-			</if>
-			<if test="username != null">
-				#{username,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				#{password,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
-			</if>
-			<if test="rights != null">
-				#{rights,jdbcType=VARCHAR},
-			</if>
-			<if test="roleId != null">
-				#{roleId,jdbcType=VARCHAR},
-			</if>
-			<if test="lastLogin != null">
-				#{lastLogin,jdbcType=VARCHAR},
-			</if>
-			<if test="ip != null">
-				#{ip,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				#{status,jdbcType=VARCHAR},
-			</if>
-			<if test="bz != null">
-				#{bz,jdbcType=VARCHAR},
-			</if>
-			<if test="phone != null">
-				#{phone,jdbcType=VARCHAR},
-			</if>
-			<if test="sfid != null">
-				#{sfid,jdbcType=VARCHAR},
-			</if>
-			<if test="startTime != null">
-				#{startTime,jdbcType=VARCHAR},
-			</if>
-			<if test="endTime != null">
-				#{endTime,jdbcType=VARCHAR},
-			</if>
-			<if test="years != null">
-				#{years,jdbcType=INTEGER},
-			</if>
-			<if test="number != null">
-				#{number,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				#{email,jdbcType=VARCHAR},
-			</if>
-			<if test="thirdType != null">
-				#{thirdType,jdbcType=VARCHAR},
-			</if>
-			<if test="imageUrl != null">
-				#{imageUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="city != null">
-				#{city,jdbcType=VARCHAR},
-			</if>
-			<if test="province != null">
-				#{province,jdbcType=VARCHAR},
-			</if>
-			<if test="sex != null">
-				#{sex,jdbcType=VARCHAR},
-			</if>
-			<if test="address != null">
-				#{address,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.AppUser">
-		update sys_app_user
-		<set>
-			<if test="username != null">
-				USERNAME = #{username,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				PASSWORD = #{password,jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				NAME = #{name,jdbcType=VARCHAR},
-			</if>
-			<if test="rights != null">
-				RIGHTS = #{rights,jdbcType=VARCHAR},
-			</if>
-			<if test="roleId != null">
-				ROLE_ID = #{roleId,jdbcType=VARCHAR},
-			</if>
-			<if test="lastLogin != null">
-				LAST_LOGIN = #{lastLogin,jdbcType=VARCHAR},
-			</if>
-			<if test="ip != null">
-				IP = #{ip,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				STATUS = #{status,jdbcType=VARCHAR},
-			</if>
-			<if test="bz != null">
-				BZ = #{bz,jdbcType=VARCHAR},
-			</if>
-			<if test="phone != null">
-				PHONE = #{phone,jdbcType=VARCHAR},
-			</if>
-			<if test="sfid != null">
-				SFID = #{sfid,jdbcType=VARCHAR},
-			</if>
-			<if test="startTime != null">
-				START_TIME = #{startTime,jdbcType=VARCHAR},
-			</if>
-			<if test="endTime != null">
-				END_TIME = #{endTime,jdbcType=VARCHAR},
-			</if>
-			<if test="years != null">
-				YEARS = #{years,jdbcType=INTEGER},
-			</if>
-			<if test="number != null">
-				NUMBER = #{number,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				EMAIL = #{email,jdbcType=VARCHAR},
-			</if>
-			<if test="thirdType != null">
-				THIRD_TYPE = #{thirdType,jdbcType=VARCHAR},
-			</if>
-			<if test="imageUrl != null">
-				image_url = #{imageUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="city != null">
-				city = #{city,jdbcType=VARCHAR},
-			</if>
-			<if test="province != null">
-				province = #{province,jdbcType=VARCHAR},
-			</if>
-			<if test="sex != null">
-				sex = #{sex,jdbcType=VARCHAR},
-			</if>
-			<if test="address != null">
-				address = #{address,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where USER_ID = #{userId,jdbcType=BIGINT}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.fh.entity.AppUser">
-		update
-		sys_app_user
-		set USERNAME = #{username,jdbcType=VARCHAR},
-		PASSWORD =
-		#{password,jdbcType=VARCHAR},
-		NAME = #{name,jdbcType=VARCHAR},
-		RIGHTS =
-		#{rights,jdbcType=VARCHAR},
-		ROLE_ID = #{roleId,jdbcType=VARCHAR},
-		LAST_LOGIN = #{lastLogin,jdbcType=VARCHAR},
-		IP =
-		#{ip,jdbcType=VARCHAR},
-		STATUS = #{status,jdbcType=VARCHAR},
-		BZ =
-		#{bz,jdbcType=VARCHAR},
-		PHONE = #{phone,jdbcType=VARCHAR},
-		SFID =
-		#{sfid,jdbcType=VARCHAR},
-		START_TIME = #{startTime,jdbcType=VARCHAR},
-		END_TIME = #{endTime,jdbcType=VARCHAR},
-		YEARS =
-		#{years,jdbcType=INTEGER},
-		NUMBER = #{number,jdbcType=VARCHAR},
-		EMAIL =
-		#{email,jdbcType=VARCHAR},
-		THIRD_TYPE = #{thirdType,jdbcType=VARCHAR},
-		image_url = #{imageUrl,jdbcType=VARCHAR},
-		city =
-		#{city,jdbcType=VARCHAR},
-		province = #{province,jdbcType=VARCHAR},
-		sex =
-		#{sex,jdbcType=VARCHAR},
-		address = #{address,jdbcType=VARCHAR}
-		where
-		USER_ID = #{userId,jdbcType=BIGINT}
-	</update>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.fh.entity.Order" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="flow_id" property="flowId" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="business_man_id" property="businessManId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, flow_id, total_price, user_id, created_date, pay_time, business_man_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from bus_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bus_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fh.entity.Order" >
+    insert into bus_order (id, flow_id, total_price, 
+      user_id, created_date, pay_time, 
+      business_man_id)
+    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{userId,jdbcType=BIGINT}, #{createdDate,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{businessManId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fh.entity.Order" >
+    insert into bus_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="flowId != null" >
+        flow_id,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="businessManId != null" >
+        business_man_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="flowId != null" >
+        #{flowId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessManId != null" >
+        #{businessManId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fh.entity.Order" >
+    update bus_order
+    <set >
+      <if test="flowId != null" >
+        flow_id = #{flowId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessManId != null" >
+        business_man_id = #{businessManId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fh.entity.Order" >
+    update bus_order
+    set flow_id = #{flowId,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      user_id = #{userId,jdbcType=BIGINT},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      business_man_id = #{businessManId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
