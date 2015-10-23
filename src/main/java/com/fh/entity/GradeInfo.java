@@ -9,7 +9,7 @@ public class GradeInfo {
 
     private String comment;
 
-    private Integer grade;
+    private Float grade;
 
     private Long userId;
     
@@ -43,11 +43,11 @@ public class GradeInfo {
         this.comment = comment == null ? null : comment.trim();
     }
 
-    public Integer getGrade() {
+    public Float getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(Float grade) {
         this.grade = grade;
     }
 
