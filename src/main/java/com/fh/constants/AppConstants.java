@@ -18,6 +18,7 @@ import com.fh.vo.request.OrderListReq;
 import com.fh.vo.request.OrderReq;
 import com.fh.vo.request.ProductDetailReq;
 import com.fh.vo.request.ProductListReq;
+import com.fh.vo.request.RatingListReq;
 import com.fh.vo.request.RatingReq;
 import com.fh.vo.request.RegisterReq;
 import com.fh.vo.request.ShoppingCartListReq;
@@ -95,6 +96,8 @@ public class AppConstants {
 	public static final String Order = "order";
 	public static final String Rating = "rating";
 	public static final String OrderList = "ol";
+	public static final String RatingList = "rl";
+
 
 	static {
 		APP_HANDLER.put(LoginImpl, "login");
@@ -120,6 +123,7 @@ public class AppConstants {
 		APP_HANDLER.put(Order, "order");
 		APP_HANDLER.put(Rating, "rating");
 		APP_HANDLER.put(OrderList, "orderList");
+		APP_HANDLER.put(RatingList, "ratingList");
 
 	}
 
@@ -144,6 +148,7 @@ public class AppConstants {
 		APP_VO.put(Order, OrderReq.class);
 		APP_VO.put(Rating, RatingReq.class);
 		APP_VO.put(OrderList, OrderListReq.class);
+		APP_VO.put(RatingList, RatingListReq.class);
 
 	}
 }

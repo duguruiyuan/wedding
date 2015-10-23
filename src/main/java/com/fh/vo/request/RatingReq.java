@@ -14,7 +14,7 @@ public class RatingReq extends RequestBody {
 
 	private String comment;// 评语
 
-	private int grade;// 等级，从0到8
+	private float grade;// 等级，从0到8
 
 	private Long orderId;
 
@@ -26,11 +26,11 @@ public class RatingReq extends RequestBody {
 		this.productId = productId;
 	}
 
-	public int getGrade() {
+	public float getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(float grade) {
 		this.grade = grade;
 	}
 

@@ -2,16 +2,18 @@ package com.fh.entity;
 
 import java.util.Date;
 
-public class Grade {
+public class GradeInfo {
     private Long id;
 
     private Long productId;
 
     private String comment;
 
-    private Float grade;
+    private Integer grade;
 
     private Long userId;
+    
+    private String userName;
 
     private Long orderId;
 
@@ -41,11 +43,11 @@ public class Grade {
         this.comment = comment == null ? null : comment.trim();
     }
 
-    public Float getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(Float grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 
@@ -72,4 +74,12 @@ public class Grade {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

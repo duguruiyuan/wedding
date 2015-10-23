@@ -26,6 +26,7 @@
 		<typeAlias type="com.fh.entity.MainType" alias="MainType" />
 		<typeAlias type="com.fh.entity.OrderDetailInfo" alias="OrderDetailInfo" />
 		<typeAlias type="com.fh.entity.OrderInfo" alias="OrderInfo" />
+		<typeAlias type="com.fh.entity.GradeInfo" alias="GradeInfo" />
 
 
 
