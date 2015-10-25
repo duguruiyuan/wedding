@@ -33,9 +33,8 @@
 	</select>
 
 	<!-- 新增 -->
-	<insert id="save" parameterType="pd">
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="ZD_ID">
 		insert into SYS_DICTIONARIES (
-		ZD_ID,
 		NAME,
 		BIANMA,
 		ORDY_BY,
@@ -43,7 +42,6 @@
 		JB,
 		P_BM
 		) values (
-		#{ZD_ID},
 		#{NAME},
 		#{BIANMA},
 		#{ORDY_BY},
@@ -107,7 +105,7 @@
 	</delete>
 
 	<resultMap id="BaseResultMap" type="com.fh.entity.Dictionary">
-		<id column="ZD_ID" property="zdId" jdbcType="VARCHAR" />
+		<id column="ZD_ID" property="zdId" jdbcType="BIGINT" />
 		<result column="NAME" property="name" jdbcType="VARCHAR" />
 		<result column="BINAMA" property="bianMa" jdbcType="VARCHAR" />
 		<result column="ORDY_BY" property="ordyBy" jdbcType="VARCHAR" />

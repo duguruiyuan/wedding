@@ -11,6 +11,7 @@ import com.fh.entity.MybatisPageable;
 public interface GradeInfoMapper {
 
 	List<GradeInfo> findGradeInfos(@Param("productId") Long productId,
+			@Param("manId") Long manId,
 			@Param(value = "pageable") MybatisPageable pageable);
 
 }

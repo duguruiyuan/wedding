@@ -1,5 +1,9 @@
 package com.fh.vo.request;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fh.vo.RequestBody;
 
 //下订单
@@ -10,12 +14,16 @@ public class RatingReq extends RequestBody {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
 	private Long productId;
 
+	@NotBlank
 	private String comment;// 评语
 
+	@NotNull
 	private float grade;// 等级，从0到8
 
+	@NotNull
 	private Long orderId;
 
 	public Long getProductId() {

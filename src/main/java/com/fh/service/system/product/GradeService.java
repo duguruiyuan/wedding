@@ -47,7 +47,7 @@ public class GradeService {
 
 	public ResponseBody ratingList(RatingListReq ratingReq) {
 		List<GradeInfo> list = gradeInfoMapper.findGradeInfos(ratingReq
-				.getProductId(),
+				.getProductId(), ratingReq.getBusinessManId(),
 				new MybatisPageable(Integer.valueOf(ratingReq.getPageSize()),
 						Integer.valueOf(ratingReq.getPageNo())));
 		RatingListResp listResp = new RatingListResp();

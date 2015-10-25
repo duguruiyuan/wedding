@@ -9,7 +9,7 @@
 		limit #{pageable.pageStart}, #{pageable.pageEnd}
 	</select>
 
-	
+
 
 
 
@@ -19,18 +19,29 @@
 		g.`id` id,
 		g.`product_id` productId ,
 		g.`comment` comment,
-		g.grade grade,
+		g.grade
+		grade,
 		g.`user_id` userId,
 		a.`username` userName,
 		g.`order_id` orderId,
 		g.`create_time` createTime
 		FROM
 		bus_grade g,
-		sys_app_user a
+		sys_app_user a,
+		bus_product
+		p,
+		sys_business_man b
 		WHERE g.`user_id` = a.`user_id`
+		and b.user_id =
+		p.user_id
+		and g.product_id = p.id
 		<if test="productId != null and productId  != ''">
 			and g.product_Id = #{productId}
 		</if>
+		<if test="manId != null and manId  != ''">
+			and b.user_id = #{manId}
+		</if>
+
 	</sql>
 
 	<sql id="sqlOrderInfo">

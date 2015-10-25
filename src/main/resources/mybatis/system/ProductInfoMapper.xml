@@ -40,9 +40,9 @@
 		FROM
 		bus_product p,
 		sys_business_man b,
-		sys_main_type m 
+		sys_dictionaries m 
 		WHERE p.`user_id` = b.`user_id`
-		AND m.`id` = p.`type_id`
+		AND m.`zd_id` = p.`type_id`
 		<if test="request.name != null and request.name  != ''">
 			and p.name like #{request.name}
 		</if>
@@ -74,9 +74,9 @@
 		FROM
 		bus_product p,
 		sys_business_man b,
-		sys_main_type m 
+		sys_dictionaries m 
 		WHERE p.`user_id` = b.`user_id`
-		AND m.`id` = p.`type_id`
+		AND m.`zd_id` = p.`type_id`
 		<if test="id != null">
 			and p.id = #{id}
 		</if>

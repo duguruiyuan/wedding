@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fh.dao.DictionaryMapper">
+
+
+
+	<!-- 根据父编码查找字典 -->
+	<select id="findByPBM" resultType="Dictionary">
+		select ZD_ID as zdId,NAME as
+		name,BIANMA as bianMa,ORDY_BY as
+		ordyBy,PARENT_ID as parentId,JB as
+		jb,P_BM as pBm from
+		sys_dictionaries d
+		where d.PARENT_ID = (SELECT ZD_ID
+		FROM
+		sys_dictionaries e WHERE e.BIANMA= #{pBm})
+	</select>
+
+	<!-- 根据父编码查找字典 -->
+	<select id="findByPBMPBMAndJb" resultType="Dictionary">
+
+		SELECT
+		ZD_ID AS zdId,
+		NAME AS NAME,
+		BIANMA AS bianMa,
+		ORDY_BY AS ordyBy,
+		PARENT_ID AS parentId,
+		JB AS jb,
+		P_BM AS pBm
+		FROM
+		sys_dictionaries d
+		WHERE d.PARENT_ID IN
+		(SELECT
+		ZD_ID
+		FROM
+		sys_dictionaries d
+		WHERE d.PARENT_ID =
+		(SELECT
+		ZD_ID
+		FROM
+		sys_dictionaries e
+		WHERE e.BIANMA = #{pBm})) and d.jb=#{jb}
+	</select>
+
+
+	<!-- 根据父编码查找字典 -->
+	<select id="findByIdAndLevel" resultType="MainTypeInfo">
+		select ZD_ID as id,NAME
+		as
+		name,
+		PARENT_ID as parentId,JB as
+		level from
+		sys_dictionaries d
+		where 1=1
+		<if test="id != null">
+			and d.parent_id = #{id,jdbcType=BIGINT}
+		</if>
+		<if test="level != null and level == '3'">
+			and
+			d.jb = #{level,jdbcType=VARCHAR}
+		</if>
+		<if test="level != null and level == '2'">
+			and
+			d.jb = #{level,jdbcType=VARCHAR}
+			and
+			d.P_BM = 'SJLB'
+		</if>
+	</select>
+</mapper>

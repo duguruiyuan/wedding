@@ -45,7 +45,7 @@
 		</if>
 	</select>
 	
-	<select id="getUserAndRoleById" parameterType="String" resultMap="userAndRoleResultMap">
+	<select id="getUserAndRoleById" parameterType="Long" resultMap="userAndRoleResultMap">
 		select  u.USER_ID,
 				u.USERNAME,
 				u.NAME,

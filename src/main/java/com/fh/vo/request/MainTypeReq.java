@@ -1,7 +1,6 @@
 package com.fh.vo.request;
 
-import javax.validation.constraints.NotNull;
-
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fh.vo.RequestBody;
@@ -13,8 +12,10 @@ public class MainTypeReq extends RequestBody {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
 	private Long id;
 	
+	@NotBlank
 	private String level;
 
 	public Long getId() {

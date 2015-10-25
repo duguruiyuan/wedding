@@ -10,7 +10,7 @@ public class Dictionary {
 	/**
 	 * id
 	 */
-	private String zdId;
+	private Long zdId;
 	/**
 	 * 名称
 	 */
@@ -26,7 +26,7 @@ public class Dictionary {
 	/**
 	 * 父id
 	 */
-	private String parentId;
+	private Long parentId;
 	/**
 	 * 级别
 	 */
@@ -36,11 +36,11 @@ public class Dictionary {
 	 */
 	private String pBm;
 
-	public String getZdId() {
+	public Long getZdId() {
 		return zdId;
 	}
 
-	public void setZdId(String zdId) {
+	public void setZdId(Long zdId) {
 		this.zdId = zdId;
 	}
 
@@ -68,11 +68,11 @@ public class Dictionary {
 		this.ordyBy = ordyBy;
 	}
 
-	public String getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(String parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 

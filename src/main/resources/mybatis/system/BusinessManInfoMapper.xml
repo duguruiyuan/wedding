@@ -38,7 +38,7 @@
 	</select>
 
 	<sql id="sqlBusinessManInfos">
-		SELECT u.user_id userId,
+		SELECT s.user_id userId,
 		s.type_id typeId,
 		s.`NAME` NAME, m.name typeName , s.`address` address 
 		, IFNULL(s.grade,0) grade
@@ -47,9 +47,9 @@
 		CONCAT('file/',s.`user_id`) mainImageUrl,
 		s.`sales_count` sales_count,
 		s.phone phone
-		FROM sys_business_man s ,sys_user u,sys_main_type m WHERE s.`user_id`= u.`USER_ID` and s.type_id = m.id
+		FROM sys_business_man s ,sys_dictionaries m WHERE s.type_id = m.zd_id
 		<if test="request.name != null and request.name  != ''">
-		   and u.name like #{request.name}
+		   and s.name like #{request.name}
 		</if>
 		<if test="request.typeId != null and request.typeId  != ''">
 		   and s.typeId = #{request.typeId}
@@ -57,16 +57,16 @@
 	</sql>
 	
 	<sql id="sqlBusinessManInfo">
-		SELECT u.user_id userId,
+		SELECT s.user_id userId,
 		s.type_id typeId,
 		s.`NAME` NAME, m.name typeName , s.`address` address 
 		, IFNULL(s.grade,0) grade
 		,s.`tuan_flag` tuanFlag, s.`cu_flag` cuFlag,s.`ding_flag`
 		dingFlag,s.`pai_flag` paiFlag,
 		CONCAT('file/',s.`user_id`) mainImageUrl
-		FROM sys_business_man s ,sys_user u,sys_main_type m WHERE s.`user_id`= u.`USER_ID` and s.type_id = m.id
+		FROM sys_business_man s ,sys_dictionaries m WHERE s.type_id = m.zd_id
 		<if test="userId != null">
-		   and u.user_id = #{userId}
+		   and s.user_id = #{userId}
 		</if>
 	</sql>
 </mapper>

@@ -125,6 +125,8 @@ public class ProductController extends BaseController {
 			mv.addObject("roleList", roleList);
 			List<Dictionary> orderStates = dictionaryMapper.findByPBM(Constants.ORDER_STATE);
 			mv.addObject("orderStates", orderStates);
+			List<Dictionary> productTypes = dictionaryMapper.findByPBMPBMAndJb(Constants.SJLB,"3");
+			mv.addObject("productTypes", productTypes);
 		} catch (Exception e) {
 			logger.error(e.toString(), e);
 		}
@@ -148,6 +150,8 @@ public class ProductController extends BaseController {
 			mv.addObject("msg", "saveProduct");
 			mv.addObject("pd", pd);
 			mv.addObject("roleList", roleList);
+			List<Dictionary> productTypes = dictionaryMapper.findByPBMPBMAndJb(Constants.SJLB,"3");
+			mv.addObject("productTypes", productTypes);
 		} catch (Exception e) {
 			logger.error(e.toString(), e);
 		}

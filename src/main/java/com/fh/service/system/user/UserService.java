@@ -139,7 +139,7 @@ public class UserService {
 	/*
 	 * 通过id获取数据
 	 */
-	public User getUserAndRoleById(String USER_ID) throws Exception {
+	public User getUserAndRoleById(Long USER_ID) throws Exception {
 		return (User) dao.findForObject("UserMapper.getUserAndRoleById",
 				USER_ID);
 	}

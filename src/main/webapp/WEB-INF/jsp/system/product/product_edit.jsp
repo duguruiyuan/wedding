@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 <!DOCTYPE html>
@@ -64,34 +65,47 @@
 <body>
 	<form action="product/${msg }.do" name="userForm" id="userForm"
 		method="post">
-		<input type="hidden" name="id" id="id"
-			value="${pd.id }" />
+		<input type="hidden" name="id" id="id" value="${pd.id }" />
 		<div id="zhongxin">
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
 					<th>商品名称</th>
-					<td><input type="text" name="name" id="name"  value="${pd.name }"  maxlength="32" placeholder="这里输入商品名称" title="名称"/></td>
+					<td><input type="text" name="name" id="name"
+						value="${pd.name }" maxlength="32" placeholder="这里输入商品名称"
+						title="名称" /></td>
 				</tr>
 				<tr>
 					<th>老价格</th>
-					<td><input type="number" name="old_price" id="old_price"  value="${pd.old_price }"  maxlength="32" placeholder="这里输入老价格" title="老价格" /></td>
+					<td><input type="number" name="old_price" id="old_price"
+						value="${pd.old_price }" maxlength="32" placeholder="这里输入老价格"
+						title="老价格" /></td>
 				</tr>
 				<tr>
 					<th>新价格</th>
-					<td><input type="number" name="new_price" id="new_price"  value="${pd.new_price }"  maxlength="32" placeholder="这里输入新价格" title="新价格" /></td>
+					<td><input type="number" name="new_price" id="new_price"
+						value="${pd.new_price }" maxlength="32" placeholder="这里输入新价格"
+						title="新价格" /></td>
 				</tr>
 				<tr class="info">
 					<th>是否推荐</th>
-					<td><select class="chzn-select" name="recommend" id="recommend"
-						data-placeholder="请选择是否推荐" style="vertical-align: top;"
-						title="是否推荐">
+					<td><select class="chzn-select" name="recommend"
+						id="recommend" data-placeholder="请选择是否推荐"
+						style="vertical-align: top;" title="是否推荐">
 							<option value="1" <c:if test="${pd.recommend}">selected</c:if>>是</option>
 							<option value="0" <c:if test="${!pd.recommend}">selected</c:if>>否</option>
 					</select></td>
 				</tr>
 				<tr>
 					<th>商品分类</th>
-					<td></td>
+					<td><select class="chzn-select" name="type_id" id="type_id"
+						data-placeholder="请选择商品类别" style="vertical-align: top;"
+						title="商品类别">
+							<option value=""></option>
+							<c:forEach items="${productTypes}" var="o">
+								<option value="${o.zdId }"
+									<c:if test="${o.zdId == pd.type_id }">selected</c:if>>${o.name }</option>
+							</c:forEach>
+					</select></td>
 				</tr>
 				<tr>
 					<th>商品详情</th>

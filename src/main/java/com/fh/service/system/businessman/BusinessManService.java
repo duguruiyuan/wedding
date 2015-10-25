@@ -104,7 +104,7 @@ public class BusinessManService {
 	 * @author wujinsong
 	 */
 	public PageData findById(PageData pd) throws Exception {
-		return (PageData) dao.findForObject("BusinessManMapper.findById", pd);
+		return (PageData) dao.findForObject("BusinessManXMapper.findById", pd);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class BusinessManService {
 	 * @author wujinsong
 	 */
 	public void saveBusinessMan(PageData pd) throws Exception {
-		dao.update("BusinessManMapper.saveBusinessMan", pd);
+		dao.update("BusinessManXMapper.saveBusinessMan", pd);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class BusinessManService {
 	 * @author wujinsong
 	 */
 	public void editBusinessMan(PageData pd) throws Exception {
-		dao.update("BusinessManMapper.updateById", pd);
+		dao.update("BusinessManXMapper.updateById", pd);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class BusinessManService {
 	 * @author wujinsong
 	 */
 	public void deleteBusinessMan(PageData pd) throws Exception {
-		dao.delete("BusinessManMapper.deleteBusinessMan", pd);
+		dao.delete("BusinessManXMapper.deleteBusinessMan", pd);
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class BusinessManService {
 	@SuppressWarnings("unchecked")
 	public List<PageData> businessManListPage(Page pd) throws Exception {
 		logger.info("获取商户列表");
-		return (List<PageData>) dao.findForList("BusinessManMapper.businessManListPage", pd);
+		return (List<PageData>) dao.findForList("BusinessManXMapper.businessManListPage", pd);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class BusinessManService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageData> listAllBusinessMans(PageData pd) throws Exception {
-		return (List<PageData>) dao.findForList("BusinessManMapper.listAllBusinessMans", pd);
+		return (List<PageData>) dao.findForList("BusinessManXMapper.listAllBusinessMans", pd);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class BusinessManService {
 	 */
 	public PageData selectByPrimaryKey(PageData pd) {
 		try {
-			return (PageData) dao.findForObject("BusinessManMapper.findById", pd);
+			return (PageData) dao.findForObject("BusinessManXMapper.findById", pd);
 		} catch (Exception e) {
 
 		}

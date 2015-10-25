@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,8 @@ import com.fh.entity.BmiRequest;
 import com.fh.entity.MybatisPageable;
 import com.fh.entity.Page;
 import com.fh.entity.ProductInfo;
+import com.fh.entity.system.User;
+import com.fh.util.Const;
 import com.fh.util.PageData;
 import com.fh.vo.RequestBody;
 import com.fh.vo.ResponseBody;
@@ -84,6 +89,11 @@ public class ProductService {
 	 * @author wujinsong
 	 */
 	public void saveProduct(PageData pd) throws Exception {
+		Subject currentUser = SecurityUtils.getSubject();  
+		Session session = currentUser.getSession();
+		
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		pd.put("user_id", user.getUSER_ID());
 		dao.update("com.fh.dao.ProductMapper.saveProduct", pd);
 	}
 

@@ -63,8 +63,8 @@ public class DictionariesController extends BaseController {
 				pd.put("JB", Integer.parseInt(pdp.get("JB").toString()) + 1);
 				pd.put("P_BM", pdp.getString("BIANMA") + "_" + pd.getString("BIANMA"));
 			}
-			pd.put("ZD_ID", this.get32UUID());	//ID
-			dictionariesService.save(pd);
+			/*pd.put("ZD_ID", this.get32UUID());	//ID
+*/			dictionariesService.save(pd);
 		}else{
 			pdp = dictionariesService.findById(pdp);
 			if(null != PARENT_ID && "0".equals(PARENT_ID)){
