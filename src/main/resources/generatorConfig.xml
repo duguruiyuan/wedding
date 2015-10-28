@@ -38,11 +38,11 @@
 			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-		<table tableName=""></table>
-		<!-- <table tableName="bus_address" domainObjectName="Address"
+		<!-- <table tableName=""></table> -->
+		<table tableName="bus_favorites" domainObjectName="Favorites"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false" /> -->
+			selectByExampleQueryId="false" />
 		<!-- <table tableName="bus_order_detail" domainObjectName="OrderDetail"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"

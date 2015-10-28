@@ -30,6 +30,7 @@
 		<typeAlias type="com.fh.entity.MainTypeInfo" alias="MainTypeInfo" />
 
 		<typeAlias type="com.fh.entity.Address" alias="Address" />
+		<typeAlias type="com.fh.entity.Favorites" alias="Favorites" />
 
 
 	</typeAliases>

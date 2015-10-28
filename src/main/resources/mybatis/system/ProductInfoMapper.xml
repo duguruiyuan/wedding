@@ -36,11 +36,12 @@
 		p.`old_price` oldPrice,
 		p.`new_price` newPrice,
 		p.`top_grade` topGrade,
-		p.`sales_count` salesCount
+		p.`sales_count`
+		salesCount
 		FROM
 		bus_product p,
 		sys_business_man b,
-		sys_dictionaries m 
+		sys_dictionaries m
 		WHERE p.`user_id` = b.`user_id`
 		AND m.`zd_id` = p.`type_id`
 		<if test="request.name != null and request.name  != ''">
@@ -63,22 +64,62 @@
 		m.`name` typeName,
 		b.`address` address,
 		p.`detail` detail,
-		b.`phone` phone,
+		b.`phone`
+		phone,
 		p.`old_price` oldPrice,
 		p.`new_price` newPrice,
-		p.`recommend` recommend,
+		p.`recommend`
+		recommend,
 		p.`top_grade` topGrade,
 		p.`sales_count` salesCount,
-		p.`info` info,
+		p.`info`
+		info,
 		p.`notice` notice
 		FROM
 		bus_product p,
 		sys_business_man b,
-		sys_dictionaries m 
+		sys_dictionaries m
 		WHERE p.`user_id` = b.`user_id`
-		AND m.`zd_id` = p.`type_id`
+		AND m.`zd_id` =
+		p.`type_id`
 		<if test="id != null">
 			and p.id = #{id}
 		</if>
+	</sql>
+
+
+	<select id="findProductInfosByF" resultType="ProductInfo">
+		select * from (
+		<include refid="sqlProductInfosByF"></include>
+		) a
+		limit #{pageable.pageStart}, #{pageable.pageEnd}
+	</select>
+
+
+	<sql id="sqlProductInfosByF">
+		SELECT
+		p.`id` id,
+		b.`user_id` userId ,
+		p.`type_id` typeId,
+		p.`name` NAME,
+		m.`name` typeName,
+		b.`address` address,
+		p.`old_price`
+		oldPrice,
+		p.`new_price` newPrice,
+		p.`top_grade` topGrade,
+		p.`sales_count`
+		salesCount
+		FROM
+		bus_product p,
+		sys_business_man b,
+		sys_dictionaries m,
+		bus_favorites f
+		WHERE p.`user_id` = b.`user_id` and
+		p.id = f.product_id
+		AND m.`zd_id` = p.`type_id`
+
+		and f.user_id = #{userId}
+
 	</sql>
 </mapper>

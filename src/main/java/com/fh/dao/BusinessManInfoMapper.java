@@ -17,4 +17,8 @@ public interface BusinessManInfoMapper {
 	BusinessManInfo findBusinessManInfo(@Param(value = "userId") long userId);
 
 	Integer countBusinessManInfos(@Param(value = "request") BmiRequest request);
+
+	List<BusinessManInfo> findBusinessManInfosByF(
+			@Param(value = "userId") Long userId,
+			@Param(value = "pageable") MybatisPageable pageable);
 }

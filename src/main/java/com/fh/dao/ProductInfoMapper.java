@@ -17,4 +17,6 @@ public interface ProductInfoMapper {
 
 	ProductInfo findProductInfo(@Param(value = "id") long id);
 
+	List<ProductInfo> findProductInfosByF(@Param(value = "userId") Long userId,
+			@Param(value = "pageable") MybatisPageable pageable);
 }

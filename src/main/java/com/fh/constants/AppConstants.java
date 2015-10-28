@@ -13,6 +13,8 @@ import com.fh.vo.request.BusinessManListReq;
 import com.fh.vo.request.CompleteProfileReq;
 import com.fh.vo.request.CreateVCReq;
 import com.fh.vo.request.EditPwdReq;
+import com.fh.vo.request.FavoritesListReq;
+import com.fh.vo.request.FavoritesReq;
 import com.fh.vo.request.LoginReq;
 import com.fh.vo.request.MainTypeReq;
 import com.fh.vo.request.OrderListReq;
@@ -100,6 +102,8 @@ public class AppConstants {
 	public static final String RatingList = "rl";
 	public static final String Address = "ad";
 	public static final String AddressList = "al";
+	public static final String Favorites = "fa";
+	public static final String FavoritesList = "fl";
 
 	static {
 		APP_HANDLER.put(LoginImpl, "login");
@@ -128,6 +132,8 @@ public class AppConstants {
 		APP_HANDLER.put(RatingList, "ratingList");
 		APP_HANDLER.put(Address, "address");
 		APP_HANDLER.put(AddressList, "addressList");
+		APP_HANDLER.put(Favorites, "favorites");
+		APP_HANDLER.put(FavoritesList, "favoritesList");
 
 	}
 
@@ -155,6 +161,8 @@ public class AppConstants {
 		APP_VO.put(RatingList, RatingListReq.class);
 		APP_VO.put(Address, AddressReq.class);
 		APP_VO.put(AddressList, AddressListReq.class);
+		APP_VO.put(Favorites, FavoritesReq.class);
+		APP_VO.put(FavoritesList, FavoritesListReq.class);
 
 	}
 }
