@@ -39,7 +39,7 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<table tableName=""></table>
-	<!-- 	<table tableName="bus_grade" domainObjectName="Grade"
+		<!-- <table tableName="bus_address" domainObjectName="Address"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false" /> -->

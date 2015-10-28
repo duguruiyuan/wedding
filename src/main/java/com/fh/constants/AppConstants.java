@@ -5,8 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fh.service.handle.impl.ProductList;
 import com.fh.vo.RequestBody;
+import com.fh.vo.request.AddressListReq;
+import com.fh.vo.request.AddressReq;
 import com.fh.vo.request.BusinessManDetailReq;
 import com.fh.vo.request.BusinessManListReq;
 import com.fh.vo.request.CompleteProfileReq;
@@ -97,7 +98,8 @@ public class AppConstants {
 	public static final String Rating = "rating";
 	public static final String OrderList = "ol";
 	public static final String RatingList = "rl";
-
+	public static final String Address = "ad";
+	public static final String AddressList = "al";
 
 	static {
 		APP_HANDLER.put(LoginImpl, "login");
@@ -124,6 +126,8 @@ public class AppConstants {
 		APP_HANDLER.put(Rating, "rating");
 		APP_HANDLER.put(OrderList, "orderList");
 		APP_HANDLER.put(RatingList, "ratingList");
+		APP_HANDLER.put(Address, "address");
+		APP_HANDLER.put(AddressList, "addressList");
 
 	}
 
@@ -149,6 +153,8 @@ public class AppConstants {
 		APP_VO.put(Rating, RatingReq.class);
 		APP_VO.put(OrderList, OrderListReq.class);
 		APP_VO.put(RatingList, RatingListReq.class);
+		APP_VO.put(Address, AddressReq.class);
+		APP_VO.put(AddressList, AddressListReq.class);
 
 	}
 }
