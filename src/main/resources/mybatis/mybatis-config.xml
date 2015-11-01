@@ -17,20 +17,8 @@
 		<typeAlias type="com.fh.util.PageData" alias="pd" />
 		<!-- 分页 -->
 		<typeAlias type="com.fh.entity.Page" alias="Page" />
-		<typeAlias type="com.fh.entity.BusinessManInfo" alias="BusinessManInfo" />
-		<typeAlias type="com.fh.entity.ProductInfo" alias="ProductInfo" />
-		<typeAlias type="com.fh.entity.ShoppingCartInfo" alias="ShoppingCartInfo" />
 		<typeAlias type="com.fh.entity.Dictionary" alias="Dictionary" />
 		<typeAlias type="com.fh.entity.ManImage" alias="ManImage" />
-
-		<typeAlias type="com.fh.entity.MainType" alias="MainType" />
-		<typeAlias type="com.fh.entity.OrderDetailInfo" alias="OrderDetailInfo" />
-		<typeAlias type="com.fh.entity.OrderInfo" alias="OrderInfo" />
-		<typeAlias type="com.fh.entity.GradeInfo" alias="GradeInfo" />
-		<typeAlias type="com.fh.entity.MainTypeInfo" alias="MainTypeInfo" />
-
-		<typeAlias type="com.fh.entity.Address" alias="Address" />
-		<typeAlias type="com.fh.entity.Favorites" alias="Favorites" />
 
 
 	</typeAliases>

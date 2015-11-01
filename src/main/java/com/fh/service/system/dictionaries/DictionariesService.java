@@ -9,20 +9,12 @@ import org.springframework.stereotype.Service;
 import com.fh.dao.DaoSupport;
 import com.fh.entity.Page;
 import com.fh.util.PageData;
-import com.fh.vo.ResponseBody;
-import com.fh.vo.request.MainTypeReq;
 
 @Service("dictionariesService")
 public class DictionariesService {
 
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
-
-	public ResponseBody getMainTypeList(MainTypeReq requestBody) {
-
-		return null;
-
-	}
 
 	// 新增
 	public void save(PageData pd) throws Exception {

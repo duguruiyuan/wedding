@@ -38,33 +38,8 @@
 		WHERE d.PARENT_ID =
 		(SELECT
 		ZD_ID
-		FROM
+		FROMMainTypeInfo
 		sys_dictionaries e
 		WHERE e.BIANMA = #{pBm})) and d.jb=#{jb}
-	</select>
-
-
-	<!-- 根据父编码查找字典 -->
-	<select id="findByIdAndLevel" resultType="MainTypeInfo">
-		select ZD_ID as id,NAME
-		as
-		name,
-		PARENT_ID as parentId,JB as
-		level from
-		sys_dictionaries d
-		where 1=1
-		<if test="id != null">
-			and d.parent_id = #{id,jdbcType=BIGINT}
-		</if>
-		<if test="level != null and level == '3'">
-			and
-			d.jb = #{level,jdbcType=VARCHAR}
-		</if>
-		<if test="level != null and level == '2'">
-			and
-			d.jb = #{level,jdbcType=VARCHAR}
-			and
-			d.P_BM = 'SJLB'
-		</if>
 	</select>
 </mapper>

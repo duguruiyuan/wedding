@@ -3,23 +3,12 @@ package com.fh.service.system.user;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fh.constants.AppConstants;
-import com.fh.dao.AppUserMapper;
 import com.fh.dao.DaoSupport;
-import com.fh.entity.AppUser;
 import com.fh.entity.Page;
 import com.fh.entity.system.User;
 import com.fh.util.PageData;
-import com.fh.vo.ErrorResponseBody;
-import com.fh.vo.ResponseBody;
-import com.fh.vo.request.LoginReq;
 
 @Service("userService")
 public class UserService {
