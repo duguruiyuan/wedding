@@ -26,7 +26,7 @@
 
 			 	<div class="page-header position-relative">
 					<h1>
-						欢迎来到贵州团购后台管理端 <small><i class="icon-double-angle-right"></i> </small>
+						欢迎来到缘梦堂后台管理端 <small><i class="icon-double-angle-right"></i> </small>
 					</h1>
 				</div> 
 				<!--/page-header-->

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HotelMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into WEDDING_HOTEL(
+			NAME,	
+			AREA,	
+			STAR,	
+			STANDARDMEALFROM,	
+			STANDARDMEALTO,	
+			HASPARKINGLOT,	
+			SALESMAN,	
+			SALESPHONE,	
+			SALESTEL,	
+			BANQUETHALLNAME,	
+			TABLENUMBER,	
+			REMARKS,	
+			ADDRESS,	
+			HOTEL_ID
+		) values (
+			#{NAME},	
+			#{AREA},	
+			#{STAR},	
+			#{STANDARDMEALFROM},	
+			#{STANDARDMEALTO},	
+			#{HASPARKINGLOT},	
+			#{SALESMAN},	
+			#{SALESPHONE},	
+			#{SALESTEL},	
+			#{BANQUETHALLNAME},	
+			#{TABLENUMBER},	
+			#{REMARKS},	
+			#{ADDRESS},	
+			#{HOTEL_ID}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from WEDDING_HOTEL
+		where 
+			HOTEL_ID = #{HOTEL_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  WEDDING_HOTEL
+			set 
+				NAME = #{NAME},
+				AREA = #{AREA},
+				STAR = #{STAR},
+				STANDARDMEALFROM = #{STANDARDMEALFROM},
+				STANDARDMEALTO = #{STANDARDMEALTO},
+				HASPARKINGLOT = #{HASPARKINGLOT},
+				SALESMAN = #{SALESMAN},
+				SALESPHONE = #{SALESPHONE},
+				SALESTEL = #{SALESTEL},
+				BANQUETHALLNAME = #{BANQUETHALLNAME},
+				TABLENUMBER = #{TABLENUMBER},
+				REMARKS = #{REMARKS},
+				ADDRESS = #{ADDRESS},
+			HOTEL_ID = HOTEL_ID
+			where 
+				HOTEL_ID = #{HOTEL_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			NAME,	
+			AREA,	
+			STAR,	
+			STANDARDMEALFROM,	
+			STANDARDMEALTO,	
+			HASPARKINGLOT,	
+			SALESMAN,	
+			SALESPHONE,	
+			SALESTEL,	
+			BANQUETHALLNAME,	
+			TABLENUMBER,	
+			REMARKS,	
+			ADDRESS,	
+			HOTEL_ID
+		from 
+			WEDDING_HOTEL
+		where 
+			HOTEL_ID = #{HOTEL_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.NAME,	
+				a.AREA,	
+				a.STAR,	
+				a.STANDARDMEALFROM,	
+				a.STANDARDMEALTO,	
+				a.HASPARKINGLOT,	
+				a.SALESMAN,	
+				a.SALESPHONE,	
+				a.SALESTEL,	
+				a.BANQUETHALLNAME,	
+				a.TABLENUMBER,	
+				a.REMARKS,	
+				a.ADDRESS,	
+				a.HOTEL_ID
+		from 
+				WEDDING_HOTEL a
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.NAME,	
+				a.AREA,	
+				a.STAR,	
+				a.STANDARDMEALFROM,	
+				a.STANDARDMEALTO,	
+				a.HASPARKINGLOT,	
+				a.SALESMAN,	
+				a.SALESPHONE,	
+				a.SALESTEL,	
+				a.BANQUETHALLNAME,	
+				a.TABLENUMBER,	
+				a.REMARKS,	
+				a.ADDRESS,	
+				a.HOTEL_ID
+		from 
+				WEDDING_HOTEL a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from WEDDING_HOTEL
+		where 
+			HOTEL_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>
