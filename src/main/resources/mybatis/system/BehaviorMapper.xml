@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BehaviorMapper">
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into WEDDING_BEHAVIOR(
+			TYPE,	
+			APPUSERID,	
+			RELATIONID,	
+			BEHAVIOR_ID,
+			CREATETIME
+		) values (
+			#{TYPE},	
+			#{APPUSERID},	
+			#{RELATIONID},	
+			#{BEHAVIOR_ID},
+			#{CREATETIME}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from WEDDING_BEHAVIOR
+		where 
+			BEHAVIOR_ID = #{BEHAVIOR_ID}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  WEDDING_BEHAVIOR
+			set 
+				TYPE = #{TYPE},
+				APPUSERID = #{APPUSERID},
+				RELATIONID = #{RELATIONID},
+			BEHAVIOR_ID = BEHAVIOR_ID
+			where 
+				BEHAVIOR_ID = #{BEHAVIOR_ID}
+	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			TYPE,	
+			APPUSERID,	
+			RELATIONID,	
+			BEHAVIOR_ID
+		from 
+			WEDDING_BEHAVIOR
+		where 
+			BEHAVIOR_ID = #{BEHAVIOR_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+				a.TYPE,	
+				a.APPUSERID,	
+				a.RELATIONID,	
+				a.BEHAVIOR_ID
+		from 
+				WEDDING_BEHAVIOR a
+	</select>
+	
+	<!-- 列表 ,酒店浏览-->
+	<select id="browseHotelListPage" parameterType="page" resultType="pd">
+		select
+				a.TYPE,	
+				a.APPUSERID,	
+				a.RELATIONID,	
+				a.BEHAVIOR_ID,
+				b.NAME,	
+				b.AREA,	
+				b.STAR,	
+				b.STANDARDMEALFROM,	
+				b.STANDARDMEALTO,	
+				b.HASPARKINGLOT,	
+				b.SALESMAN,	
+				b.SALESPHONE,	
+				b.SALESTEL,	
+				b.BANQUETHALLNAME,	
+				b.TABLENUMBER,	
+				b.REMARKS,	
+				b.ADDRESS,	
+				b.HOTEL_ID,
+				u.USERNAME,
+				u.PHONE
+		from 
+				WEDDING_BEHAVIOR a LEFT JOIN WEDDING_HOTEL b ON a.RELATIONID = b.HOTEL_ID LEFT JOIN SYS_APP_USER u ON a.APPUSERID = u.USER_ID WHERE a.type = 'BROWSE_HOTEL'
+	</select>
+	
+	<!-- 列表 ,套餐浏览-->
+	<select id="browsePackageListPage" parameterType="page" resultType="pd">
+		select
+				a.TYPE,	
+				a.APPUSERID,	
+				a.RELATIONID,	
+				a.BEHAVIOR_ID,
+				b.THEME,	
+				b.INTRODUCTION,	
+				b.ZAMBIANUMBER,	
+				b.SERVICEITEMS,	
+				b.PRICE,	
+				b.DETAIL,	
+				b.SERVICE_ID
+				u.USERNAME,
+				u.PHONE
+		from 
+				WEDDING_BEHAVIOR a LEFT JOIN WEDDING_SERVICE b ON a.RELATIONID = b.SERVICE_ID LEFT JOIN SYS_APP_USER u ON a.APPUSERID = u.USER_ID WHERE a.type = 'BROWSE_PACKAGE'
+	</select>
+	
+	<!-- 列表 ,酒店收藏-->
+	<select id="hotelCollectionListPage" parameterType="page" resultType="pd">
+		select
+				a.TYPE,	
+				a.APPUSERID,	
+				a.RELATIONID,	
+				a.BEHAVIOR_ID,
+				b.NAME,	
+				b.AREA,	
+				b.STAR,	
+				b.STANDARDMEALFROM,	
+				b.STANDARDMEALTO,	
+				b.HASPARKINGLOT,	
+				b.SALESMAN,	
+				b.SALESPHONE,	
+				b.SALESTEL,	
+				b.BANQUETHALLNAME,	
+				b.TABLENUMBER,	
+				b.REMARKS,	
+				b.ADDRESS,	
+				b.HOTEL_ID,
+				u.USERNAME,
+				u.PHONE
+		from 
+				WEDDING_BEHAVIOR a LEFT JOIN WEDDING_HOTEL b ON a.RELATIONID = b.HOTEL_ID LEFT JOIN SYS_APP_USER u ON a.APPUSERID = u.USER_ID WHERE a.type = 'HOTEL_COLLECTION'
+	</select>
+	
+		<!-- 列表 ,服务点赞-->
+	<select id="serviceZambiaListPage" parameterType="page" resultType="pd">
+		select
+				a.TYPE,	
+				a.APPUSERID,	
+				a.RELATIONID,	
+				a.BEHAVIOR_ID,
+				b.THEME,	
+				b.INTRODUCTION,	
+				b.ZAMBIANUMBER,	
+				b.SERVICEITEMS,	
+				b.PRICE,	
+				b.DETAIL,	
+				b.SERVICE_ID
+				u.USERNAME,
+				u.PHONE
+		from 
+				WEDDING_BEHAVIOR a LEFT JOIN WEDDING_SERVICE b ON a.RELATIONID = b.SERVICE_ID LEFT JOIN SYS_APP_USER u ON a.APPUSERID = u.USER_ID WHERE a.type = 'SERVICE_ZAMBIA'
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+				a.TYPE,	
+				a.APPUSERID,	
+				a.RELATIONID,	
+				a.BEHAVIOR_ID
+		from 
+				WEDDING_BEHAVIOR a
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from WEDDING_BEHAVIOR
+		where 
+			BEHAVIOR_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

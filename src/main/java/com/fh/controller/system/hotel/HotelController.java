@@ -29,7 +29,6 @@ import com.fh.util.AppUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.Const;
 import com.fh.util.PageData;
-import com.fh.util.Tools;
 import com.fh.util.Jurisdiction;
 import com.fh.service.system.hotel.HotelService;
 
@@ -102,7 +101,7 @@ public class HotelController extends BaseController {
 	 * 列表
 	 */
 	@RequestMapping(value="/list")
-	public ModelAndView list(Page page){
+	public Object list(Page page){
 		logBefore(logger, "列表Hotel");
 		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();

@@ -130,6 +130,7 @@
 			<value>
 				/rest/** = anon
 				/file/** = anon
+				/hotel/api/** = anon
 				/static/login/** = anon
 				/static/js/myjs/** = authc
 				/static/js/** = anon
@@ -138,7 +139,7 @@
 				/login_login = anon
 				/app**/** = anon
 				/weixin/** = anon
-				/** = authc
+				/** = authc 
 			</value>
 		</property>
 	</bean>

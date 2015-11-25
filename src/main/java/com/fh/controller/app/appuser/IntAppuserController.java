@@ -8,70 +8,101 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.fh.constants.Result;
+import com.fh.constants.Result.Type;
 import com.fh.controller.base.BaseController;
 import com.fh.service.system.appuser.AppuserService;
 import com.fh.util.AppUtil;
+import com.fh.util.MD5;
 import com.fh.util.PageData;
 import com.fh.util.Tools;
-
+import com.fh.vo.BehaviorVo;
 
 /**
-  * 会员-接口类 
-  *    
-  * 相关参数协议：
-  * 00	请求失败
-  * 01	请求成功
-  * 02	返回空值
-  * 03	请求协议参数不完整    
-  * 04  用户名或密码错误
-  * 05  FKEY验证失败
+ * 会员-接口类
+ * 
+ * 相关参数协议： 00 请求失败 01 请求成功 02 返回空值 03 请求协议参数不完整 04 用户名或密码错误 05 FKEY验证失败
  */
 @Controller
-@RequestMapping(value="/appuser")
+@RequestMapping(value = "/appuser")
 public class IntAppuserController extends BaseController {
-    
-	@Resource(name="appuserService")
+
+	@Resource(name = "appuserService")
 	private AppuserService appuserService;
-	
+
 	/**
 	 * 根据用户名获取会员信息
 	 */
-	@RequestMapping(value="/getAppuserByUm")
+	@RequestMapping(value = "/getAppuserByUm")
 	@ResponseBody
-	public Object getAppuserByUsernmae(){
+	public Object getAppuserByUsernmae() {
 		logBefore(logger, "根据用户名获取会员信息");
-		Map<String,Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String result = "00";
-		
-		try{
-			if(Tools.checkKey("USERNAME", pd.getString("FKEY"))){	//检验请求key值是否合法
-				if(AppUtil.checkParam("getAppuserByUsernmae", pd)){	//检查参数
+
+		try {
+			if (Tools.checkKey("USERNAME", pd.getString("FKEY"))) { // 检验请求key值是否合法
+				if (AppUtil.checkParam("getAppuserByUsernmae", pd)) { // 检查参数
 					pd = appuserService.findByUId(pd);
-					
+
 					map.put("pd", pd);
-					result = (null == pd) ?  "02" :  "01";
-					
-				}else {
+					result = (null == pd) ? "02" : "01";
+
+				} else {
 					result = "03";
 				}
-			}else{
+			} else {
 				result = "05";
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			logger.error(e.toString(), e);
-		}finally{
+		} finally {
 			map.put("result", result);
 			logAfter(logger);
 		}
-		
+
 		return AppUtil.returnObject(new PageData(), map);
 	}
-	
 
-	
+	/**
+	 * 注册会员
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/registerAppUser")
+	public Result registerAppUser() throws Exception {
+		Result result = new Result(Type.SUCCESS);
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		pd.put("USER_ID", this.get32UUID()); // ID
+		pd.put("RIGHTS", ""); // 权限
+		pd.put("LAST_LOGIN", ""); // 最后登录时间
+		pd.put("IP", ""); // IP
+		// pd.put("STATUS", "0"); //状态
+
+		pd.put("PASSWORD", MD5.md5(pd.getString("PASSWORD")));
+
+		if (null == appuserService.findByUId(pd)) {
+			appuserService.saveU(pd);
+		} else {
+			result.setType(Type.FAILURE);
+		}
+
+		return result;
+	}
+
+	/**
+	 * 预约
+	 * 
+	 * @return
+	 */
+	public Result makeAppointment() {
+		Result result = new Result();
+
+		return result;
+	}
 }
-	
- 

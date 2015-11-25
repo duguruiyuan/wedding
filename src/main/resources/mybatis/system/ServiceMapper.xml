@@ -12,7 +12,8 @@
 			SERVICEITEMS,	
 			PRICE,	
 			DETAIL,	
-			SERVICE_ID
+			SERVICE_ID,
+			CREATETIME
 		) values (
 			#{THEME},	
 			#{INTRODUCTION},	
@@ -20,7 +21,8 @@
 			#{SERVICEITEMS},	
 			#{PRICE},	
 			#{DETAIL},	
-			#{SERVICE_ID}
+			#{SERVICE_ID},
+			#{CREATETIME}
 		)
 	</insert>
 	
