@@ -101,13 +101,14 @@
 				a.APPUSERID,	
 				a.RELATIONID,	
 				a.BEHAVIOR_ID,
+				a.CREATETIME,
 				b.THEME,	
 				b.INTRODUCTION,	
 				b.ZAMBIANUMBER,	
 				b.SERVICEITEMS,	
 				b.PRICE,	
 				b.DETAIL,	
-				b.SERVICE_ID
+				b.SERVICE_ID,
 				u.USERNAME,
 				u.PHONE
 		from 
@@ -148,13 +149,14 @@
 				a.APPUSERID,	
 				a.RELATIONID,	
 				a.BEHAVIOR_ID,
+				a.CREATETIME,
 				b.THEME,	
 				b.INTRODUCTION,	
 				b.ZAMBIANUMBER,	
 				b.SERVICEITEMS,	
 				b.PRICE,	
 				b.DETAIL,	
-				b.SERVICE_ID
+				b.SERVICE_ID,
 				u.USERNAME,
 				u.PHONE
 		from 

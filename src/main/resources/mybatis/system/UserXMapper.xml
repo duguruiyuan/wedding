@@ -180,7 +180,8 @@
 			SKIN,
 			EMAIL,
 			NUMBER,
-			PHONE
+			PHONE,
+			CREATETIME
 		) values (
 			#{USER_ID},
 			#{USERNAME},
@@ -195,7 +196,8 @@
 			#{SKIN},
 			#{EMAIL},
 			#{NUMBER},
-			#{PHONE}
+			#{PHONE},
+			#{CREATETIME}
 		)
 	</insert>
 	<!-- 用户列表(用户组) -->

@@ -16,7 +16,6 @@ import com.fh.util.AppUtil;
 import com.fh.util.MD5;
 import com.fh.util.PageData;
 import com.fh.util.Tools;
-import com.fh.vo.BehaviorVo;
 
 /**
  * 会员-接口类

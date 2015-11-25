@@ -126,14 +126,14 @@ public class BehaviorController extends BaseController {
 				// 浏览套餐
 			} else if (type.equals(BehaviorType.BROWSE_PACKAGE.name())) {
 				varList = behaviorService.browsePackageListPage(page);
-				mv.setViewName("system/behavior/browseHotel");
+				mv.setViewName("system/behavior/browsePackage");
 				// 酒店收藏
 			} else if (type.equals(BehaviorType.HOTEL_COLLECTION.name())) {
-				varList = behaviorService.browsePackageListPage(page);
+				varList = behaviorService.hotelCollectionListPage(page);
 				mv.setViewName("system/behavior/hotelCollection");
 				// 服务点赞
 			} else if (type.equals(BehaviorType.SERVICE_ZAMBIA.name())) {
-				varList = behaviorService.browsePackageListPage(page);
+				varList = behaviorService.serviceZambiaListPage(page);
 				mv.setViewName("system/behavior/serviceZambia");
 			}
 

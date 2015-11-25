@@ -1,9 +1,13 @@
 package com.fh.controller.app.appuser;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.fh.constants.Result;
 import com.fh.controller.base.BaseController;
 import com.fh.util.PageData;
@@ -25,6 +29,7 @@ public class AppBehaviorController extends BaseController {
 	 * 新增行为记录
 	 */
 	@RequestMapping(value = "/addBehavior")
+	@ResponseBody
 	public Result<String> save(BehaviorVo behaviorVo) throws Exception {
 		logBefore(logger, "新增Behavior");
 		Result<String> result = new Result<String>();
@@ -36,6 +41,7 @@ public class AppBehaviorController extends BaseController {
 			pd.put("TYPE", behaviorVo.getType());
 			pd.put("RELATIONID", behaviorVo.getRelationId());
 			pd.put("APPUSERID", behaviorVo.getAppUserId());
+			pd.put("CREATETIME", new Date());
 			behaviorService.save(pd);
 		} catch (Exception e) {
 

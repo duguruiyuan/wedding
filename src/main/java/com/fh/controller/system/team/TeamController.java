@@ -57,6 +57,7 @@ public class TeamController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("TEAM_ID", this.get32UUID());	//主键
+		pd.put("CREATETIME", new Date());
 		teamService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
