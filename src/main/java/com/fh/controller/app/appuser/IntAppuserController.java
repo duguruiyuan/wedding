@@ -1,5 +1,6 @@
 package com.fh.controller.app.appuser;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,14 +9,19 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.fh.constants.Result;
 import com.fh.constants.Result.Type;
 import com.fh.controller.base.BaseController;
+import com.fh.service.system.appointment.AppointmentService;
 import com.fh.service.system.appuser.AppuserService;
 import com.fh.util.AppUtil;
+import com.fh.util.Jurisdiction;
 import com.fh.util.MD5;
 import com.fh.util.PageData;
 import com.fh.util.Tools;
+import com.fh.vo.Appointment;
 
 /**
  * 会员-接口类
@@ -25,9 +31,11 @@ import com.fh.util.Tools;
 @Controller
 @RequestMapping(value = "/appuser")
 public class IntAppuserController extends BaseController {
-
 	@Resource(name = "appuserService")
 	private AppuserService appuserService;
+	
+	@Resource
+	private AppointmentService appointmentService;
 
 	/**
 	 * 根据用户名获取会员信息
@@ -72,8 +80,8 @@ public class IntAppuserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/registerAppUser")
-	public Result registerAppUser() throws Exception {
-		Result result = new Result(Type.SUCCESS);
+	public Result<String> registerAppUser() throws Exception {
+		Result<String> result = new Result<String>(Type.SUCCESS);
 		PageData pd = new PageData();
 		pd = this.getPageData();
 
@@ -95,13 +103,32 @@ public class IntAppuserController extends BaseController {
 	}
 
 	/**
-	 * 预约
+	 * 新增预约预约
 	 * 
 	 * @return
 	 */
-	public Result makeAppointment() {
-		Result result = new Result();
-
+	@RequestMapping(value = "/makeAppointment")
+	@ResponseBody
+	public Result<String> makeAppointment(Appointment appointment) {
+		logBefore(logger, "新增Appointment");
+		Result<String> result = new Result<>();
+		PageData pd = new PageData();
+		try {
+			pd = this.getPageData();
+			pd.put("APPOINTMENT_ID", this.get32UUID());	//主键
+			pd.put("CREATETIME", appointment.getCreatetime());
+			pd.put("ISEVENNUMBERS", appointment.getIsEvenNumbers());
+			pd.put("ISLUCKYDAY", appointment.getIsLuckyDay());
+			pd.put("ISWEEKEND", appointment.getIsWeekend());
+			pd.put("GETPHONE", appointment.getPhone());
+			pd.put("SMSVERIFICATIONCODE", appointment.getSmsVerificationCode());
+			pd.put("TABLENUMBER", appointment.getTableNumber());
+			pd.put("CREATETIME", new Date());
+			appointmentService.save(pd);
+		} catch (Exception e) {
+			result.setType(Type.FAILURE);
+		}
+		
 		return result;
 	}
 }
